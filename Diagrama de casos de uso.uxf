@@ -82,18 +82,18 @@
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>260</y>
+      <y>250</y>
       <w>120</w>
-      <h>270</h>
+      <h>280</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;100.0;250.0</additional_attributes>
+    <additional_attributes>10.0;10.0;100.0;260.0</additional_attributes>
   </element>
   <element>
     <id>UMLActor</id>
     <coordinates>
       <x>20</x>
-      <y>270</y>
+      <y>260</y>
       <w>80</w>
       <h>120</h>
     </coordinates>
@@ -107,10 +107,21 @@ formularios</panel_attributes>
       <x>50</x>
       <y>120</y>
       <w>30</w>
-      <h>170</h>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>70</x>
+      <y>240</y>
+      <w>120</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;20.0;100.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -118,65 +129,54 @@ formularios</panel_attributes>
       <x>70</x>
       <y>250</y>
       <w>120</w>
-      <h>40</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;20.0;100.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;100.0;60.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>260</y>
+      <y>250</y>
       <w>120</w>
-      <h>70</h>
+      <h>130</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;100.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;100.0;110.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>260</y>
+      <y>250</y>
       <w>120</w>
-      <h>120</h>
+      <h>180</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;100.0;100.0</additional_attributes>
+    <additional_attributes>10.0;10.0;100.0;160.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>70</x>
-      <y>260</y>
+      <y>250</y>
       <w>120</w>
-      <h>170</h>
+      <h>230</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;10.0;100.0;150.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>70</x>
-      <y>260</y>
-      <w>120</w>
-      <h>220</h>
-    </coordinates>
-    <panel_attributes/>
-    <additional_attributes>10.0;10.0;100.0;200.0</additional_attributes>
+    <additional_attributes>10.0;10.0;100.0;210.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>80</x>
-      <y>560</y>
+      <y>500</y>
       <w>110</w>
-      <h>40</h>
+      <h>100</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;20.0;90.0;20.0</additional_attributes>
+    <additional_attributes>10.0;10.0;90.0;80.0</additional_attributes>
   </element>
   <element>
     <id>UMLUseCase</id>
@@ -219,16 +219,16 @@ formularios</panel_attributes>
       <x>50</x>
       <y>380</y>
       <w>30</w>
-      <h>200</h>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;180.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
   </element>
   <element>
     <id>UMLActor</id>
     <coordinates>
       <x>10</x>
-      <y>570</y>
+      <y>500</y>
       <w>100</w>
       <h>100</h>
     </coordinates>
@@ -343,10 +343,10 @@ Sistema</panel_attributes>
       <x>70</x>
       <y>200</y>
       <w>120</w>
-      <h>90</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes/>
-    <additional_attributes>10.0;70.0;100.0;10.0</additional_attributes>
+    <additional_attributes>10.0;60.0;100.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
