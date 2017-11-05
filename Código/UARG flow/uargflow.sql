@@ -61,7 +61,7 @@ CREATE TABLE `ROL` (
 
 LOCK TABLES `ROL` WRITE;
 /*!40000 ALTER TABLE `ROL` DISABLE KEYS */;
-INSERT INTO `ROL` VALUES (1,'Administrador'),(2,'Gestor de formularios'),(3,'Usuario regular');
+INSERT INTO `ROL` VALUES (1,'Administrador'),(2,'Usuario Sector'),(3,'Mesa de Entrada'),(4,'Usuario Consulta');
 /*!40000 ALTER TABLE `ROL` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -118,7 +118,7 @@ CREATE TABLE `USUARIO` (
 
 LOCK TABLES `USUARIO` WRITE;
 /*!40000 ALTER TABLE `USUARIO` DISABLE KEYS */;
-INSERT INTO `USUARIO` VALUES (1,'arielmachini@protonmail.com','Ariel Machini','Google','Activo'));
+INSERT INTO `USUARIO` VALUES (1,'portaluarg@uarg.unpa.edu.ar','Portal UARG','Google','Activo'),(2,'esantos@uarg.unpa.edu.ar','Eder dos Santos','Google','Activo');
 /*!40000 ALTER TABLE `USUARIO` ENABLE KEYS */;
 UNLOCK TABLES;
 
