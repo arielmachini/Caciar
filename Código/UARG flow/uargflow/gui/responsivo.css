@@ -1,0 +1,29 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16/06/2017, 12:01:29
+    Author     : esantos
+*/
+
+@media screen and (max-width: 991px) {
+    * {
+        font-size: 1.2 em;
+        line-height: normal;
+    }
+    #main-content {
+        background: white;
+        width: 80%;
+        max-width: 900px;
+        margin: 20px auto;
+        box-shadow: 0 0 10px rgba(0,0,0,.1);
+    }
+    
+    .divFormulario {
+        width: 100%;
+        display: block;
+        float: none;
+    }
+}
