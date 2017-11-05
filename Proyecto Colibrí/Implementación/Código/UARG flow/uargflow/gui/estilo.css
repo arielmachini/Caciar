@@ -47,7 +47,7 @@ a:hover {
 }
 
 /* Contenedor del slider */
-.switch {
+.cajaSwitch {
   position: relative;
   display: inline-block;
   width: 60px;
@@ -55,10 +55,10 @@ a:hover {
 }
 
 /* Esconde el checkbox por defecto */
-.switch input {display:none;}
+.cajaSwitch input {display:none;}
 
 /* Slider */
-.slider {
+.switchSlider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -70,7 +70,7 @@ a:hover {
   transition: .4s;
 }
 
-.slider:before {
+.switchSlider:before {
   position: absolute;
   content: "";
   height: 26px;
@@ -82,26 +82,26 @@ a:hover {
   transition: .4s;
 }
 
-input:checked + .slider {
+input:checked + .switchSlider {
   background-color: #2196F3;
 }
 
-input:focus + .slider {
+input:focus + .switchSlider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .slider:before {
+input:checked + .switchSlider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
 
 /* Redondeado */
-.slider.redondeado {
+.switchSlider.redondeado {
   border-radius: 34px;
 }
 
-.slider.redondeado:before {
+.switchSlider.redondeado:before {
   border-radius: 50%;
 }
 

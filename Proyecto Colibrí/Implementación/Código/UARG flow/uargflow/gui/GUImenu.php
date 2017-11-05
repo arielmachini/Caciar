@@ -6,7 +6,7 @@
 
     <a id="logo-header" href="../app/index.php">
         <span class="site-name"><?php echo Constantes::NOMBRE_SISTEMA; ?></span>
-        <span class="site-desc">SIT UNPA-UARG</span>
+        <span class="site-desc">Grupo de desarrollo Paire</span>
     </a>
 
 
@@ -35,7 +35,7 @@
                         <?php echo GUI::generaMenuActive("workflow/workflow.permisos.ver.php"); ?>
                            >Usuarios</a>
                         <ul>
-                            <li><a href="../workflow/workflow.gestion.gestores.php" title="Gesti&oacute;n de gestores" <?php echo GUI::generaMenuActive("workflow/workflow.gestion.gestores.php"); ?>>Administrar gestores de formularios</a></li>
+                            <li><a href="../workflow/workflow.gestion.gestores.php" title="Gesti&oacute;n de gestores" <?php echo GUI::generaMenuActive("workflow/workflow.gestion.gestores.php"); ?>>Gestores</a></li>
                             <li><a href="../workflow/workflow.usuarios.ver.php" title="Gesti&oacute;n de Usuarios" <?php echo GUI::generaMenuActive("workflow/workflow.usuarios.ver.php"); ?>>Usuarios</a></li>
                             <li><a href="../workflow/workflow.roles.ver.php" title="Tipos de Usuario" <?php echo GUI::generaMenuActive("workflow/workflow.roles.ver.php"); ?>>Roles</a></li>
                             <li><a href="../workflow/workflow.permisos.ver.php" title="Permisos del sistema" <?php echo GUI::generaMenuActive("workflow/workflow.permisos.ver.php"); ?>>Permisos</a></li>
@@ -51,7 +51,7 @@
                         <td>
                             Usuario: <?php echo $_SESSION['usuario']->nombre; ?><br />
                             (<?php echo $_SESSION['usuario']->email; ?>) ::
-                            <a href="../app/salir.php">Salir</a>
+                            <a href="../workflow/salir.php">Salir</a>
                         </td>
                         <td><img src="<?php echo $_SESSION['usuario']->imagen; ?>" style="height:30px; padding: 0; margin: 0" /></td>
                     </tr>
