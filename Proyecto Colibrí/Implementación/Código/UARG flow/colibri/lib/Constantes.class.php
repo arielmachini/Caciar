@@ -14,13 +14,13 @@ class Constantes {
     
     const NOMBRE_SISTEMA = "UARGFlow";
     
-    const WEBROOT = "/var/www/html/uargflow/";
-    const APPDIR = "uargflow";
+    const WEBROOT = "/var/www/html/colibri/";
+    const APPDIR = "colibri";
         
     const SERVER = "http://localhost";
-    const APPURL = "http://localhost/uargflow";
-    const HOMEURL = "http://localhost/uargflow/app/index.php";
-    const HOMEAUTH = "http://localhost/uargflow/app/workflow.usuarios.ver.php";
+    const APPURL = "http://localhost/colibri";
+    const HOMEURL = "http://localhost/colibri/workflow/index.php";
+    const HOMEAUTH = "http://localhost/colibri/workflow/workflow.usuarios.ver.php";
     
     const BD_SCHEMA = "uargflow";
     const BD_USERS = "uargflow";
