@@ -293,19 +293,18 @@ class ControlAcceso {
      * 
      */
     static function verificaPermiso($permiso_) {
-        if ($_SESSION['usuario'] == null) {
+        $Usuario = $_SESSION['usuario'];
+        if ($Usuario == null) {
             return false;
-        } else {
-            $Usuario = $_SESSION['usuario'];
-
-            foreach ($Usuario->roles as $Rol) {
-                foreach ($Rol->permisos as $Permiso) {
-                    if ($permiso_ == $Permiso->nombre) {
-                        return true;
-                    }
+        }
+        foreach ($Usuario->roles as $Rol) {
+            foreach ($Rol->permisos as $Permiso) {
+                if ($permiso_ == $Permiso->nombre) {
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     /**

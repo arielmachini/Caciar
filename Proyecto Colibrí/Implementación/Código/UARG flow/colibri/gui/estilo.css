@@ -1,4 +1,4 @@
-/************
+/************ 
 //--------------------------------
 // GENERAL
 //-------------------------------
@@ -8,7 +8,7 @@ body {
     padding: 0;
     font-family: Helvetica, Arial, sans-serif;
     color: #666;
-    background: #f2f2f2;
+    background: #f2f2f2; 
     font-size: 1em;
     line-height: 1.5em;
     padding-top: 80px;
@@ -46,67 +46,8 @@ a:hover {
     color: #4f4f4f;
 }
 
-/* Contenedor del slider */
-.cajaSwitch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
 
-/* Esconde el checkbox por defecto */
-.cajaSwitch input {display:none;}
-
-/* Slider */
-.switchSlider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.switchSlider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .switchSlider {
-  background-color: #2196F3;
-}
-
-input:focus + .switchSlider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .switchSlider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Redondeado */
-.switchSlider.redondeado {
-  border-radius: 34px;
-}
-
-.switchSlider.redondeado:before {
-  border-radius: 50%;
-}
-
-
-/************
+/************ 
 //-------------------------------
 // CABECERA
 //-------------------------------
@@ -122,7 +63,7 @@ input:checked + .switchSlider:before {
     top: 0;
     position: fixed;
     z-index: 10;
-}
+}   
 
 #main-header a {
     color: white;
@@ -135,10 +76,10 @@ input:checked + .switchSlider:before {
 }
 
 #main-header table {
-    border-top: 5px solid #c7db09;
-    border: 1px solid #c7db09;
+    border-top: 5px solid #c7db09; 
+    border: 1px solid #c7db09; 
     background-color: #fff;
-    padding: 5px;
+    padding: 5px; 
     color: #4f4f4f;
 }
 
@@ -230,7 +171,7 @@ nav ul li a:hover {
 }
 
 
-/************
+/************ 
 //------------------------------
 // CONTENIDO
 //------------------------------
@@ -280,16 +221,16 @@ nav ul li a:hover {
 }
 
 .divFormulario {
-    width: 50%;
-    float: right;
+    width: 50%; 
+    float: right;  
     display: inline-table;
-}
+} 
 
 
 /* ****** */
-table {
-    width: 100%;
-    border-collapse: collapse;
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
     border: solid thin #ddd;
 }
 
@@ -298,17 +239,17 @@ table * {
 }
 
 th {
-    background-color: #f5f5f5;
-    text-align: justify;
-    padding: 3px !important;
+    background-color: #f5f5f5; 
+    text-align: justify; 
+    padding: 3px !important; 
 }
 
 td {
-    padding: 3px !important;
+    padding: 3px !important; 
 }
 
-tbody {
-    border: solid thin #ddd;
+tbody { 
+    border: solid thin #ddd; 
     background-color: #FFF;
 }
 
@@ -325,7 +266,7 @@ tbody {
 }
 
 #container * {
-    font-family: Arial, sans;
+    font-family: Arial, sans; 
     margin: 0;
     padding: 0;
     box-sizing: border-box;

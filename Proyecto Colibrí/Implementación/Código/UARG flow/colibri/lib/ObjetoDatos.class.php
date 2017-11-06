@@ -2,9 +2,9 @@
 
 class ConfiguracionesBD {
 
-    const BD_HOST = "localhost:3306";
+    const BD_HOST = "localhost";
     const BD_USUARIO = "root";
-    const BD_CLAVE = "root";
+    const BD_CLAVE = "password";
     const BD_SCHEMA = "uargflow";
 
 }
