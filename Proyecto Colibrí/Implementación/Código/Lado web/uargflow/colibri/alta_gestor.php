@@ -24,7 +24,7 @@ $UsuariosWorkflow = new WorkflowUsuarios();
                     ?>
                     <h3>Alta de gestor de formularios</h3>
                     <p>Rellene el siguiente formulario para dar de alta al usuario <strong><?= $GestorFormularios->getNombre() ?></strong> (UID <strong><?= $GestorFormularios->getIdUsuario() ?></strong>) como gestor de formularios.</p>
-                    <form action="AltaGestor.php" method="post" style='width: 100%'>
+                    <form action="AltaGestor.php" method="post" onload="revisarInputLimiteManual('limite')" style='width: 100%'>
                         <strong style='display: inline-block; padding-bottom: 5px'>Correo electrónico:</strong><br/>
                         <input title="El correo electrónico institucional se obtiene automáticamente" type="email" disabled="true" style="width: 60%" value="<?= $GestorFormularios->getEmail() ?>"/><br/><br/>
                         <strong>Límite de creación de formularios:</strong><br/>

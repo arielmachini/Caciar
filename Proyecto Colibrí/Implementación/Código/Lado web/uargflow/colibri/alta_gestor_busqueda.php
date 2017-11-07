@@ -25,7 +25,7 @@ $UsuariosWorkflow = new WorkflowUsuarios();
 
                     <?php
                     if (isset($email)) {
-                        if ($email == "") {
+                        if ($email === "") {
                             ?>
                             <div style="text-align: center; width: 100%"><span style="font-size: 14px; width: 70%"><img alt="/!\\" src='../imagenes/atencion.png'/> <strong>Error:</strong> No ingresó ninguna dirección de correo electrónico para buscar.</span></div>
                         <?php } else { ?>
@@ -53,7 +53,7 @@ $UsuariosWorkflow = new WorkflowUsuarios();
 
                                 </tbody>
                             </table>
-                            <?php if ($hayResultados == false) { ?>
+                            <?php if ($hayResultados === false) { ?>
                                 <br/><div style="text-align: center; width: 100%"><span style="font-size: 14px; width: 70%">No se han encontrado personas que contengan "<strong><?= $email ?></strong>" en su dirección de correo electrónico.</span></div>
                                 <?php
                             }
