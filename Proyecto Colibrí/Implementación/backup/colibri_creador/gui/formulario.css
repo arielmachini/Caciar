@@ -1,0 +1,66 @@
+/* 
+    Created on : 08/11/2017, 23:28:21
+    Author     : Ariel Machini
+*/
+
+p.descripcion {
+    font-size: 13.5px;
+}
+
+div.edicionCampo {
+    background: #F6F6F6;
+    border-radius: 5px;
+    display: none;
+    margin-bottom: 10px;
+    padding: 7px;
+    width: 100%;
+}
+
+table.editorFormulario {
+    background-color: transparent !important;
+    border-style: none !important;
+    border-color: transparent !important;
+    width: 100%;
+}
+
+td.editorFormulario {
+    background-color: transparent !important;
+    border-style: none !important;
+    border-color: transparent !important;
+    text-align: left;
+    vertical-align: top;
+}
+
+span.cabecera {
+    display: inline-block;
+    font-weight: 600;
+    padding-bottom: 6px;
+}
+
+span.texto {
+    display: inline-block;
+    font-size: 14px;
+    padding-bottom: 12px;
+}
+
+input.campoFormularioPrincipal {
+    width: 66%;
+}
+
+input.campoExhibicion, select.campoExhibicion {
+    margin-bottom: 10px;
+    width: 80%;
+}
+
+textarea.campoFormularioPrincipal {
+    height: 100px;
+    resize: vertical;
+    width: 66%;
+}
+
+textarea.campoExhibicion {
+    height: 40px;
+    margin-bottom: 10px;
+    resize: none;
+    width: 80%;
+}
