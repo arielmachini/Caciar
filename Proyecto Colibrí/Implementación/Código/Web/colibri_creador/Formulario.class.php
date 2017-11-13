@@ -38,7 +38,12 @@ class Formulario {
      * $rolesDestino: Arreglo que contiene los roles del sistema a los que
      * está dirigido el formulario.
      */
-    private $camposFormulario = array();
+    
+    /**
+     *
+     * @var Campo[]
+     */
+    private $camposFormulario;
     private $cantidadRespuestas;
     private $descripcion;
     private $emailReceptor;
@@ -62,8 +67,12 @@ class Formulario {
         $this->WorkflowRoles = new WorkflowRoles();
     }
     
+    /**
+     * 
+     * @param Campo $campo_
+     */
     function agregarCampo($campo_) {
-        array_push($this->camposFormulario, $campo_);
+        $this->camposFormulario[] = $campo_;
     }
     
     function agregarDestinatario($idrol_) {
@@ -80,10 +89,15 @@ class Formulario {
         $this->estaHabilitado = !$this->estaHabilitado;
     }
     
+    
     function estaHabilitado() {
         return $this->estaHabilitado;
     }
     
+    /**
+     * 
+     * @return Campo[]
+     */
     function getCampos() {
         return $this->camposFormulario;
     }

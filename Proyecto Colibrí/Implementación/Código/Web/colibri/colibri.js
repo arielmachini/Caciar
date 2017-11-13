@@ -34,69 +34,82 @@ function terminadorAMGestores(dialogo) {
 /* Funciones del creador de formularios */
 
 $(document).ready(function () {
-    /* Guardado del formulario en la variable $_SESSION */
-    $("#botonGuardar").click(function () {
-        var formulario = JSON.stringify(sessionStorage.getItem("formularioNuevo"));
-        
-        $.post("procesar.php", {formulario: formulario});
-    });
-    
-    /* Funciones relacionadas con agregar campos de texto */    
+    /* Funciones relacionadas con agregar campos de texto */
     $("#agregarCampoTexto").click(function () {
-        $("#edicionCampoTexto").slideDown(400, "swing");
+        $("#edicionCampoTexto").slideDown(700, "linear");
     });
     
+    /* Al presionar el botón para guardar el campo de texto... */
     $("#guardarEdicionCampoTexto").click(function () {
+        /*
+         * La variable "id" de sessionStorage se utiliza dentro de este
+         * contexto, principalmente para mostrar el índice en la tabla y para
+         * asignar en algunos nombres de atributo. También es utilizada más
+         * adelante, aunque indirectamente, en el archivo PHP encargado de
+         * procesar la información enviada a través del formulario.
+         */
         if (sessionStorage.getItem("id") !== null) {
             sessionStorage.setItem("id", Number(sessionStorage.getItem("id")) + 1);
         } else {
             sessionStorage.setItem("id", 1);
         }
         
-        if ($.trim($("#tituloCampoTexto").val().replace(/ /g, '_')) === "") {
-            alert("Por favor, rellene los campos requeridos antes de agregar el campo de texto.");
+        /* Es obligatorio poner un título para el campo */
+        if ($.trim($("#tituloCampoTexto").val()) === "") {
+            alert("Por favor, rellene los campos requeridos antes de guardar este campo de texto.");
         } else {
-            var camposFormulario;
+            /*var camposFormulario;
             
             if (sessionStorage.getItem("formularioNuevo") === null || sessionStorage.getItem("formularioNuevo") === "") {
                 camposFormulario = [];
             } else {
                 camposFormulario = JSON.parse(sessionStorage.getItem("formularioNuevo"));
-            }
+            }*/
             
             var campoNuevo;
             
-            if ($("#obligatorioCampoTexto").is(':checked')) {    
-                campoNuevo = {tipoCampo: "CampoTexto", descripcion: $("#descripcionCampoTexto").val(), obligatorio: 1, pista: $("#pistaCampoTexto").val(), titulo: $.trim($("#tituloCampoTexto").val().replace(/ /g, '_'))};
+            if ($("#obligatorioCampoTexto").is(':checked')) { /* Si es obligatorio... */
+                /*
+                 * Se genera un objeto para guardar las propiedades del campo
+                 * recién generado y se lo convierte en un string utilizando
+                 * JSON para, posteriormente, ser procesado con PHP.
+                 * Lo mismo aplica para el caso dentro del 'else'.
+                 */
+                campoNuevo = {tipoCampo: "CampoTexto", descripcion: $("#descripcionCampoTexto").val(), obligatorio: 1, pista: $("#pistaCampoTexto").val(), titulo: $("#tituloCampoTexto").val()};
+                campoNuevo = JSON.stringify(campoNuevo);
                 
-                $("#vistaPrevia").append("<tr><td>" + sessionStorage.getItem("id") + "</td><td><span style=\"font-weight: 600\">" + $("#tituloCampoTexto").val() + "</span></td><td><span style=\"color: red; font-weight: 600\">Sí</span></td><td><img onclick=\"subirCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/flecha_arriba.png\" style=\"cursor:pointer\" title=\"Subir este campo\"/> <img id=\"bajarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/flecha_abajo.png\" style=\"cursor:pointer\" title=\"Bajar este campo\"/> <img onclick=\"editarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/gestor_editar.png\" style=\"cursor:pointer\" title=\"Editar este campo\"/> <img onclick=\"borrarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/gestor_revocar_permisos.png\" style=\"cursor:pointer\" title=\"Eliminar este campo\"/></td></tr>");
-            } else {
-                campoNuevo = {tipoCampo: "CampoTexto", descripcion: $("#descripcionCampoTexto").val(), obligatorio: 0, pista: $("#pistaCampoTexto").val(), titulo: $.trim($("#tituloCampoTexto").val().replace(/ /g, '_'))};
+                /*
+                 * Se crea un campo oculto para cada campo nuevo de manera que
+                 * se pueda enviar a través del formulario mediante POST.
+                 * Lo mismo aplica para el caso dentro del 'else'.
+                 */
+                $("#camposCreados").append("<input name=\"campoId" + sessionStorage.getItem("id") + "\" type=\"hidden\" value=\"\">");
+                $("input[name=campoId" + sessionStorage.getItem("id") + "]").val(campoNuevo);
                 
-                $("#vistaPrevia").append("<tr><td>" + sessionStorage.getItem("id") + "</td><td><span style=\"font-weight: 600\">" + $("#tituloCampoTexto").val() + "</span></td><td>No</td><td><img onclick=\"subirCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/flecha_arriba.png\" style=\"cursor:pointer\" title=\"Subir este campo\"/> <img id=\"bajarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/flecha_abajo.png\" style=\"cursor:pointer\" title=\"Bajar este campo\"/> <img onclick=\"editarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/gestor_editar.png\" style=\"cursor:pointer\" title=\"Editar este campo\"/> <img onclick=\"borrarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/gestor_revocar_permisos.png\" style=\"cursor:pointer\" title=\"Eliminar este campo\"/></td></tr>");
+                /*
+                 * Se "agrega el campo" a la tabla de previsualización del
+                 * nuevo formulario.
+                 * Lo mismo aplica para el caso dentro del 'else'.
+                 */
+                $("#vistaPrevia").append("<tr><td>" + sessionStorage.getItem("id") + "</td><td><span style=\"font-weight: 600\">" + $("#tituloCampoTexto").val() + "</span></td><td><span style=\"color: red; font-weight: 600\">Sí</span></td><td><img onclick=\"subirCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/flecha_arriba.png\" style=\"cursor:pointer\" title=\"Subir este campo\"/> <img id=\"bajarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/flecha_abajo.png\" style=\"cursor:pointer\" title=\"Bajar este campo\"/><br/><img onclick=\"editarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/gestor_editar.png\" style=\"cursor:pointer\" title=\"Editar este campo\"/> <img onclick=\"borrarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/gestor_revocar_permisos.png\" style=\"cursor:pointer\" title=\"Eliminar este campo\"/></td></tr>");
+            } else { /* Si no es obligatorio... */
+                campoNuevo = {tipoCampo: "CampoTexto", descripcion: $("#descripcionCampoTexto").val(), obligatorio: 0, pista: $("#pistaCampoTexto").val(), titulo: $("#tituloCampoTexto").val()};
+                campoNuevo = JSON.stringify(campoNuevo);
+                
+                $("#camposCreados").append("<input name=\"campoId" + sessionStorage.getItem("id") + "\" type=\"hidden\" value=\"\">");
+                $("#campoId" + sessionStorage.getItem("id")).val(campoNuevo);
+                $("#vistaPrevia").append("<tr><td>" + sessionStorage.getItem("id") + "</td><td><span style=\"font-weight: 600\">" + $("#tituloCampoTexto").val() + "</span></td><td>No</td><td><img onclick=\"subirCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/flecha_arriba.png\" style=\"cursor:pointer\" title=\"Subir este campo\"/> <img id=\"bajarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/flecha_abajo.png\" style=\"cursor:pointer\" title=\"Bajar este campo\"/><br/><img onclick=\"editarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/gestor_editar.png\" style=\"cursor:pointer\" title=\"Editar este campo\"/> <img onclick=\"borrarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/gestor_revocar_permisos.png\" style=\"cursor:pointer\" title=\"Eliminar este campo\"/></td></tr>");
             }
             
-            camposFormulario.push(campoNuevo);
+            /* camposFormulario.push(campoNuevo);
             sessionStorage.setItem("formularioNuevo", JSON.stringify(camposFormulario));
             
-            alert(sessionStorage.getItem("formularioNuevo"));
+            alert(sessionStorage.getItem("formularioNuevo")); */
         }
     });
 });
 
 $(document).ready(function () {
-    $("#formularioCreacion").change(function () {
-        $(":submit").prop("disabled", true);
-    });
-
-    $("#botonGuardar").click(function () {
-        $(":submit").prop("disabled", false);
-    });
-});
-
-$(document).ready(function () {
-
-
     $.datepicker.regional['es'] = {
         closeText: 'Cerrar selector',
         prevText: 'Mes anterior',
@@ -128,6 +141,4 @@ $(document).ready(function () {
         $('#fechaCierre').datepicker('option', 'minDate', fechaCierreMinima);
         $("#fechaCierre").datepicker("refresh");
     });
-
-
 });

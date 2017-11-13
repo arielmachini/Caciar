@@ -1,6 +1,8 @@
 <?php
 
-include_once '../gui/GUI.class.php';
+define("__ROOT__", dirname(dirname(__FILE__)));
+
+include_once __ROOT__ . '/gui/GUI.class.php';
 setlocale(LC_TIME, 'es_AR.utf8');
 
 /**

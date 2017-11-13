@@ -9,10 +9,11 @@ p.descripcion {
 
 div.edicionCampo {
     background: #F6F6F6;
-    border-radius: 5px;
+    border-radius: 6px;
+    box-sizing : border-box;
     display: none;
-    margin-bottom: 10px;
-    padding: 7px;
+    margin-bottom: 20px;
+    padding: 5px;
     width: 100%;
 }
 
@@ -43,13 +44,20 @@ span.texto {
     padding-bottom: 12px;
 }
 
-input.campoFormularioPrincipal {
+input.campoFormularioPrincipal, select.campoFormularioPrincipal {
     width: 66%;
 }
 
+input[type=submit] {
+    font-weight: 600;
+    height: 50px;
+    width: 100%;
+}
+
 input.campoExhibicion, select.campoExhibicion {
+    box-sizing: border-box;
     margin-bottom: 10px;
-    width: 80%;
+    width: 90%;
 }
 
 textarea.campoFormularioPrincipal {
@@ -59,8 +67,9 @@ textarea.campoFormularioPrincipal {
 }
 
 textarea.campoExhibicion {
+    box-sizing: border-box;
     height: 40px;
     margin-bottom: 10px;
     resize: none;
-    width: 80%;
+    width: 90%;
 }

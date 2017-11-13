@@ -1,37 +1,42 @@
 <!DOCTYPE HTML>
-
 <?php
-// error_reporting(E_ALL);
-// ini_set("display_errors", 1);
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
+
+include_once dirname(dirname(__FILE__)) . "/modelo/Workflow.class.php";
 
 $WorkflowRoles = new WorkflowRoles();
-
-date_default_timezone_set("America/Argentina/Rio_Gallegos");
 ?>
 <html>
     <head>
         <title><?= Constantes::NOMBRE_SISTEMA ?>: Crear un nuevo formulario</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
         <link href="../gui/estilo.css" type="text/css" rel="stylesheet">
         <link href="../gui/responsivo.css" type="text/css" rel="stylesheet">
-        <link href="./gui/formulario.css" rel="stylesheet">
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/start/jquery-ui.css">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <script src="are-you-sure.js"></script>
+        <link href="./gui/formulario.css" rel="stylesheet">
+
         <script type="text/javascript">
             sessionStorage.clear();
-            sessionStorage.setItem("formularioNuevo", []);
+            // sessionStorage.setItem("formularioNuevo", []);
 
-            $(function () {
-                $('#formularioCreacion').areYouSure(
-                        {
-                            message: '¿Está seguro de que desea salir del editor de formularios? Se perderán todos los cambios que haya hecho.'
-                        }
-                );
-            });
+            /*
+             * Se evita que el usuario salga de la página sin confirmar que
+             * está seguro de que quiere hacerlo. Con esto se evita que se
+             * pierdan cambios que no se querían perder por accidente.
+             */
+            window.onbeforeunload = confirmarSalida;
+
+            function confirmarSalida() {
+                alert("¿Está seguro de que quiere terminar? ¡SE PERDERÁN TODOS LOS CAMBIOS QUE HAYA REALIZADO!");
+                return false;
+            }
         </script>
-        <script src="../colibri/colibri.js"></script>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="../colibri/colibri.js"></script>
     </head>
     <body>
         <?php include_once '../gui/GUImenu.php'; ?>
@@ -47,19 +52,19 @@ date_default_timezone_set("America/Argentina/Rio_Gallegos");
 
                         <span class="cabecera">Título del formulario:</span><br/>
                         <span class="texto">Ingrese un título corto pero descriptivo para el formulario.</span><br/>
-                        <input autocomplete="off" autofocus class="campoFormularioPrincipal" name="titulo" required type="text"/><br/><br/>
+                        <input autocomplete="off" autofocus class="campoFormularioPrincipal" name="titulo" required spellcheck="true" type="text"/><br/><br/>
 
                         <span class="cabecera">Descripción del formulario:</span><br/>
                         <span class="texto">Rellenar esto no es obligatorio, pero si lo hace procure ser breve y preciso para que quienes vayan a leer el formulario puedan comprenderlo en pocas palabras.</span><br/>
-                        <textarea class="campoFormularioPrincipal" maxlength="500" name="descripcion" placeholder="Se admiten hasta 500 caracteres."></textarea><br/><br/>
+                        <textarea class="campoFormularioPrincipal" maxlength="500" name="descripcion" placeholder="Se admiten hasta 500 caracteres." spellcheck="true"></textarea><br/><br/>
 
                         <span class="cabecera">Destinatarios del formulario:</span>
                         <span class="texto">Seleccione uno o más roles a los que estará dirigido el formulario. Aquellos usuarios con roles que no seleccione no serán capaces de ver el formulario.</span>
-                        <select multiple name="rolesDestinatarios" required title="Puede seleccionar uno o más roles. Mantenga presionada la tecla control (Ctrl) mientras hace clic para realizar una selección múltiple">
-                            <?php foreach ($WorkflowRoles as $WorkflowRol) { ?>
-                                <option value="<?= $WorkflowRol . getIdRol() ?>"><?= $WorkflowRol . getNombre() ?></option>
+                        <select class="campoFormularioPrincipal" multiple name="rolesDestino" required style="height: 100px" title="Puede seleccionar uno o más roles. Mantenga presionada la tecla control (Ctrl) mientras hace clic para realizar una selección múltiple">
+                            <?php foreach ($WorkflowRoles->getRoles() as $WorkflowRol) { ?>
+                                <option value="<?= $WorkflowRol->getIdRol() ?>"><?= $WorkflowRol->getNombre() ?></option>
                             <?php } ?>
-                        </select>
+                        </select><br/><br/>
 
                         <span class="cabecera">Fechas límite:</span><br/>
                         <span class="texto">Si lo desea puede establecer una fecha a partir de la cual el formulario estará disponible para ser rellenado, así como también puede establecer una fecha en la que se dejen de aceptar respuestas. Esto es opcional, por lo que también puede elegir que el formulario esté disponible hasta que se deshabilite manualmente.</span><br/>
@@ -70,35 +75,36 @@ date_default_timezone_set("America/Argentina/Rio_Gallegos");
 
                         <table class="editorFormulario">
                             <tr>
-                                <td class="editorFormulario" style="text-align: center; width: 60%">
-                                    <table id="vistaPrevia" style="width: 97%">
+                                <td class="editorFormulario" style="width: 71%">
+                                    <table id="vistaPrevia" style="text-align: center; width: 96%">
                                         <tr>
                                             <th style="text-align: center">Posición</th>
                                             <th style="text-align: center">Título</th>
-                                            <th style="text-align: center">Obligatorio</th>
+                                            <th style="text-align: center">¿Obligatorio?</th>
                                             <th style="text-align: center">Acciones</th>
                                         </tr>
                                     </table>
                                 </td>
 
-                                <td class="editorFormulario" style="width: 40%">
-                                    <h3>Campos disponibles</h3>
+                                <td class="editorFormulario" style="width: 29%">
+                                    <span class="cabecera" style="color: #00466e; font-size: 17px; padding-bottom: 18px">Campos disponibles</span><br/>
 
-                                    <input class="campoExhibicion" disabled type="text" value="Campo de texto" style="cursor: help" title="Un campo de texto. Para escribir una sola línea."> <img id="agregarCampoTexto" src="../imagenes/creador_agregar_campo.png" style="cursor:pointer" title="Haga clic aquí para agregar un nuevo campo de texto"/><br/><br/>
+                                    <input class="campoExhibicion" disabled type="text" value="Campo de texto" style="cursor: help" title="Un campo de texto. Para escribir una sola línea."> <img id="agregarCampoTexto" src="../imagenes/creador_agregar_campo.png" style="cursor:pointer" title="Haga clic aquí para agregar un nuevo campo de texto"/><br/>
                                     <!-- Div que contiene el editor de campo de texto !-->
-                                    <div class="edicionCampo" id="edicionCampoTexto">
+                                    <div class="edicionCampo" id="edicionCampoTexto" style="box-sizing: border-box">
                                         <span class="cabecera" style="cursor: help" title="El título del campo de texto es la cabecera que va antes de este. Tómelo como el NOMBRE del campo.">Título<span style="color: red">*</span>:</span><br/>
                                         <input class="campoExhibicion" id="tituloCampoTexto" maxlength="20" placeholder="Se admiten hasta 20 caracteres" style="width: 100%"><br/>
 
                                         <span class="cabecera" style="cursor: help" title="La descripción no siempre es necesaria, pero en el caso de que lo fuese, sirve para describir al campo en pocas palabras.">Descripción:</span><br/>
                                         <textarea class="campoExhibicion" id="descripcionCampoTexto" maxlength="100" placeholder="Se admiten hasta 100 caracteres" style="width: 100%"></textarea><br/>
 
-                                        <div><input id="obligatorioCampoTexto" name="esObligatorio" style="vertical-align: middle" type="checkbox" value="Sí"> <span class="cabecera" style="cursor: help" title="Elija si el campo va a ser o no requerido para enviar el formulario">Obligatorio<span style="color: red">*</span></span></div>
+                                        <div><input id="obligatorioCampoTexto" name="esObligatorio" style="vertical-align: middle" type="checkbox" value="Sí"> <span class="cabecera" style="cursor: help" title="Elija si el campo va a ser o no requerido para enviar el formulario">Campo obligatorio</span></div>
 
                                         <span class="cabecera" style="cursor: help; margin-top: 10px" title="Es el texto que se muestra dentro del campo antes de que se escriba algo en él. Procure escribir pistas breves.">Pista:</span><br/>
                                         <input class="campoExhibicion" id="pistaCampoTexto" maxlength="50" placeholder="Se admiten hasta 50 caracteres" style="width: 100%" type="text"><br/>
 
-                                        <input id="guardarEdicionCampoTexto" style="width: 100%" type="button" value="Agregar este campo">
+                                        <input id="guardarEdicionCampoTexto" style="box-sizing: border-box; width: 100%" type="button" value="💾 Guardar este campo">
+                                        <input disabled id="cancelarEdicionCampoTexto" style="box-sizing: border-box; width: 100%" type="button" value="🚮 Descartar cambios">
                                     </div>
 
                                     <textarea class="campoExhibicion" disabled style="cursor: help" title="Un área de texto. Útil cuando el usuario tiene que escribir mucho acerca de algo.">Área de texto</textarea> <img id="agregarAreaTexto" src="../imagenes/creador_agregar_campo.png" style="cursor:pointer" title="Haga clic aquí para agregar una nueva área de texto"/><br/><br/>
@@ -110,11 +116,14 @@ date_default_timezone_set("America/Argentina/Rio_Gallegos");
                                 </td>
                             </tr>
                         </table><br/>
-                        <input id="botonGuardar" type="button" value="Guardar cambios"> <input disabled type="submit" value="Siguiente »">
+
+                        <fieldset id="camposCreados" style="display: none"></fieldset>
+
+                        <input class="campoFormularioPrincipal" type="submit" value="✔ Listo">
                     </form>
                 </div>
             </article>
         </section>
-        <?php include_once '../gui/GUIfooter.php'; ?>
+        <?php include_once '../gui/GUIfooter.class.php'; ?>;
     </body>
 </html>

@@ -1,72 +1,119 @@
 <?php
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 
-require_once realpath("./Campos.class.php");
-require_once realpath("./Formulario.class.php");
+require_once dirname(dirname(__FILE__)) . "/colibri_creador/Campos.class.php";
+require_once dirname(dirname(__FILE__)) . "/colibri_creador/Formulario.class.php";
 
-if (isset(filter_input(INPUT_POST, "formulario"))) {
-    ObjetoDatos::getInstancia()->autocommit(false);
-    ObjetoDatos::getInstancia()->begin_transaction();
-    
-    /* Con esta variable se monitorea el éxito o el fallo de la operación */
-    $transaccionRealizada;
-    
-    $Formulario = new Formulario(getdate()['year'] . "/" . getdate()['mon'] . "/" . getdate()['mday']);
-    
-    $formularioRecibido = json_decode(filter_input(INPUT_POST, "formulario"));
-    $rolesDestinatarios = filter_input(INPUT_POST, "rolesDestinatarios");
-    
-    $i = 0;
-    
-    foreach ($formularioRecibido as $campoFormulario) {
-        $i++;
-        
-        /* Se comprueba qué tipo de campo es y después se asignan las propiedades */
-        $tipoCampoActual = $campoFormulario->tipoCampo;
-        
-        if ($tipoCampoActual === "CampoTexto") {
-            $CampoTexto = new CampoTexto();
-            
-            $CampoTexto->setDescripcion($campoFormulario->descripcion);
-            $CampoTexto->setEsObligatorio($campoFormulario->obligatorio);
-            $CampoTexto->setPista($campoFormulario->pista);
-            $CampoTexto->setPosicion($i);
-            $CampoTexto->setTitulo($campoFormulario->titulo);
-            
-            $Formulario->agregarCampo($CampoTexto);
-        } else if ($tipoCampoActual === "AreaTexto") {
-            $AreaTexto = new AreaTexto();
-            
-            $AreaTexto->setDescripcion($campoFormulario->descripcion);
-            $AreaTexto->setEsObligatorio($campoFormulario->obligatorio);
-            $AreaTexto->setLimiteCaracteres($campoFormulario->limiteCaracteres);
-            $AreaTexto->setPosicion($i);
-            $AreaTexto->setTitulo($campoFormulario->titulo);
-        } else if ($tipoCampoActual === "ListaDesplegable") {
-            $ListaDesplegable = new ListaDesplegable();
-            
-            $ListaDesplegable->setDescripcion($campoFormulario->descripcion);
-            $ListaDesplegable->setEsObligatorio($campoFormulario->obligatorio);
-            $ListaDesplegable->setPosicion($i);
-            $ListaDesplegable->setTitulo($campoFormulario->titulo);
-            
-            foreach($campoFormulario->opciones as $opcion) {
-                $ListaDesplegable->agregarOpcion($opcion);
-            }
-            
-            $Formulario->agregarCampo($ListaDesplegable);
+
+ObjetoDatos::getInstancia()->autocommit(false);
+ObjetoDatos::getInstancia()->begin_transaction();
+
+$Formulario = new Formulario(getdate()['year'] . "/" . getdate()['mon'] . "/" . getdate()['mday']);
+
+$indice = 1;
+$campoActual = json_decode(stripslashes(filter_input(INPUT_POST, "campoId" . $indice)));
+
+while (isset($campoActual)) {
+    $tipo = $campoActual->tipoCampo;
+
+    if ($tipo === "CampoTexto") {
+        $CampoTexto = new CampoTexto();
+
+        $CampoTexto->setDescripcion($campoActual->descripcion);
+        $CampoTexto->setEsObligatorio($campoActual->obligatorio);
+        $CampoTexto->setPista($campoActual->pista);
+        $CampoTexto->setPosicion($indice);
+        $CampoTexto->setTitulo($campoActual->titulo);
+
+        $Formulario->agregarCampo($CampoTexto);
+    } else if ($tipo === "AreaTexto") {
+        $AreaTexto = new AreaTexto();
+
+        $AreaTexto->setDescripcion($campoActual->descripcion);
+        $AreaTexto->setEsObligatorio($campoActual->obligatorio);
+        $AreaTexto->setLimiteCaracteres($campoActual->limiteCaracteres);
+        $AreaTexto->setPosicion($indice);
+        $AreaTexto->setTitulo($campoActual->titulo);
+    } else if ($tipo === "ListaDesplegable") {
+        $ListaDesplegable = new ListaDesplegable();
+
+        $ListaDesplegable->setDescripcion($campoActual->descripcion);
+        $ListaDesplegable->setEsObligatorio($campoActual->obligatorio);
+        $ListaDesplegable->setPosicion($indice);
+        $ListaDesplegable->setTitulo($campoActual->titulo);
+
+        foreach ($campoActual->opciones as $opcion) { // VERIFICAR QUE FUNCIONA BIEN.
+            $ListaDesplegable->agregarOpcion($opcion);
         }
+
+        $Formulario->agregarCampo($ListaDesplegable);
     }
-    
-    $Formulario.setDescripcion(filter_input(INPUT_POST, "descripcion"));
-    $Formulario.setEmailReceptor(filter_input(INPUT_POST, "destinatario"));
-    $Formulario.setFechaInicio(filter_input(INPUT_POST, "fechaApertura"));
-    $Formulario.setFechaFin(filter_input(INPUT_POST, "fechaCierre"));
-    $Formulario.setTitulo(filter_input(INPUT_POST, "titulo"));
-    
-    foreach ($rolesDestinatarios as $idrol) {
-        $Formulario.agregarDestinatario($idrol);
-    }
-    
-    $transaccionRealizada = ObjetoDatos::getInstancia()->ejecutarQuery("" .
-            "")
+
+    $indice = $indice + 1;
+    $campoActual = json_decode(stripslashes(filter_input(INPUT_POST, "campoId" . $indice)));
+}
+
+$rolesDestino = (array) filter_input(INPUT_POST, "rolesDestino");
+
+$Formulario->setDescripcion(filter_input(INPUT_POST, "descripcion"));
+$Formulario->setEmailReceptor(filter_input(INPUT_POST, "destinatario"));
+$Formulario->setFechaInicio(filter_input(INPUT_POST, "fechaApertura"));
+$Formulario->setFechaFin(filter_input(INPUT_POST, "fechaCierre"));
+$Formulario->setTitulo(filter_input(INPUT_POST, "titulo"));
+
+/* Se obtienen los roles de la variable rolesDestinatarios de POST */
+foreach ($rolesDestino as $idrol) {
+    $Formulario->agregarDestinatario($idrol);
+}
+
+if (!isset($_POST["fechaApertura"]) && !isset($_POST["fechaCierre"])) {
+    ObjetoDatos::getInstancia()->ejecutarQuery("" .
+            "INSERT INTO FORMULARIO(`titulo`, `descripcion`, `emailreceptor`, `cantidadrespuestas`, `estahabilitado`, `fechainicio`, `fechafin`, `fechacreacion`, `creador`) " .
+            "VALUES ('{$Formulario->getTitulo()}', '{$Formulario->getDescripcion()}', '{$Formulario->getEmailReceptor()}', {$Formulario->getCantidadRespuestas()}, 0, NULL, NULL, STR_TO_DATE('{$Formulario->getFechaCreacion()}', '%Y/%m/%d'), 3)");
+} else if (!isset($_POST["fechaCierre"])) {
+    ObjetoDatos::getInstancia()->ejecutarQuery("" .
+            "INSERT INTO FORMULARIO(`titulo`, `descripcion`, `emailreceptor`, `cantidadrespuestas`, `estahabilitado`, `fechainicio`, `fechafin`, `fechacreacion`, `creador`) " .
+            "VALUES ('{$Formulario->getTitulo()}', '{$Formulario->getDescripcion()}', '{$Formulario->getEmailReceptor()}', {$Formulario->getCantidadRespuestas()}, 0, STR_TO_DATE('{$Formulario->getFechaInicio()}', '%Y/%m/%d'), NULL, STR_TO_DATE('{$Formulario->getFechaCreacion()}', '%Y/%m/%d'), 3)");
+} else if (!isset($_POST["fechaApertura"])) {
+    ObjetoDatos::getInstancia()->ejecutarQuery("" .
+            "INSERT INTO FORMULARIO(`titulo`, `descripcion`, `emailreceptor`, `cantidadrespuestas`, `estahabilitado`, `fechainicio`, `fechafin`, `fechacreacion`, `creador`) " .
+            "VALUES ('{$Formulario->getTitulo()}', '{$Formulario->getDescripcion()}', '{$Formulario->getEmailReceptor()}', {$Formulario->getCantidadRespuestas()}, 0, NULL, STR_TO_DATE('{$Formulario->getFechaFin()}', '%Y/%m/%d'), STR_TO_DATE('{$Formulario->getFechaCreacion()}', '%Y/%m/%d'), 3)");
+} else {
+    ObjetoDatos::getInstancia()->ejecutarQuery("" .
+            "INSERT INTO FORMULARIO(`titulo`, `descripcion`, `emailreceptor`, `cantidadrespuestas`, `estahabilitado`, `fechainicio`, `fechafin`, `fechacreacion`, `creador`) " .
+            "VALUES ('{$Formulario->getTitulo()}', '{$Formulario->getDescripcion()}', '{$Formulario->getEmailReceptor()}', {$Formulario->getCantidadRespuestas()}, 0, STR_TO_DATE('{$Formulario->getFechaInicio()}', '%Y/%m/%d'), STR_TO_DATE('{$Formulario->getFechaFin()}', '%Y/%m/%d'), STR_TO_DATE('{$Formulario->getFechaCreacion()}', '%Y/%m/%d'), 3)");
+}
+?>
+
+<p><strong>Error MySQL. Inserción del formulario:</strong></p>
+<p>Si no sale ninguno significa que todo salió bien.</p>
+<p>Código: <?= mysqli_errno(ObjetoDatos::getInstancia()) ?>, Mensaje: <?= mysqli_error(ObjetoDatos::getInstancia()) ?></p>
+
+<?php
+ObjetoDatos::getInstancia()->commit();
+
+/* Ahora, vamos con la inserción de campos a la base de datos */
+
+$resultadoConsulta = ObjetoDatos::getInstancia()->ejecutarQuery("" .
+        "SELECT `idformulario` " .
+        "FROM FORMULARIO " .
+        "WHERE `titulo` = '{$Formulario->getTitulo()}'");
+?>
+<br/><p><strong>Error MySQL. Obtención del ID del formulario:</strong></p>
+<p>Si no sale ninguno significa que todo salió bien.</p>
+<p>Código: <?= mysqli_errno(ObjetoDatos::getInstancia()) ?>, Mensaje: <?= mysqli_error(ObjetoDatos::getInstancia()) ?></p>
+<?php
+$consulta = $resultadoConsulta->fetch_assoc();
+
+foreach ($Formulario->getCampos() as $CampoActual) {
+    ObjetoDatos::getInstancia()->ejecutarQuery("INSERT INTO CAMPO(`idformulario`, `titulo`, `descripcion`, `esobligatorio`, `posicion`) " .
+            "VALUES ({$consulta['idformulario']}, '{$CampoActual->getTitulo()}', '{$CampoActual->getDescripcion()}', {$CampoActual->esObligatorio()}, {$CampoActual->getPosicion()})");
+    ?>
+    <br/><p><strong>Error MySQL. Inserción de campos:</strong></p>
+    <p>Si no sale ninguno significa que todo salió bien.</p>
+    <p>Código: <?= mysqli_errno(ObjetoDatos::getInstancia()) ?>, Mensaje: <?= mysqli_error(ObjetoDatos::getInstancia()) ?></p>
+    <?php
+    ObjetoDatos::getInstancia()->commit();
+    //if ($tipocampo == "Some text")...
 }

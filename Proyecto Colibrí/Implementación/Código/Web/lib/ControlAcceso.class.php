@@ -1,8 +1,11 @@
 <?php
 
 session_start();
-include_once realpath("./Constantes.class.php");
-include_once realpath("./ObjetoDatos.class.php");
+
+define("__ROOT__", dirname(dirname(__FILE__)));
+
+require_once __ROOT__ . "/lib/Constantes.class.php";
+require_once __ROOT__ . "/lib/ObjetoDatos.class.php";
 
 /**
  * Clase de constantes del sistema de Roles y Permisos
@@ -14,19 +17,14 @@ class PermisosSistema {
     const PERMISO_SALIR = "Salir";
     const PERMISO_LOGIN = "Ingresar";
     const PERMISO_CONSULTAR = "Consultar";
-    
     const PERMISO_DOC_ALTA = "Alta Documento";
-    const PERMISO_DOC_BAJA = "Baja Documento";    
+    const PERMISO_DOC_BAJA = "Baja Documento";
     const PERMISO_DOC_MOD = "Modificacion Documento";
-    
     const PERMISO_MOV = "Movimientos";
     const PERMISO_MOV_MOD = "Modificacion Movimiento";
-    
     const PERMISO_REPORTES = "Reportes";
-    
-    const PERMISO_PARAMETROS = "Parametros";   
+    const PERMISO_PARAMETROS = "Parametros";
     const PERMISO_USUARIOS = "Usuarios";
-    
     const PERMISO_GESTOR = "Gestión de formularios";
     const PERMISO_PUBLICACION = "Publicación de formularios";
 
@@ -34,7 +32,7 @@ class PermisosSistema {
      * Administrador del Sistema.
      */
     const ROL_ADMIN = "Administrador";
-    
+
     /**
      * Gestor de formularios.
      */
@@ -241,7 +239,7 @@ class UsuarioGoogle extends Usuario {
      */
     function registraUsuarioGoogle() {
 
-        
+
         ObjetoDatos::getInstancia()->ejecutarQuery(""
                 . "INSERT INTO " . Constantes::BD_USERS . ".USUARIO "
                 . "VALUES (NULL, '{$this->email}', '{$this->nombre}', '" . Usuario::METODO_GOOGLE . "', 'Activo' )");

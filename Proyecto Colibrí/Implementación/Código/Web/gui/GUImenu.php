@@ -1,5 +1,5 @@
 <?php
-include_once realpath('../lib/ControlAcceso.class.php');
+require_once dirname(dirname(__FILE__)) . '/lib/ControlAcceso.class.php';
 ?>
 
 <link href="../gui/estilo.css" type="text/css" rel="stylesheet" />
