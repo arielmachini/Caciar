@@ -1,0 +1,16 @@
+[Sun Nov 12 11:38:25.834702 2017] [:error] [pid 17095] [client 127.0.0.1:36108] PHP Warning:  include_once(../gui/GUI.class.php): failed to open stream: No such file or directory in /var/www/html/uargflow/lib/Constantes.class.php on line 3
+[Sun Nov 12 11:38:25.834746 2017] [:error] [pid 17095] [client 127.0.0.1:36108] PHP Stack trace:
+[Sun Nov 12 11:38:25.834753 2017] [:error] [pid 17095] [client 127.0.0.1:36108] PHP   1. {main}() /var/www/html/uargflow/index.php:0
+[Sun Nov 12 11:38:25.834756 2017] [:error] [pid 17095] [client 127.0.0.1:36108] PHP   2. include_once() /var/www/html/uargflow/index.php:2
+[Sun Nov 12 11:38:25.834763 2017] [:error] [pid 17095] [client 127.0.0.1:36108] PHP Warning:  include_once(): Failed opening '../gui/GUI.class.php' for inclusion (include_path='.:/usr/share/php') in /var/www/html/uargflow/lib/Constantes.class.php on line 3
+[Sun Nov 12 11:38:25.834770 2017] [:error] [pid 17095] [client 127.0.0.1:36108] PHP Stack trace:
+[Sun Nov 12 11:38:25.834772 2017] [:error] [pid 17095] [client 127.0.0.1:36108] PHP   1. {main}() /var/www/html/uargflow/index.php:0
+[Sun Nov 12 11:38:25.834775 2017] [:error] [pid 17095] [client 127.0.0.1:36108] PHP   2. include_once() /var/www/html/uargflow/index.php:2
+[Sun Nov 12 11:43:59.491771 2017] [:error] [pid 17298] [client 127.0.0.1:36410] PHP Warning:  include_once(../gui/GUI.class.php): failed to open stream: No such file or directory in /var/www/html/uargflow/lib/Constantes.class.php on line 3
+[Sun Nov 12 11:43:59.491815 2017] [:error] [pid 17298] [client 127.0.0.1:36410] PHP Stack trace:
+[Sun Nov 12 11:43:59.491822 2017] [:error] [pid 17298] [client 127.0.0.1:36410] PHP   1. {main}() /var/www/html/uargflow/index.php:0
+[Sun Nov 12 11:43:59.491826 2017] [:error] [pid 17298] [client 127.0.0.1:36410] PHP   2. include_once() /var/www/html/uargflow/index.php:2
+[Sun Nov 12 11:43:59.491833 2017] [:error] [pid 17298] [client 127.0.0.1:36410] PHP Warning:  include_once(): Failed opening '../gui/GUI.class.php' for inclusion (include_path='.:/usr/share/php') in /var/www/html/uargflow/lib/Constantes.class.php on line 3
+[Sun Nov 12 11:43:59.491836 2017] [:error] [pid 17298] [client 127.0.0.1:36410] PHP Stack trace:
+[Sun Nov 12 11:43:59.491839 2017] [:error] [pid 17298] [client 127.0.0.1:36410] PHP   1. {main}() /var/www/html/uargflow/index.php:0
+[Sun Nov 12 11:43:59.491841 2017] [:error] [pid 17298] [client 127.0.0.1:36410] PHP   2. include_once() /var/www/html/uargflow/index.php:2
