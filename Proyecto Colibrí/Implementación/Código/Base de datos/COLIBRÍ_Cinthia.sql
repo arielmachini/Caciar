@@ -67,7 +67,7 @@ CREATE TABLE CAMPO (
     FOREIGN KEY (`id_formulario`)
         REFERENCES FORMULARIO (`id_formulario`)
         ON DELETE CASCADE ON UPDATE CASCADE,
-    PRIMARY KEY (`id_campo`)
+    PRIMARY KEY (`id_campo`, `idformulario`)
 );
 
 CREATE TABLE CAMPO_TEXTO(
