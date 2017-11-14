@@ -29,8 +29,7 @@ $WorkflowRoles = new WorkflowRoles();
             window.onbeforeunload = confirmarSalida;
 
             function confirmarSalida() {
-                alert("¿Está seguro de que quiere terminar? ¡SE PERDERÁN TODOS LOS CAMBIOS QUE HAYA REALIZADO!");
-                return false;
+                return "¿Está seguro de que quiere terminar? ¡SE PERDERÁN TODOS LOS CAMBIOS QUE HAYA REALIZADO!";
             }
         </script>
 
@@ -69,9 +68,9 @@ $WorkflowRoles = new WorkflowRoles();
                         <span class="cabecera">Fechas límite:</span><br/>
                         <span class="texto">Si lo desea puede establecer una fecha a partir de la cual el formulario estará disponible para ser rellenado, así como también puede establecer una fecha en la que se dejen de aceptar respuestas. Esto es opcional, por lo que también puede elegir que el formulario esté disponible hasta que se deshabilite manualmente.</span><br/>
                         <span class="texto" style="font-style: italic">Abierto desde:</span><br/>
-                        <input autocomplete="off" class="campoFormularioPrincipal" id="fechaApertura" placeholder="Haga clic aquí para abrir el calendario" readonly type="date"><br/><br/>
+                        <input autocomplete="off" class="campoFormularioPrincipal" id="fechaApertura" name="fechaInicio" placeholder="Haga clic aquí para abrir el calendario" readonly type="date"><br/><br/>
                         <span class="texto" style="font-style: italic">Abierto hasta:</span><br/>
-                        <input autocomplete="off" class="campoFormularioPrincipal" id="fechaCierre" placeholder="Haga clic aquí para abrir el calendario" readonly type="date"><br/><br/>
+                        <input autocomplete="off" class="campoFormularioPrincipal" id="fechaCierre" name="fechaFin" placeholder="Haga clic aquí para abrir el calendario" readonly type="date"><br/><br/>
 
                         <table class="editorFormulario">
                             <tr>

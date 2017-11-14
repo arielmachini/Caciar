@@ -71,7 +71,7 @@ abstract class Campo {
     }
 
     function getTitulo() {
-        return $this->posicion;
+        return $this->titulo;
     }
 
     function setDescripcion($descripcion_) {
