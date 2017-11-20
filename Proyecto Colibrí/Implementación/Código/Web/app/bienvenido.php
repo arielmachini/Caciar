@@ -22,16 +22,6 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CONSULTAR);
                     <div>
                         <h4>¡Bienvenido!</h4>
                         <p>Acaba de iniciar sesión en el sistema Colibrí. ¡Sea bienvenido!</p>
-                        <div class="botonGoogle" onclick="window.open('../Instructivo.pdf', '_blank');" title="Ver Manual de Uso">
-                            <div class="abcRioButtonIcon" style="padding:8px">
-                                <div style="width:18px;height:18px;" class="abcRioButtonSvgImageWithFallback abcRioButtonIconImage abcRioButtonIconImage18">
-                                    <img src="../imagenes/pdf.png" style="width: 18px; height: 18px" />
-                                </div>
-                            </div>
-                            <span style="font-size:13px;line-height:34px;" class="abcRioButtonContents">
-                                <span id="not_signed_in9kbu5ybb006p">Manual</span>
-                            </span>
-                        </div>
                     </div>
                 </div>
             </article>

@@ -1,9 +1,9 @@
 <?php
-    include_once '../lib/Constantes.class.php';
-    require_once '../lib/ControlAcceso.class.php';
-    require_once '../lib/ObjetoDatos.class.php';
-    
-    ControlAcceso::requierePermiso(PermisosSistema::PERMISO_USUARIOS);
+include_once '../lib/Constantes.class.php';
+require_once '../lib/ControlAcceso.class.php';
+require_once '../lib/ObjetoDatos.class.php';
+
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_USUARIOS);
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
     <head>
         <meta charset="UTF-8">
         <title><?= Constantes::NOMBRE_SISTEMA ?> ~ Gestionar mis formularios</title>
-        
+
         <script src="../colibri/colibri.js" type="text/javascript"></script>
     </head>
     <body>
@@ -33,30 +33,49 @@
                         </thead>
                         <tbody>
                             <?php
-                            $tieneFormularios = ObjetoDatos::getInstancia()->ejecutarQuery("SELECT * FROM FORMULARIO WHERE `idcreador` = {$_SESSION['usuario']}");
+                            $formulariosUsuario = ObjetoDatos::getInstancia()->ejecutarQuery("SELECT * FROM FORMULARIO WHERE `idCreador` = 3"); // Cambiar
 
-                            foreach ($UsuariosWorkflow->getUsuarios() as $WorkflowUsuario) {
-                                if ($WorkflowUsuario->poseeRol(5)) {
-                                    $hayGestores = true; // Se encontró al menos un gestor de formularios.
-                                    $GestorFormularios = new GestorFormularios($WorkflowUsuario->getIdUsuario()); // Ya conociendo que el rol del usuario es "Gestor de formularios" se puede instanciar como tal para acceder a sus datos de gestión.
-                                    ?>
-                                    <tr>
-                                        <td style="text-align: center"><?= $GestorFormularios->getNombre(); ?></td>
-                                        <td style="text-align: center"><?= $GestorFormularios->getEmail(); ?></td>
-                                        <td style="text-align: center"><strong><?= $GestorFormularios->getLimite() ?></strong></td>
-                                        <td style="text-align:center"><?= $GestorFormularios->getLibertad() ?></td>
-                                        <td style="text-align: center"><img onclick="abrirDialogoModificacion('<?= $GestorFormularios->getIdUsuario() ?>')" src="../imagenes/gestor_editar.png" style='cursor: pointer' title="Editar los detalles de gestión de formularios de <?= $WorkflowUsuario->getNombre() ?>"/></a> <a href="BajaGestor.php?idusuario=<?= $WorkflowUsuario->getIdUsuario() ?>" onclick="return confirm('¿Está seguro de que desea revocarle los permisos de gestión de formularios a <?= $GestorFormularios->getNombre() ?> ?');" target="_self"><img src="../imagenes/gestor_revocar_permisos.png" title="Revocar a <?= $WorkflowUsuario->getNombre() ?> el permiso de gestionar formularios"/></a></td>
-                                    </tr>
-                                    <?php
-                                }
-                            }
+                            if ($formulariosUsuario === false) {
+                                ?>
+                            </tbody>
+                        </table>
+                        <br/><div style="text-align: center; width: 100%"><span style="font-size: 14px; width: 70%"><img alt="/!\\" src='../imagenes/informacion.png'/> Todavía no tiene formularios bajo su responsabilidad.</span></div>
+                        <?php
+                    } else {
+                        while ($formularioActual = $formulariosUsuario->fetch_assoc()) {
                             ?>
+                            <tr>
+                                <td style="text-align: center"><?= $formularioActual['titulo']; ?></td>
+                                <td style="text-align: center"><?= $formularioActual['fechaCreacion']; ?></td>
+                                <td style="text-align: center">
+                                    <?php
+                                    $estaHabilitado = $formularioActual['estaHabilitado'];
+                                    $fechaInicio = $formularioActual['fechaInicio'];
+                                    $fechaFin = $formularioActual['fechaFin'];
+
+                                    if ($estaHabilitado == 0) {
+                                        ?>
+                                        No publicado
+                                    <?php } else if ($fechaInicio > date("Y-m-d") || date("Y-m-d") > $fechaFin) { ?>
+                                        Publicado e invisible
+                                        <?php
+                                    } else {
+                                        ?>
+                                        Publicado
+                                    <?php } ?>
+                                </td>
+                                <td style="text-align:center"><?= $formularioActual['cantidadRespuestas'] ?></td>
+                                <td style="text-align: center"><img onclick="window.open('./editar_formulario?id=<?= $formularioActual['idFormulario'] ?>', '_self');" src="../imagenes/gestor_editar.png" style='cursor: pointer' title="Editar este formulario"/></a> <a href="baja_formulario.php?id=<?= $formularioActual['idFormulario'] ?>" onclick="return confirm('¿Está seguro de que desea eliminar el formulario bajo el título \"<?= $formularioActual['titulo'] ?>\"?');" target="_self"><img src="../imagenes/gestor_revocar_permisos.png" title="Eliminar este formulario"/></a></td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
                         </tbody>
-                    </table>
-                    <?php if ($hayGestores === false) { ?>
-                        <br/><div style="text-align: center; width: 100%"><span style="font-size: 14px; width: 70%"><img alt="/!\\" src='../imagenes/informacion.png'/> No se encontró ningún usuario con el rol de gestor de formularios.</span></div>
-                    <?php } ?>
-                    <br/><div style='align-items: center; display: flex; justify-content: flex-end; width: 100%'><input onclick="abrirDialogoBusquedaAlta();" style='height: 35px' type="button" value="Dar de alta a un nuevo gestor de formularios"/></div>
+                        </table>
+                        <?php
+                    }
+                    ?>
+                    <br/><div style='align-items: center; display: flex; justify-content: flex-end; width: 100%'><input onclick="window.open('./crear_formulario.php', '_self');" style='height: 35px' type="button" value="Crear un nuevo formulario"/></div>
                 </div>
             </article>
         </section>

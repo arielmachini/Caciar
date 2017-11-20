@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the VerFormularioPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+/* Importaciones propias */
+import { ConectorProvider } from '../../providers/conector/conector';
 
 @IonicPage()
 @Component({
@@ -15,11 +11,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class VerFormularioPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private formulario: any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private servicioConector: ConectorProvider) {
+    console.log(this.recuperarFormulario(3));
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad VerFormularioPage');
+  }
+
+  recuperarFormulario(id: number) {
+    this.servicioConector.recuperarFormulario(id).subscribe((formulario: Response) => this.formulario = formulario);
   }
 
 }

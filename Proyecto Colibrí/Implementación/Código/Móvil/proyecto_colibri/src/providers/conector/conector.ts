@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 
 /* Importaciones propias */
 import 'rxjs/add/operator/map';
-import { Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Response } from '@angular/http'
 
 @Injectable()
 export class ConectorProvider {
@@ -16,7 +15,7 @@ export class ConectorProvider {
   }
 
   recuperarFormulario(id: number) {
-    return this.http.get(this.host + "recuperarFormulario.php?id=" + id).map(res => res.json());
+    return this.http.get(this.host + "recuperarFormulario.php?id=" + id).map((formulario: Response) => formulario.json());
   }
 
 }

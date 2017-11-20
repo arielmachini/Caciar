@@ -12,17 +12,25 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ConectorProvider } from '../providers/conector/conector';
 
+/* Importaciones propias */
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+import { VerFormularioPage } from '../pages/ver-formulario/ver-formulario';
+
 @NgModule({
   declarations: [
     MyApp,
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    VerFormularioPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpClientModule, // Agregado manualmente
+    HttpModule // Agregado manualmente
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -30,7 +38,8 @@ import { ConectorProvider } from '../providers/conector/conector';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    VerFormularioPage
   ],
   providers: [
     StatusBar,

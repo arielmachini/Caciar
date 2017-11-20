@@ -16,11 +16,10 @@
         <section id="main-content">
             <article>
                 <div class="content">
-                    <h3><?php echo Constantes::NOMBRE_SISTEMA; ?> - Consulta</h3>
+                    <h3><?php echo Constantes::NOMBRE_SISTEMA; ?> ~ Página de inicio</h3>
                     <div>
                         <h4>Bienvenido</h4>
-                        <p>Estimado agente: Bienvenido a la aplicaci&oacute;n eRecibo, a trav&eacute;s de la cual podr&aacute; consultar sus recibos de haberes y solicitar su impresi&oacute;n.</p>
-                        <p><span style="color: red">Importante: Los recibos no tienen validez sin la firma correspondiente.</span></p>
+                        <p>Sea bienvenido al sistema Colibrí.</p>
                         <h4>Ingreso al Sistema</h4>
                         <p>Ud. puede consultar el sistema si est&aacute; conectado a su e-mail Institucional. Por favor haga click en el bot&oacute;n a continuaci&oacute;n y elija su cuenta institucional.</p>
                         <div class="botonGoogle" onclick="window.open('../Instructivo.pdf', '_blank');" title="Ver Manual de Uso">

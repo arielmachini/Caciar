@@ -2,5 +2,7 @@
   "name": "proyecto_colibri",
   "app_id": "",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }
