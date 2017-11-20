@@ -1,5 +1,7 @@
 <?php
 
+include_once $_SERVER['DOCUMENT_ROOT'] . "/colibrionic/lib/Constantes.class.php";
+
 class WorkflowPermiso {
 
     private $idpermiso;

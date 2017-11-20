@@ -3,7 +3,10 @@
 //error_reporting(E_ALL);
 //ini_set("display_errors", 1);
 
-include_once dirname(dirname(__FILE__)) . "/modelo/Workflow.class.php";
+include_once "../lib/ControlAcceso.class.php";
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CONSULTAR);
+
+include_once "../modelo/Workflow.class.php";
 
 $WorkflowRoles = new WorkflowRoles();
 ?>
@@ -74,7 +77,7 @@ $WorkflowRoles = new WorkflowRoles();
 
                         <table class="editorFormulario">
                             <tr>
-                                <td class="editorFormulario" style="width: 71%">
+                                <td class="editorFormulario" style="visibility: visible; width: 71%">
                                     <table id="vistaPrevia" style="text-align: center; width: 96%">
                                         <tr>
                                             <th style="text-align: center">Posición</th>

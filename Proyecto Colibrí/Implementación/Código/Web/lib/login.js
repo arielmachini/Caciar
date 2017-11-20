@@ -2,7 +2,7 @@
 
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
-    var url = '../colibri_creador/crear_formulario.php';
+    var url = '../app/bienvenido.php';
 
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());

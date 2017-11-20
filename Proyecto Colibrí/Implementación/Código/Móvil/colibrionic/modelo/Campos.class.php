@@ -164,8 +164,7 @@ class CampoTexto extends Campo {
         }
 
         $codigoGenerado = $codigoGenerado . "type=\"text\"><br/><br/>";
-
-
+        
         return $codigoGenerado;
     }
 

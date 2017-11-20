@@ -2,8 +2,12 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-require_once dirname(dirname(__FILE__)) . "/colibri_creador/Campos.class.php";
-require_once dirname(dirname(__FILE__)) . "/colibri_creador/Formulario.class.php";
+include_once "../lib/ControlAcceso.class.php";
+ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CONSULTAR);
+
+include_once "../lib/ObjetoDatos.class.php";
+require_once "./Campos.class.php";
+require_once "./Formulario.class.php";
 
 
 ObjetoDatos::getInstancia()->autocommit(false);
@@ -71,22 +75,23 @@ foreach ($rolesDestino as $idrol) {
     $Formulario->agregarDestinatario($idrol);
 }
 
+// RECORDAR TRIMMEAR ESPACIOS VACIOS PARA COMPROBAR QUE NO SE INSERTAN CADENAS SIN CARACTERES.
 if (empty($Formulario->getFechaInicio()) && empty($Formulario->getFechaFin())) {
     ObjetoDatos::getInstancia()->ejecutarQuery("" .
-            "INSERT INTO FORMULARIO(`titulo`, `descripcion`, `emailreceptor`, `cantidadrespuestas`, `estahabilitado`, `fechainicio`, `fechafin`, `fechacreacion`, `creador`) " .
-            "VALUES ('{$Formulario->getTitulo()}', '{$Formulario->getDescripcion()}', '{$Formulario->getEmailReceptor()}', {$Formulario->getCantidadRespuestas()}, 0, NULL, NULL, STR_TO_DATE('{$Formulario->getFechaCreacion()}', '%Y-%m-%d'), 2)");
+            "INSERT INTO FORMULARIO(`titulo`, `descripcion`, `emailReceptor`, `cantidadRespuestas`, `estaHabilitado`, `fechaInicio`, `fechaFin`, `fechaCreacion`, `idCreador`) " .
+            "VALUES ('{$Formulario->getTitulo()}', '{$Formulario->getDescripcion()}', '{$Formulario->getEmailReceptor()}', {$Formulario->getCantidadRespuestas()}, 0, NULL, NULL, NULL, 3)");
 } else if (empty($Formulario->getFechaFin())) {
     ObjetoDatos::getInstancia()->ejecutarQuery("" .
-            "INSERT INTO FORMULARIO(`titulo`, `descripcion`, `emailreceptor`, `cantidadrespuestas`, `estahabilitado`, `fechainicio`, `fechafin`, `fechacreacion`, `creador`) " .
-            "VALUES ('{$Formulario->getTitulo()}', '{$Formulario->getDescripcion()}', '{$Formulario->getEmailReceptor()}', {$Formulario->getCantidadRespuestas()}, 0, STR_TO_DATE('{$Formulario->getFechaInicio()}', '%Y-%m-%d'), NULL, STR_TO_DATE('{$Formulario->getFechaCreacion()}', '%Y-%m-%d'), 2)");
+            "INSERT INTO FORMULARIO(`titulo`, `descripcion`, `emailReceptor`, `cantidadRespuestas`, `estaHabilitado`, `fechaInicio`, `fechaFin`, `fechaCreacion`, `idCreador`) " .
+            "VALUES ('{$Formulario->getTitulo()}', '{$Formulario->getDescripcion()}', '{$Formulario->getEmailReceptor()}', {$Formulario->getCantidadRespuestas()}, 0, STR_TO_DATE('{$Formulario->getFechaInicio()}', '%Y-%m-%d'), NULL, 3)");
 } else if (empty($Formulario->getFechaInicio())) {
     ObjetoDatos::getInstancia()->ejecutarQuery("" .
-            "INSERT INTO FORMULARIO(`titulo`, `descripcion`, `emailreceptor`, `cantidadrespuestas`, `estahabilitado`, `fechainicio`, `fechafin`, `fechacreacion`, `creador`) " .
-            "VALUES ('{$Formulario->getTitulo()}', '{$Formulario->getDescripcion()}', '{$Formulario->getEmailReceptor()}', {$Formulario->getCantidadRespuestas()}, 0, NULL, STR_TO_DATE('{$Formulario->getFechaFin()}', '%Y-%m-%d'), STR_TO_DATE('{$Formulario->getFechaCreacion()}', '%Y-%m-%d'), 2)");
+            "INSERT INTO FORMULARIO(`titulo`, `descripcion`, `emailReceptor`, `cantidadRespuestas`, `estaHabilitado`, `fechaInicio`, `fechaFin`, `fechaCreacion`, `idCreador`) " .
+            "VALUES ('{$Formulario->getTitulo()}', '{$Formulario->getDescripcion()}', '{$Formulario->getEmailReceptor()}', {$Formulario->getCantidadRespuestas()}, 0, NULL, STR_TO_DATE('{$Formulario->getFechaFin()}', '%Y-%m-%d'), NULL, 3)");
 } else {
     ObjetoDatos::getInstancia()->ejecutarQuery("" .
-            "INSERT INTO FORMULARIO(`titulo`, `descripcion`, `emailreceptor`, `cantidadrespuestas`, `estahabilitado`, `fechainicio`, `fechafin`, `fechacreacion`, `creador`) " .
-            "VALUES ('{$Formulario->getTitulo()}', '{$Formulario->getDescripcion()}', '{$Formulario->getEmailReceptor()}', {$Formulario->getCantidadRespuestas()}, 0, STR_TO_DATE('{$Formulario->getFechaInicio()}', '%Y-%m-%d'), STR_TO_DATE('{$Formulario->getFechaFin()}', '%Y-%m-%d'), STR_TO_DATE('{$Formulario->getFechaCreacion()}', '%Y-%m-%d'), 2)");
+            "INSERT INTO FORMULARIO(`titulo`, `descripcion`, `emailReceptor`, `cantidadRespuestas`, `estaHabilitado`, `fechaInicio`, `fechaFin`, `fechaCreacion`, `idCreador`) " .
+            "VALUES ('{$Formulario->getTitulo()}', '{$Formulario->getDescripcion()}', '{$Formulario->getEmailReceptor()}', {$Formulario->getCantidadRespuestas()}, 0, STR_TO_DATE('{$Formulario->getFechaInicio()}', '%Y-%m-%d'), STR_TO_DATE('{$Formulario->getFechaFin()}', '%Y-%m-%d'), NULL, 3)");
 }
 ?>
 
@@ -101,12 +106,14 @@ ObjetoDatos::getInstancia()->commit();
 
 ObjetoDatos::getInstancia()->autocommit(true); // Se activa el autocommit porque de lo contrario habían problemas...
 
-$query = "SELECT `idformulario` " .
+// VERIFICAR FORMA ALTERNATIVA PARA EVITAR POSIBILIDAD DE QUE SE AGREGUE
+// EL FORMULARIO PERO NO LOS CAMPOS!!!!
+$query = "SELECT `idFormulario` " .
         "FROM FORMULARIO " .
         "WHERE `titulo` = '{$Formulario->getTitulo()}'";
 
 $resultadoConsulta = ObjetoDatos::getInstancia()->ejecutarQuery($query);
-$idformulario = $resultadoConsulta->fetch_assoc()['idformulario'];
+$idFormulario = $resultadoConsulta->fetch_assoc()['idFormulario'];
 ?>
 
 <br/>
@@ -116,7 +123,7 @@ $idformulario = $resultadoConsulta->fetch_assoc()['idformulario'];
 <br/>
 
 <br/><p><strong>Error MySQL. Obtención del ID del formulario:</strong></p>
-<p>Si no sale ninguno (cód. 0) significa que todo salió bien. La ID es <?= $idformulario ?>.</p>
+<p>Si no sale ninguno (cód. 0) significa que todo salió bien. La ID es <?= $idFormulario ?>.</p>
 <p>Código: <?= mysqli_errno(ObjetoDatos::getInstancia()) ?>, Mensaje: <?= mysqli_error(ObjetoDatos::getInstancia()) ?></p>
 
 <?php
@@ -129,8 +136,8 @@ ObjetoDatos::getInstancia()->autocommit(false);
 foreach ($Formulario->getCampos() as $CampoActual) {
     ObjetoDatos::getInstancia()->begin_transaction();
 
-    $query = "INSERT INTO CAMPO(`idformulario`, `titulo`, `descripcion`, `esobligatorio`, `posicion`) " .
-            "VALUES ({$idformulario}, '{$CampoActual->getTitulo()}', '{$CampoActual->getDescripcion()}', {$CampoActual->esObligatorio()}, {$CampoActual->getPosicion()})";
+    $query = "INSERT INTO CAMPO(`idFormulario`, `titulo`, `descripcion`, `esObligatorio`, `posicion`) " .
+            "VALUES ({$idFormulario}, '{$CampoActual->getTitulo()}', '{$CampoActual->getDescripcion()}', {$CampoActual->esObligatorio()}, {$CampoActual->getPosicion()})";
     ?>
 
     <br/>
@@ -147,9 +154,13 @@ foreach ($Formulario->getCampos() as $CampoActual) {
     <p>Código: <?= mysqli_errno(ObjetoDatos::getInstancia()) ?>, Mensaje: <?= mysqli_error(ObjetoDatos::getInstancia()) ?></p>
 
     <?php
+    $idcampo = ObjetoDatos::getInstancia()->ejecutarQuery("SELECT `idCampo` " .
+            "FROM CAMPO " .
+            "WHERE `idFormulario` = {$idFormulario} AND `titulo` = '{$CampoActual->getTitulo()}'")->fetch_assoc()['idCampo'];
+
     if ($CampoActual instanceof CampoTexto) {
         $query = "INSERT INTO CAMPO_TEXTO " .
-                "VALUES ({$idformulario}, '{$CampoActual->getPista()}')";
+                "VALUES ({$idcampo}, '{$CampoActual->getPista()}')";
         ObjetoDatos::getInstancia()->ejecutarQuery($query);
         ?>
 
@@ -169,3 +180,5 @@ foreach ($Formulario->getCampos() as $CampoActual) {
 }
 ?>
 
+<br/>
+<strong style="font-size: 20px"><a href="./ver_formulario.php?id=<?= $idFormulario ?>" target="_self">¡¡¡¡¡VER FORMULARIO GENERADO YA!!!!!</a></strong>

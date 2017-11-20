@@ -1,4 +1,6 @@
 <?php
+
+include_once ("../lib/ControlAcceso.class.php");
 include_once realpath("../modelo/Workflow.class.php");
 //ControlAcceso::requierePermiso(PermisosSistema::PERMISO_USUARIOS);
 $UsuariosWorkflow = new WorkflowUsuarios();
