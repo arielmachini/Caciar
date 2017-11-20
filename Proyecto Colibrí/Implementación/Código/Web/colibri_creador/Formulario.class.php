@@ -26,23 +26,29 @@ class Formulario {
      * $emailReceptor: Dirección de correo electrónico a la que se van a enviar
      * las solicitudes.
      * 
+     * $descripcion: Atributo opcional. Se muestra bajo el título del
+     * formulario, es una breve introducción a la temática del formulario.
+     * 
      * $estaHabilitado: Define si el formulario está actualmente publicado o
      * no. Este valor se puede alternar siempre que sea necesario.
      * 
      * $fechaInicio: Atributo opcional. Define cuándo el formulario comenzará a
-     * aceptar solicitudes (DD/MM/AAAA).
+     * aceptar solicitudes (AAAA-MM-DD).
      * 
      * $fechaFin: Atributo opcional. Define cuándo el formulario dejará de
-     * aceptar solicitudes (DD/MM/AAAA).
+     * aceptar solicitudes (AAAA-MM-DD).
+     * 
+     * $fechaCreacion: Es la fecha (AAAA-MM-DD) en la que fue creada el
+     * formulario.
      * 
      * $rolesDestino: Arreglo que contiene los roles del sistema a los que
      * está dirigido el formulario.
+     * 
+     * $titulo: El título (dicho de otra forma, el nombre) del formulario.
+     * Es lo primero que ve el usuario y se muestra en la lista de formularios
+     * disponibles.
      */
-    
-    /**
-     *
-     * @var Campo[]
-     */
+
     private $camposFormulario = array();
     private $cantidadRespuestas;
     private $descripcion;

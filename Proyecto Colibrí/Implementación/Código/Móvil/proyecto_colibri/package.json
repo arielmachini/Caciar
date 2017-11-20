@@ -1,8 +1,8 @@
 {
   "name": "proyecto_colibri",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Grupo de desarrollo Paire",
+  "homepage": "https://www.uarg.unpa.edu.ar/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -34,5 +34,5 @@
     "@ionic/app-scripts": "3.1.2",
     "typescript": "2.4.2"
   },
-  "description": "An Ionic project"
+  "description": "El proyecto Colibrí es una aplicación basada en la Web desarrollada por el grupo Paire."
 }
