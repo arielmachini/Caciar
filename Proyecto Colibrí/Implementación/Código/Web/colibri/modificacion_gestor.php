@@ -1,7 +1,7 @@
 <?php
 include_once '../lib/ControlAcceso.class.php';
 include_once '../modelo/Workflow.class.php';
-ControlAcceso::requierePermiso(PermisosSistema::PERMISO_USUARIOS);
+//ControlAcceso::requierePermiso(PermisosSistema::PERMISO_USUARIOS);
 ?>
 
 <html>

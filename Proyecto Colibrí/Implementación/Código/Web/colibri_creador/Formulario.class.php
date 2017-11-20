@@ -43,7 +43,7 @@ class Formulario {
      *
      * @var Campo[]
      */
-    private $camposFormulario;
+    private $camposFormulario = array();
     private $cantidadRespuestas;
     private $descripcion;
     private $emailReceptor;
@@ -67,10 +67,6 @@ class Formulario {
         $this->WorkflowRoles = new WorkflowRoles();
     }
     
-    /**
-     * 
-     * @param Campo $campo_
-     */
     function agregarCampo($campo_) {
         $this->camposFormulario[] = $campo_;
     }
@@ -94,10 +90,6 @@ class Formulario {
         return $this->estaHabilitado;
     }
     
-    /**
-     * 
-     * @return Campo[]
-     */
     function getCampos() {
         return $this->camposFormulario;
     }

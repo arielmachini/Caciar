@@ -97,7 +97,8 @@ $(document).ready(function () {
                 campoNuevo = JSON.stringify(campoNuevo);
                 
                 $("#camposCreados").append("<input name=\"campoId" + sessionStorage.getItem("id") + "\" type=\"hidden\" value=\"\">");
-                $("#campoId" + sessionStorage.getItem("id")).val(campoNuevo);
+                $("input[name=campoId" + sessionStorage.getItem("id") + "]").val(campoNuevo);
+                
                 $("#vistaPrevia").append("<tr><td>" + sessionStorage.getItem("id") + "</td><td><span style=\"font-weight: 600\">" + $("#tituloCampoTexto").val() + "</span></td><td>No</td><td><img onclick=\"subirCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/flecha_arriba.png\" style=\"cursor:pointer\" title=\"Subir este campo\"/> <img id=\"bajarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/flecha_abajo.png\" style=\"cursor:pointer\" title=\"Bajar este campo\"/><br/><img onclick=\"editarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/gestor_editar.png\" style=\"cursor:pointer\" title=\"Editar este campo\"/> <img onclick=\"borrarCampo(\'" + sessionStorage.getItem("id") + "\')\" src=\"../imagenes/gestor_revocar_permisos.png\" style=\"cursor:pointer\" title=\"Eliminar este campo\"/></td></tr>");
             }
             
@@ -121,7 +122,7 @@ $(document).ready(function () {
         dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
         dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
         weekHeader: 'Sm',
-        dateFormat: 'yy/mm/dd',
+        dateFormat: 'yy-mm-dd',
         firstDay: 1,
         isRTL: false,
         showMonthAfterYear: false,

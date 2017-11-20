@@ -1,28 +1,24 @@
 <?php
 
-define("__ROOT__", dirname(dirname(__FILE__)));
-
-include_once __ROOT__ . '/gui/GUI.class.php';
+include_once '../gui/GUI.class.php';
 setlocale(LC_TIME, 'es_AR.utf8');
 
 /**
- * 
- * Clase para mantener las constantes de sistema
- * @author Eder dos Santos <esantos@uarg.unpa.edu.ar>
- * 
+ * Esta clase almacena las constantes utilizadas dentro del sistema.
+ * @author Ariel Machini <arielmachini@protonmail.com>
  */
 class Constantes {
 
     
-    const NOMBRE_SISTEMA = "Colibrí";
+    const NOMBRE_SISTEMA = "Sistema Colibrí";
     
-    const WEBROOT = "/var/www/html/uargflow/";
-    const APPDIR = "uargflow";
+    const WEBROOT = "/var/www/html/colibri/";
+    const APPDIR = "colibri";
         
     const SERVER = "http://localhost";
-    const APPURL = "http://localhost/uargflow";
-    const HOMEURL = "http://localhost/uargflow/app/index.php";
-    const HOMEAUTH = "http://localhost/uargflow/app/workflow.usuarios.ver.php";
+    const APPURL = "http://localhost/colibri";
+    const HOMEURL = "http://localhost/colibri/app/index.php";
+    const HOMEAUTH = "http://localhost/colibri/app/workflow.usuarios.ver.php";
     
     const BD_SCHEMA = "uargflow";
     const BD_USERS = "uargflow";

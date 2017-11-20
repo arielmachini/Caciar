@@ -1,7 +1,3 @@
-<?php
-require_once dirname(dirname(__FILE__)) . '/lib/ControlAcceso.class.php';
-?>
-
 <link href="../gui/estilo.css" type="text/css" rel="stylesheet" />
 <link href="../gui/responsivo.css" type="text/css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="../gui/menu/dist/css/slimmenu.min.css">
@@ -10,7 +6,7 @@ require_once dirname(dirname(__FILE__)) . '/lib/ControlAcceso.class.php';
 
     <a id="logo-header" href="../app/index.php">
         <span class="site-name"><?php echo Constantes::NOMBRE_SISTEMA; ?></span>
-        <span class="site-desc">Grupo de desarrollo Paire</span>
+        <span class="site-desc">SIT UNPA-UARG</span>
     </a>
 
 

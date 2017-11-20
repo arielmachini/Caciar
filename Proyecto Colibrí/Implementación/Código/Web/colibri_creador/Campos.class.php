@@ -49,14 +49,7 @@ abstract class Campo {
         $this->obligatorio = false;
     }
 
-    function getCodigo() {
-        $codigoGenerado = "<h4>" . $this->getTitulo() . "</h4><br/>";
-        
-        if ($this->getDescripcion() !== null) {
-            $codigoGenerado = $codigoGenerado .
-                    "<p class=\"Descripcion\">" . $this->getDescripcion() . "</p><br/>";
-        }
-    }
+    abstract function getCodigo();
 
     function esObligatorio() {
         return $this->obligatorio;
@@ -71,7 +64,7 @@ abstract class Campo {
     }
 
     function getTitulo() {
-        return $this->posicion;
+        return $this->titulo;
     }
 
     function setDescripcion($descripcion_) {
@@ -146,7 +139,12 @@ class CampoTexto extends Campo {
     }
 
     function getCodigo() {
-        $codigoGenerado = parent::getCodigo();
+        $codigoGenerado = "<h4>" . $this->getTitulo() . "</h4>";
+        
+        if ($this->getDescripcion() !== null) {
+            $codigoGenerado = $codigoGenerado .
+                    "<p class=\"Descripcion\">" . $this->getDescripcion() . "</p>";
+        }
 
         $codigoGenerado = $codigoGenerado .
                 "<input ";
@@ -155,9 +153,9 @@ class CampoTexto extends Campo {
             $codigoGenerado = $codigoGenerado . "autofocus=\"true\" ";
         }
 
-        $codigoGenerado = $codigoGenerado . "id=\"" . $this->getId() . "\" name=\"" . $this->getNombre() . "\" ";
+        $codigoGenerado = $codigoGenerado . "id=\"id_" . $this->getTitulo() . "\" name=\"nombre_" . $this->getTitulo() . "\" ";
 
-        if ($this->getPista() !== null) {
+        if (!empty($this->getPista())) {
             $codigoGenerado = $codigoGenerado . "placeholder=\"" . $this->getPista() . "\" ";
         }
         

@@ -19,15 +19,13 @@ div.edicionCampo {
 
 table.editorFormulario {
     background-color: transparent !important;
-    border-style: none !important;
-    border-color: transparent !important;
+    border-collapse: collapse !important;
     width: 100%;
 }
 
 td.editorFormulario {
     background-color: transparent !important;
-    border-style: none !important;
-    border-color: transparent !important;
+    border-collapse: collapse !important;
     text-align: left;
     vertical-align: top;
 }
