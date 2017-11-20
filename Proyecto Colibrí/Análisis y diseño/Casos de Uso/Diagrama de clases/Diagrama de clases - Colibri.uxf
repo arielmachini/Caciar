@@ -26,6 +26,7 @@
 
 
 // This text will be stored with each diagram;  use it for notes.</help_text>
+<<<<<<< Updated upstream
   <zoom_level>8</zoom_level>
   <element>
     <id>UMLClass</id>
@@ -34,6 +35,16 @@
       <y>136</y>
       <w>224</w>
       <h>176</h>
+=======
+  <zoom_level>11</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>440</x>
+      <y>121</y>
+      <w>308</w>
+      <h>253</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>Formulario
 --
@@ -43,6 +54,7 @@
 -fechaDesdeVisibilidad: Fecha
 -fechaHastaVisibilidad: Fecha
 -destinatarios: Roles[]
+-publicado: boolean
 -cantidadRespuestas: int
 -campos: Campo[]
 -creador: Gestor de Formulario
@@ -56,10 +68,17 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>328</x>
       <y>368</y>
       <w>248</w>
       <h>104</h>
+=======
+      <x>418</x>
+      <y>440</y>
+      <w>341</w>
+      <h>231</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>Campo
 --
@@ -67,7 +86,13 @@
 -titulo: String
 -descripción: String
 -obligatorio: boolean
+<<<<<<< Updated upstream
 -posición: int
+=======
+-pista: String
+-icono: Imagen
+-numeroCampo: int
+>>>>>>> Stashed changes
 --
 +getters/setters
 +generarCodigo(): String</panel_attributes>
@@ -76,10 +101,17 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>624</x>
       <y>48</y>
       <w>328</w>
       <h>152</h>
+=======
+      <x>825</x>
+      <y>0</y>
+      <w>451</w>
+      <h>209</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>WorkFlow_Usuario
 --
@@ -102,10 +134,17 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>656</x>
       <y>248</y>
       <w>272</w>
       <h>112</h>
+=======
+      <x>902</x>
+      <y>297</y>
+      <w>374</w>
+      <h>154</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>Gestor_de_formulario
 --
@@ -122,10 +161,17 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>616</x>
       <y>400</y>
       <w>368</w>
       <h>128</h>
+=======
+      <x>814</x>
+      <y>539</y>
+      <w>506</w>
+      <h>176</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>Administrador
 --
@@ -147,10 +193,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>UMLClass</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>1032</x>
       <y>48</y>
       <w>80</w>
       <h>64</h>
+=======
+      <x>1386</x>
+      <y>0</y>
+      <w>110</w>
+      <h>88</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>WorkFlow_Rol
 --
@@ -163,10 +216,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>UMLClass</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>1032</x>
       <y>160</y>
       <w>96</w>
       <h>64</h>
+=======
+      <x>1386</x>
+      <y>154</y>
+      <w>132</w>
+      <h>88</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>WorkFlow_Permiso
 --
@@ -180,10 +240,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>UMLClass</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>64</x>
       <y>192</y>
       <w>208</w>
       <h>104</h>
+=======
+      <x>11</x>
+      <y>198</y>
+      <w>330</w>
+      <h>143</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>Informe
 --
@@ -200,10 +267,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>UMLClass</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>128</x>
       <y>584</y>
       <w>96</w>
       <h>56</h>
+=======
+      <x>0</x>
+      <y>803</y>
+      <w>132</w>
+      <h>77</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>Campo Texto
 --
@@ -216,10 +290,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>UMLClass</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>240</x>
       <y>584</y>
       <w>80</w>
       <h>56</h>
+=======
+      <x>143</x>
+      <y>803</y>
+      <w>110</w>
+      <h>77</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>Texto Largo
 --
@@ -231,43 +312,71 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>UMLClass</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>368</x>
       <y>680</y>
       <w>128</w>
       <h>48</h>
+=======
+      <x>275</x>
+      <y>979</y>
+      <w>286</w>
+      <h>77</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>Opciones
 --
 
 --
-/redefición de métodos
+-agregarElemento(String elemento): void
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>336</x>
       <y>584</y>
       <w>208</w>
       <h>64</h>
     </coordinates>
     <panel_attributes>Lista Desplegable
+=======
+      <x>264</x>
+      <y>803</y>
+      <w>286</w>
+      <h>121</h>
+    </coordinates>
+    <panel_attributes>Opciones Multiples
+>>>>>>> Stashed changes
 --
 -opciones: String[]
 -opcionInicial: String
 --
 +/getters/setters
+<<<<<<< Updated upstream
+=======
++agregarElemento(String elemento): void
+
+>>>>>>> Stashed changes
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>560</x>
       <y>584</y>
       <w>120</w>
       <h>88</h>
+=======
+      <x>792</x>
+      <y>803</y>
+      <w>165</w>
+      <h>121</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>Fecha
 --
@@ -283,10 +392,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>UMLClass</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>696</x>
       <y>584</y>
       <w>96</w>
       <h>96</h>
+=======
+      <x>979</x>
+      <y>803</y>
+      <w>132</w>
+      <h>132</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>Direccion
 --
@@ -302,10 +418,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>432</x>
       <y>304</y>
       <w>24</w>
       <h>80</h>
+=======
+      <x>561</x>
+      <y>363</y>
+      <w>33</w>
+      <h>99</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
@@ -313,10 +436,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>424</x>
       <y>464</y>
       <w>24</w>
       <h>104</h>
+=======
+      <x>550</x>
+      <y>660</y>
+      <w>33</w>
+      <h>121</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
@@ -324,10 +454,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>272</x>
       <y>544</y>
       <w>24</w>
       <h>56</h>
+=======
+      <x>187</x>
+      <y>748</y>
+      <w>33</w>
+      <h>77</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
@@ -335,10 +472,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>424</x>
       <y>544</y>
       <w>24</w>
       <h>56</h>
+=======
+      <x>385</x>
+      <y>748</y>
+      <w>33</w>
+      <h>77</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
@@ -346,10 +490,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>608</x>
       <y>544</y>
       <w>24</w>
       <h>56</h>
+=======
+      <x>858</x>
+      <y>748</y>
+      <w>33</w>
+      <h>77</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
@@ -357,10 +508,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>728</x>
       <y>544</y>
       <w>24</w>
       <h>56</h>
+=======
+      <x>1023</x>
+      <y>748</y>
+      <w>33</w>
+      <h>77</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
@@ -368,10 +526,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>424</x>
       <y>640</y>
       <w>24</w>
       <h>56</h>
+=======
+      <x>385</x>
+      <y>913</y>
+      <w>33</w>
+      <h>88</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
@@ -379,10 +544,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>160</x>
       <y>544</y>
       <w>24</w>
       <h>56</h>
+=======
+      <x>44</x>
+      <y>748</y>
+      <w>33</w>
+      <h>77</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
@@ -390,21 +562,35 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>160</x>
       <y>544</y>
       <w>592</w>
       <h>24</h>
+=======
+      <x>44</x>
+      <y>748</y>
+      <w>1012</w>
+      <h>33</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>720.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>900.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>784</x>
       <y>192</y>
       <w>24</w>
       <h>72</h>
+=======
+      <x>1045</x>
+      <y>198</y>
+      <w>33</w>
+      <h>121</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
@@ -412,10 +598,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>784</x>
       <y>352</y>
       <w>24</w>
       <h>64</h>
+=======
+      <x>1045</x>
+      <y>440</y>
+      <w>33</w>
+      <h>121</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
@@ -423,10 +616,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>264</x>
       <y>232</y>
       <w>96</w>
       <h>24</h>
+=======
+      <x>330</x>
+      <y>253</y>
+      <w>132</w>
+      <h>33</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
@@ -434,10 +634,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>944</x>
       <y>56</y>
       <w>104</w>
       <h>24</h>
+=======
+      <x>1265</x>
+      <y>11</y>
+      <w>143</w>
+      <h>33</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
@@ -445,21 +652,68 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>1064</x>
       <y>104</y>
       <w>24</w>
       <h>72</h>
+=======
+      <x>1430</x>
+      <y>77</y>
+      <w>33</w>
+      <h>99</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
   </element>
   <element>
+<<<<<<< Updated upstream
     <id>Relation</id>
     <coordinates>
       <x>560</x>
       <y>264</y>
       <w>112</w>
       <h>24</h>
+=======
+    <id>UMLClass</id>
+    <coordinates>
+      <x>242</x>
+      <y>528</y>
+      <w>110</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>Imagen
+--
+-tipo: String
+-altura: int 
+-anchura: int
+--
++/getters/setters
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>341</x>
+      <y>528</y>
+      <w>99</w>
+      <h>33</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>737</x>
+      <y>297</y>
+      <w>187</w>
+      <h>33</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
@@ -467,10 +721,17 @@ WorkFlow_Usuario usuario): void
   <element>
     <id>UMLNote</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>168</x>
       <y>656</y>
       <w>128</w>
       <h>40</h>
+=======
+      <x>66</x>
+      <y>946</y>
+      <w>176</w>
+      <h>55</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>Equivalente a CheckBox
 en HTML
@@ -480,10 +741,17 @@ bg=#2c3756</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>536</x>
       <y>712</y>
       <w>128</w>
       <h>32</h>
+=======
+      <x>649</x>
+      <y>1001</y>
+      <w>176</w>
+      <h>44</h>
+>>>>>>> Stashed changes
     </coordinates>
     <panel_attributes>Equivalente a Seleccion
 en HTML
@@ -493,6 +761,7 @@ bg=#2c3756</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>528</x>
       <y>640</y>
       <w>80</w>
@@ -501,10 +770,21 @@ bg=#2c3756</panel_attributes>
     <panel_attributes>comentario
 lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+=======
+      <x>550</x>
+      <y>1012</y>
+      <w>121</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>comentario
+lt=.</panel_attributes>
+    <additional_attributes>10.0;20.0;90.0;20.0</additional_attributes>
+>>>>>>> Stashed changes
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
+<<<<<<< Updated upstream
       <x>288</x>
       <y>672</y>
       <w>96</w>
@@ -513,5 +793,43 @@ lt=.</panel_attributes>
     <panel_attributes>comentario
 lt=.</panel_attributes>
     <additional_attributes>10.0;20.0;100.0;20.0</additional_attributes>
+=======
+      <x>231</x>
+      <y>902</y>
+      <w>121</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>comentario
+lt=.</panel_attributes>
+    <additional_attributes>10.0;80.0;30.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>594</x>
+      <y>803</y>
+      <w>165</w>
+      <h>121</h>
+    </coordinates>
+    <panel_attributes>Opciones Unica
+--
+-elementos: String[]
+-elementosSeleccionables: int
+--
++/getters/setters
++ agregarElemento(String elemento)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>671</x>
+      <y>748</y>
+      <w>33</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+>>>>>>> Stashed changes
   </element>
 </diagram>
