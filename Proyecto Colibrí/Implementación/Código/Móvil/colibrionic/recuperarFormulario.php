@@ -1,13 +1,14 @@
 <?php
 
-
-
 header("Access-Control-Allow-Origin: *");
-header("Content-type: text/plain");
+header("Content-Type: text/plain");
 
 /* Evitar que la información se guarde en caché */
 header("Cache-Control: no-cache, must-revalidate");
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 
 require_once './lib/ObjetoDatos.class.php';
 include_once './modelo/Formulario.class.php';

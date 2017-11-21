@@ -1,7 +1,14 @@
 <?php
 
 header("Access-Control-Allow-Origin: *");
-header('Content-Type: text/html; charset=utf-8');
+header("Content-Type: text/plain");
+
+/* Evitar que la información se guarde en caché */
+header("Cache-Control: no-cache, must-revalidate");
+header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 
 define("__ROOT__", dirname(__FILE__));
 
