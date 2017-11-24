@@ -12,28 +12,12 @@ abstract class Campo {
     /*
      * DEFINICIÓN DE LOS ATRIBUTOS DE LA CLASE:
      *
-     * TÍTULO *
-     * Descripción
-     * [Pista          ]
-     *
-     * Nota: El * representa a un campo obligatorio.
-     * Esa representación gráfica muestra sólo los atributos del campo que son
-     * visibles al usuario. El resto son propiedades que se definen en el
-     * código.
-     *
      * $descripcion: Línea de texto que se muestra bajo el título del campo.
-     *
-     * $id: Identificador (único) que diferencia al campo de los demás en el
-     * formulario. Se utiliza principalmente para recuperar el campo si se
-     * quieren ejecutar funciones sobre este.
-     *
-     * $nombre: Nombre único que representa al campo. Se utiliza principalmente
-     * para obtener los valores del formulario del array $_POST o $_GET.
-     *
+
      * $obligatorio: Define si el rellenado del campo es o no obligatorio para
      * poder enviar el formulario.
      *
-     * $posicion: Define la posición que tiene el campo en el formulario.
+     * $posicion: Define la posición que tiene el campo en el formulario. <--- REVISAR SI ES NECESARIO!!!!
      *
      * $titulo: Cabecera que va antes del campo y la descripción. En resumidas
      * palabras, es el "nombre" del campo.
@@ -50,6 +34,8 @@ abstract class Campo {
     }
 
     abstract function getCodigo();
+    
+    abstract function getCodigoIonic();
 
     function esObligatorio() {
         return $this->obligatorio;
@@ -112,6 +98,10 @@ class AreaTexto extends Campo {
         
         $codigoGenerado = $codigoGenerado . "></textarea><br/><br/>";
     }
+    
+    function getCodigoIonic() {
+        //
+    }
             
     function getLimiteCaracteres() {
         return $this->limiteCaracteres;
@@ -164,7 +154,32 @@ class CampoTexto extends Campo {
         }
 
         $codigoGenerado = $codigoGenerado . "type=\"text\"><br/><br/>";
+
+
+        return $codigoGenerado;
+    }
+    
+    function getCodigoIonic() {
+        /*$codigoGenerado = "<h5>" . $this->getTitulo() . "</h5>";
         
+        if ($this->getDescripcion() !== null) {
+            $codigoGenerado = $codigoGenerado .
+                    "<p>" . $this->getDescripcion() . "</p>";
+        }*/
+
+        $codigoGenerado = "<ion-input id=\"id_" . $this->getTitulo() . "\" name=\"nombre_" . $this->getTitulo() . "\" ";
+
+        if (!empty($this->getPista())) {
+            $codigoGenerado = $codigoGenerado . "placeholder=\"" . $this->getPista() . "\" ";
+        }
+        
+        /*if ($this->esObligatorio()) {
+            $codigoGenerado = $codigoGenerado . "required ";
+        }*/
+
+        $codigoGenerado = $codigoGenerado . "type=\"text\"></ion-input><br/><br/>";
+
+
         return $codigoGenerado;
     }
 
@@ -219,6 +234,10 @@ class ListaDesplegable extends Campo {
         
         $codigoGenerado = $codigoGenerado .
                 "</select><br/><br/>";
+    }
+    
+    function getCodigoIonic() {
+        //;
     }
     
     function getOpciones() {

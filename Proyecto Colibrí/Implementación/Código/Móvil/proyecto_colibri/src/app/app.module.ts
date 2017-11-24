@@ -13,6 +13,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ConectorProvider } from '../providers/conector/conector';
 
 /* Importaciones propias */
+import { FormulariosPage } from '../pages/formularios/formularios';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { VerFormularioPage } from '../pages/ver-formulario/ver-formulario';
@@ -24,7 +25,8 @@ import { VerFormularioPage } from '../pages/ver-formulario/ver-formulario';
     ContactPage,
     HomePage,
     TabsPage,
-    VerFormularioPage
+    VerFormularioPage,
+    FormulariosPage
   ],
   imports: [
     BrowserModule,
@@ -39,7 +41,8 @@ import { VerFormularioPage } from '../pages/ver-formulario/ver-formulario';
     ContactPage,
     HomePage,
     TabsPage,
-    VerFormularioPage
+    VerFormularioPage,
+    FormulariosPage
   ],
   providers: [
     StatusBar,

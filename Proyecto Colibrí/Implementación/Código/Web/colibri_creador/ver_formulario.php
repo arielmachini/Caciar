@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 
 <?php
-//error_reporting(E_ALL);
-//ini_set("display_errors", 1);
+// error_reporting(E_ALL);
+// ini_set("display_errors", 1);
 
 require_once '../lib/ControlAcceso.class.php';
-ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CONSULTAR);
+// ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CONSULTAR);
 
 include_once './Campos.class.php';
 include_once './Formulario.class.php';
+
+session_start();
+
+$idformulario = filter_input(INPUT_GET, "id");
+
+$formularioRecibido = ObjetoDatos::getInstancia()->ejecutarQuery("SELECT * FROM FORMULARIO WHERE `idFormulario` = {$idformulario}")->fetch_assoc();
 ?>
 
 <html>
     <head>
         <meta charset="UTF-8">
-        <title><?= Constantes::NOMBRE_SISTEMA; ?>: Vista del formulario</title>
+        <title><?= Constantes::NOMBRE_SISTEMA; ?> ~ <?= $formularioRecibido['titulo'] ?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <link href="../gui/estilo.css" type="text/css" rel="stylesheet">
@@ -27,23 +33,7 @@ include_once './Formulario.class.php';
         <section id="main-content">
             <article>
                 <div class="content">
-                    <h2>VISTA DEL FORMULARIO</h2>
-                    <p>
-                        En esta página se obtiene el formulario de la base de datos y se muestran sus campos correspondientes.
-                    </p>
-
                     <?php
-                    /* function ordenarPorPosicion($campo1_, $campo2_) {
-                      return $campo2_->getPosicion() - $campo1_->getPosicion();
-                      } */
-
-                    $idformulario = filter_input(INPUT_GET, "id");
-
-                    $formularioRecibido = ObjetoDatos::getInstancia()->ejecutarQuery("SELECT * FROM FORMULARIO WHERE `idFormulario` = {$idformulario}");
-                    $camposFormulario = ObjetoDatos::getInstancia()->ejecutarQuery("SELECT * FROM CAMPO WHERE `idFormulario` = {$idformulario}");
-
-                    $formularioRecibido = $formularioRecibido->fetch_assoc();
-
                     $FormularioRecuperado = new Formulario($formularioRecibido['fechaCreacion']);
 
                     $FormularioRecuperado->setTitulo($formularioRecibido['titulo']);
@@ -51,15 +41,9 @@ include_once './Formulario.class.php';
                     $FormularioRecuperado->setEmailReceptor($formularioRecibido['emailReceptor']);
                     $FormularioRecuperado->setFechaInicio($formularioRecibido['fechaInicio']);
                     $FormularioRecuperado->setFechaFin($formularioRecibido['fechaFin']);
-                    ?>
 
-                    <p><u>Datos para el desarrollador:</u></p>
-                    <p><strong>RESPONSABLE DEL FORMULARIO:</strong> ID DE USUARIO <?= $formularioRecibido['idCreador']; ?></p>
-                    <p><strong>RESPUESTAS A:</strong> <?= $FormularioRecuperado->getEmailReceptor(); ?></p>
-                    <hr>
-                    <br/>
+                    $camposFormulario = ObjetoDatos::getInstancia()->ejecutarQuery("SELECT * FROM CAMPO WHERE `idFormulario` = {$idformulario}");
 
-                    <?php
                     while ($campoActual = $camposFormulario->fetch_assoc()) {
                         $idcampo = $campoActual['idCampo'];
                         $campoTextoActual = ObjetoDatos::getInstancia()->ejecutarQuery("SELECT * " .
@@ -81,29 +65,28 @@ include_once './Formulario.class.php';
 
                         $FormularioRecuperado->agregarCampo($CampoTexto);
                     }
-
-                    // $FormularioRecuperado->setCampos() = usort($FormularioRecuperado->getCampos(), "ordenarPorPosicion");
                     ?>
+                    <div id="formularioParseado" style="width: 100%">
+                        <h2><?= $FormularioRecuperado->getTitulo() ?></h2>
+                        <?php if (!empty($FormularioRecuperado->getDescripcion())) { ?>
+                            <h3 style="padding-bottom: 15px"><?= $FormularioRecuperado->getDescripcion() ?></h3>
+                        <?php } ?>
 
-                    <div id="formularioParseado" style="text-align: center; width: 100%">
-                        <h1><?= $FormularioRecuperado->getTitulo() ?></h1>
-                        <h3 style="padding-bottom: 15px"><?= $FormularioRecuperado->getDescripcion() ?></h3>
-
-                        <form id="formulario">
-
+                            <form action="procesarSolicitud.php" id="formulario" method="POST">
                             <?php
                             foreach ($FormularioRecuperado->getCampos() as $campoActual) {
                                 if ($campoActual instanceof CampoTexto) {
                                     ?>
-
                                     <?= $campoActual->getCodigo(); ?>
-
                                     <?php
                                 }
                             }
+                            
+                            $_SESSION['formulario'] = $FormularioRecuperado;
                             ?>
                             <br/>
-                            <input disabled type="submit" value="Enviar solicitud :D">
+                            <input name="emailReceptor" type="hidden" value="<?= $FormularioRecuperado->getEmailReceptor(); ?>">
+                            <input type="submit" value="Enviar solicitud">
                         </form>
                     </div>
                 </div>

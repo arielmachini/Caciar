@@ -1,6 +1,7 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
+// header("Access-Control-Allow-Origin: *");
+// header("Access-Control-Allow-Methods: GET");
 header("Content-Type: text/plain");
 
 /* Evitar que la información se guarde en caché */
@@ -29,30 +30,9 @@ if ($camposRecibidos === false || $camposRecibidos->num_rows === 0) {
     die(); // Se cancela la operación.
 }
 
-$camposParseados = "{"; // En esta variable se van a almacenar todos los campos obtenidos.
+$camposParseados = "[";
 
-if (count($camposRecibidos) > 1) {
-    while ($campoActual = $camposRecibidos->fetch_assoc()) {
-        $CampoFormulario = new CampoTexto();
-        $idcampo = $campoActual['idCampo'];
-
-        $CampoFormulario->setTitulo($campoActual['titulo']);
-        $CampoFormulario->setDescripcion($campoActual['descripcion']);
-
-        $CampoFormulario->setEsObligatorio($campoActual['esObligatorio']);
-
-        $campoTextoRecibido = ObjetoDatos::getInstancia()->ejecutarQuery("SELECT * FROM CAMPO_TEXTO WHERE `idCampo` = {$idcampo}");
-        $pistaCampoActual = $campoTextoRecibido->fetch_assoc()['pista'];
-
-        $CampoFormulario->setPista($pistaCampoActual);
-
-        $codigoHTML = $CampoFormulario->getCodigo();
-        $camposParseados .= "{codigo: '{$codigoHTML}'}, ";
-    }
-    
-    $camposParseados = substr($camposParseados, 0, strlen($camposParseados) - 2);
-} else { // Si el formulario sólo tiene un campo no se puede retornar un array.
-    $campoActual = $camposRecibidos->fetch_assoc();
+while ($campoActual = $camposRecibidos->fetch_assoc()) {
     $CampoFormulario = new CampoTexto();
     $idcampo = $campoActual['idCampo'];
 
@@ -66,10 +46,11 @@ if (count($camposRecibidos) > 1) {
 
     $CampoFormulario->setPista($pistaCampoActual);
 
-    $codigoHTML = json_encode($CampoFormulario->getCodigo());
-    $camposParseados .= "codigo: " . $codigoHTML;
+    $JSON = json_encode($CampoFormulario->getCodigoIonic());
+    $camposParseados .= '{"codigo": ' . $JSON . '}, ';
 }
 
-$camposParseados .= "}";
+$camposParseados = substr($camposParseados, 0, strlen($camposParseados) - 2);
+$camposParseados .= "]";
 
 echo $camposParseados;

@@ -11,18 +11,24 @@ import { ConectorProvider } from '../../providers/conector/conector';
 })
 export class VerFormularioPage {
 
-  private formulario: any;
+  formulario: any = '';
+  camposFormulario: any[999];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private servicioConector: ConectorProvider) {
-    console.log(this.recuperarFormulario(3));
+    this.recuperarFormulario(1);
+    this.recuperarCampos(1);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad VerFormularioPage');
+    
+  }
+
+  recuperarCampos(id: number) {
+    this.servicioConector.recuperarCampos(id).subscribe((camposFormulario: Response) => this.camposFormulario = camposFormulario, error => console.log("E: Se produjo el siguiente error al intentar recuperar los campos del formulario de la base de datos: " + error));
   }
 
   recuperarFormulario(id: number) {
-    this.servicioConector.recuperarFormulario(id).subscribe((formulario: Response) => this.formulario = formulario);
+    this.servicioConector.recuperarFormulario(id).subscribe((formulario: Response) => this.formulario = formulario, error => console.log("E: Se produjo el siguiente error al intentar recuperar el formulario de la base de datos: " + error));
   }
 
 }

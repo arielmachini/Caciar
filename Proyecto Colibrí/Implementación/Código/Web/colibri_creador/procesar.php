@@ -83,7 +83,7 @@ if (empty($Formulario->getFechaInicio()) && empty($Formulario->getFechaFin())) {
 } else if (empty($Formulario->getFechaFin())) {
     ObjetoDatos::getInstancia()->ejecutarQuery("" .
             "INSERT INTO FORMULARIO(`titulo`, `descripcion`, `emailReceptor`, `cantidadRespuestas`, `estaHabilitado`, `fechaInicio`, `fechaFin`, `fechaCreacion`, `idCreador`) " .
-            "VALUES ('{$Formulario->getTitulo()}', '{$Formulario->getDescripcion()}', '{$Formulario->getEmailReceptor()}', {$Formulario->getCantidadRespuestas()}, 0, STR_TO_DATE('{$Formulario->getFechaInicio()}', '%Y-%m-%d'), NULL, 3)");
+            "VALUES ('{$Formulario->getTitulo()}', '{$Formulario->getDescripcion()}', '{$Formulario->getEmailReceptor()}', {$Formulario->getCantidadRespuestas()}, 0, STR_TO_DATE('{$Formulario->getFechaInicio()}', '%Y-%m-%d'), NULL, NULL, 3)");
 } else if (empty($Formulario->getFechaInicio())) {
     ObjetoDatos::getInstancia()->ejecutarQuery("" .
             "INSERT INTO FORMULARIO(`titulo`, `descripcion`, `emailReceptor`, `cantidadRespuestas`, `estaHabilitado`, `fechaInicio`, `fechaFin`, `fechaCreacion`, `idCreador`) " .

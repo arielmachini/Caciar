@@ -155,4 +155,12 @@ class Formulario {
     function setTitulo($titulo_) {
         $this->titulo = $titulo_;
     }
+    
+    function getCodigoHTML() {
+        // ToDo.
+    }
+    
+    function getCodigoIonic() {
+        // ToDo.
+    }
 }

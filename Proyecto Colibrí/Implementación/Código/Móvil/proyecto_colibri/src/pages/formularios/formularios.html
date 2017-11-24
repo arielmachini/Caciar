@@ -1,0 +1,24 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Formularios disponibles</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h6>Los datos de estos formularios fueron obtenidos mediante un proceso desde la base de datos y se muestran a continuación.</h6>
+  <hr><br/>
+  <div *ngFor="let formulario of formularios">
+    <div>
+      <h5>📄 {{formulario.titulo}}</h5>
+      <p>{{formulario.descripcion}}</p>
+      <p><strong>Recibe: </strong>{{formulario.emailReceptor}}</p>
+      <p><strong>Fecha de apertura: </strong>{{formulario.fechaInicio}}</p>
+      <p><strong>Fecha de cierre: </strong>{{formulario.fechaFin}}</p>
+      <p><strong>Creado el: </strong>{{formulario.fechaCreacion}}</p>
+      <hr><br/>
+    </div>
+  </div>
+</ion-content>
