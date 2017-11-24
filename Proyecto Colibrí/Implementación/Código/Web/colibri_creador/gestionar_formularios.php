@@ -27,7 +27,7 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_USUARIOS);
                                 <th style="text-align: center">Título del formulario</th>
                                 <th style="text-align: center">Fecha de creación</th>
                                 <th style="text-align: center">Visibilidad</th>
-                                <th style="text-align: center">Respuestas</th>
+                                <!-- <th style="text-align: center">Respuestas</th> -->
                                 <th style="text-align: center">Acción</th>
                             </tr>
                         </thead>
@@ -64,8 +64,8 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_USUARIOS);
                                         Publicado
                                     <?php } ?>
                                 </td>
-                                <td style="text-align:center"><?= $formularioActual['cantidadRespuestas'] ?></td>
-                                <td style="text-align: center"><img onclick="window.open('./editar_formulario?id=<?= $formularioActual['idFormulario'] ?>', '_self');" src="../imagenes/gestor_editar.png" style='cursor: pointer' title="Editar este formulario"/></a> <a href="baja_formulario.php?id=<?= $formularioActual['idFormulario'] ?>" onclick="return confirm('¿Está seguro de que desea eliminar el formulario bajo el título \"<?= $formularioActual['titulo'] ?>\"?');" target="_self"><img src="../imagenes/gestor_revocar_permisos.png" title="Eliminar este formulario"/></a></td>
+                                <!-- <td style="text-align:center"><?= $formularioActual['cantidadRespuestas'] ?></td> -->
+                                <td style="text-align: center"><img onclick="window.open('./editar_formulario.php?id=<?= $formularioActual['idFormulario'] ?>', '_self');" src="../imagenes/gestor_editar.png" style='cursor: pointer' title="Editar este formulario"/></a> <a href="baja_formulario.php?id=<?= $formularioActual['idFormulario'] ?>" onclick="return confirm('¿Está seguro de que desea eliminar el formulario bajo el título \"<?= $formularioActual['titulo'] ?>\"?');" target="_self"><img src="../imagenes/gestor_revocar_permisos.png" title="Eliminar este formulario"/></a></td>
                             </tr>
                             <?php
                         }
