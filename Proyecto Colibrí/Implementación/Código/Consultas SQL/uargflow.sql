@@ -3,6 +3,7 @@
 -- Host: localhost    Database: uargflow
 -- ------------------------------------------------------
 -- Server version	5.5.55-0ubuntu0.14.04.1
+DROP SCHEMA uargflow;
 CREATE SCHEMA uargflow CHARSET UTF8;
 USE uargflow;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;

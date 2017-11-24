@@ -120,7 +120,7 @@ CREATE TABLE LISTA_DESPLEGABLE (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE OPCION (
+CREATE TABLE OPCION_LISTA_DESPLEGABLE (
     `idLista` INT UNSIGNED NOT NULL,
     `textoOpcion` VARCHAR(40) NOT NULL,
     
@@ -156,19 +156,3 @@ CREATE TABLE BOTON_RADIO (
 /* Fin de lista de botones de radio */
 
 /* * * Fin de tipos de campo * * */
-
-/* Tabla RELLENADO_ENVIADO: ¿Es realmente necesaria?
-
-CREATE TABLE RELLENADO_ENVIADO (
-    `idformulario` INT UNSIGNED NOT NULL,
-    `idusuario` INT NOT NULL,
-    FOREIGN KEY (`idformulario`)
-        REFERENCES FORMULARIO (`idformulario`)
-        ON DELETE RESTRICT ON UPDATE CASCADE,
-    FOREIGN KEY (`idusuario`)
-        REFERENCES USUARIO (`idusuario`)
-        ON DELETE RESTRICT ON UPDATE CASCADE,
-    PRIMARY KEY (`idformulario` , `idusuario`)
-);
-
-*/
