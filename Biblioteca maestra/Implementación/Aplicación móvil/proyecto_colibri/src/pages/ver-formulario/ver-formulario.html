@@ -20,7 +20,7 @@
     <p>{{formulario.descripcion}}</p><br/>
     <form (ngSubmit)="procesar.php" ng-app="GenerarFormulario">
       <ion-item *ngFor="let campo of camposFormulario" ng-controller="ControladorGenerarFormulario">
-        <div ng-bind-html="myHTML"></div>
+        <div ng-bind-html="myHTML">{{campo.codigo}}</div>
       </ion-item>
     </form>
     <p ng-app="GenerarFormulario" ng-controller="ControladorGenerarFormulario" ng-bind-html="myHTML"></p>

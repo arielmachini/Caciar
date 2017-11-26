@@ -5,15 +5,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
-/* Borrar más tarde */
-import { FormulariosPage } from '../pages/formularios/formularios';
-import { VerFormularioPage } from '../pages/ver-formulario/ver-formulario';
-
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = FormulariosPage; // Devolver a TabsPage más tarde
+  rootPage:any = TabsPage; // Devolver a TabsPage más tarde
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
