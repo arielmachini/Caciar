@@ -1,0 +1,336 @@
+/**
+ * ESTILOS GLOBALES
+ */
+
+td {
+    vertical-align: middle !important;
+}
+
+/**
+ * FORMULARIOS
+ */
+
+input[type=checkbox], input[type=radio] {
+    height: 13px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    *overflow: hidden;
+    top: -1px;
+    vertical-align: middle;
+    width: 13px;
+}
+
+input[type=date] {
+    cursor: pointer;
+}
+
+label {
+    display: block;
+    padding-left: 15px;
+    text-indent: -15px;
+}
+
+p.campo-cabecera {
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+p.campo-descripcion {
+    font-size: 14px;
+}
+
+/**
+ * MISCELÁNEO
+ */
+
+@-webkit-keyframes boton-guardar-error {
+    25%     {background-color: #ff0000; border-color: #cc0000; color: white;}
+    50%     {background-color: #cc0000; border-color: #ff0000; color: white;}
+    75%     {background-color: #ff0000; border-color: #cc0000; color: white;}
+}
+
+@keyframes boton-guardar-error {
+    25%     {background-color: #ff0000; border-color: #cc0000; color: white;}
+    50%     {background-color: #cc0000; border-color: #ff0000; color: white;}
+    75%     {background-color: #ff0000; border-color: #cc0000; color: white;}
+}
+
+@-webkit-keyframes editor-cabecera {
+    50%     {background-color: #ffffa6;}
+}
+
+@keyframes editor-cabecera {
+    50%     {background-color: #ffffa6;}
+}
+
+/* Estilo de Bootstrap, modificado. */
+.campo-editor {
+    background-clip: padding-box;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.2rem;
+    -moz-border-radius: 0.2rem;
+    color: #495057;
+    display: block;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    padding: 0.25rem 0.5rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    width: 100%;
+}
+
+/* Estilo de Bootstrap, modificado. */
+.campo-editor:focus {
+    background-color: #fff;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    color: #495057;
+    outline: 0;
+}
+
+*.oculto {
+    display: none !important;
+}
+
+button.animacion-error {
+    animation-duration: 650ms;
+    animation-name: boton-guardar-error;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-duration: 650ms;
+    -webkit-animation-name: boton-guardar-error;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+div.campo-error {
+    background-image: linear-gradient(to bottom right, #b30000, #ff0000);
+    border: 2px solid #b30000;
+    border-radius: 250px;
+    -moz-border-radius: 250px;
+    color: white;
+    cursor: help;
+    font-size: 11px;
+    margin-left: 5px;
+    padding: 5px 8px;
+}
+
+div.editor-opciones-botones {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+div.editor-opciones-botones > button {
+    width: 48% !important;
+}
+
+div.formulario-recuadro {
+    align-items: center;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0)), url(../../lib/img/formulario_fondo.png);
+    background-repeat: round;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    display: flex;
+    height: 50px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+div.formulario-titulo {
+    color: white;
+    cursor: default;
+    display: inline-block;
+    max-width: 60%;
+    overflow: hidden;
+    text-shadow: 0 1px black;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+fieldset.opciones-lista {
+    max-height: 175px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+input.campo-opcion {
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input.campo-opcion:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: 0;
+}
+
+span.animacion {
+    animation-duration: 300ms;
+    animation-name: editor-cabecera;
+    animation-timing-function: linear;
+    -webkit-animation-duration: 300ms;
+    -webkit-animation-name: editor-cabecera;
+    -webkit-animation-timing-function: linear;
+}
+
+span.campo-tipo-ayuda {
+    background-image: linear-gradient(to bottom right, #17a2b8, #69ddf4);
+    border: 2px solid #17a2b8;
+    border-radius: 250px;
+    -moz-border-radius: 250px;
+    color: white;
+    cursor: help;
+    font-size: 11px;
+    margin-left: 5px;
+    padding: 5px 8px 6px;
+}
+
+span.campo-tipo-info {
+    background-image: linear-gradient(to bottom right, #ffc107, #ffdd37);
+    border: 2px solid #ffc107;
+    border-radius: 250px;
+    -moz-border-radius: 250px;
+    color: #474747;
+    cursor: help;
+    font-size: 11px;
+    margin-left: 5px;
+    padding: 5px 8px 6px;
+}
+
+span.campo-tipo {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+span.editor-cabecera {
+    background-color: #f1f1f1;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    color: #777;
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 5px;
+    text-align: center;
+}
+
+span.editor-propiedad-cabecera {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+
+span.editor-propiedad-pista {
+    color: #5e5e5e;
+    display: block;
+    font-size: 13px;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+span.estado-deshabilitado {
+    border: 2px #822222 solid;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    box-shadow: 0 1px 1px #c6c6c6;
+    color: #822222;
+    cursor: default;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px;
+    text-shadow: 0 1px 1px #c6c6c6;
+}
+
+span.estado-habilitado {
+    border: 2px #00a86b solid;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    box-shadow: 0 1px 1px #c6c6c6;
+    color: #00a86b;
+    cursor: default;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px;
+    text-shadow: 0 1px 1px #c6c6c6;
+}
+
+span.estado-oculto {
+    border: 2px #588bae solid;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    box-shadow: 0 1px 1px #c6c6c6;
+    color: #588bae;
+    cursor: help;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 3px;
+    padding: 5px;
+    text-shadow: 0 1px 1px #c6c6c6;
+}
+
+table.campos-disponibles {
+    border-collapse: separate;
+    border-spacing: 5px !important;
+    min-width: 425px;
+    table-layout: fixed;
+    width: 100%;
+}
+
+table.campos-disponibles td:hover {
+    background: #f1f1f1;
+}
+
+table.editor {
+    background: #f8f8f8;
+    border-collapse: separate;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+}
+
+table.editor td {
+    vertical-align: top !important;
+}
+
+table.campos-disponibles td {
+    border-radius: 7.5px;
+    -moz-border-radius: 7.5px;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle !important;
+    width: 50%;
+}
+
+table.campos-disponibles td.nuevo-campo {
+    cursor: pointer;
+}
+
+table.campos-disponibles td.seleccionado {
+    background: #e2e2e2;
+}
+
+table.previa-formulario {
+    background: #f8f8f8;
+    border-collapse: separate;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+}
+
+table.previa-formulario td {
+    vertical-align: top !important;
+}
+
+table.previa-formulario td:first-child {
+    border-radius: 7.5px;
+    -moz-border-radius: 7.5px;
+    background: white;
+    padding: 10px;
+}
