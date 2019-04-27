@@ -3,6 +3,7 @@
 <?php
 require_once '../modelo/Formulario.Class.php';
 include_once '../lib/ControlAcceso.Class.php';
+include_once '../lib/FabricaPDF.php';
 require_once '../modelo/BDConexion.Class.php';
 
 date_default_timezone_set("America/Argentina/Rio_Gallegos");
@@ -23,25 +24,12 @@ function reCaptcha() {
     return $resultado;
 }
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 /**
  * Se realiza esta comprobación para evitar que el usuario acceda directamente
  * a esta página.
  */
 if (empty($_POST) || !isset($_SESSION['formulario'])) {
-    echo("" .
-    "<script type=\"text/javascript\">" .
-    "window.location.replace(\"formularios.php\");" .
-    "</script>");
-
-    /**
-     * Si el usuario tiene desactivado JavaScript en su navegador, de igual
-     * manera se cancela la carga de la página.
-     */
-    die();
+    ControlAcceso::redireccionar();
 }
 
 $formulario = $_SESSION['formulario'];
@@ -75,19 +63,24 @@ if ($resultadoCaptcha && $puntajeCaptcha > 0.5) {
     $colibri->isHTML(false);
     $colibri->Body = "Estimado usuario,\n\nSe acaba de enviar una nueva solicitud en su formulario \"" . $formulario->getTitulo() . "\". A continuación se muestran los datos de dicha solicitud:\n\n";
 
+    $cuerpoHtmlPdf = '';
+
     foreach ($formulario->getCampos() as $campo) {
         if ($campo instanceof ListaCheckbox) { // Sólo hay que realizar un tratamiento diferente para la lista de casillas de verificación.
-            $nombreCampo = str_replace(" ", "_", $campo->getTitulo()) . "[]";
-            $casillasSeleccionadas = (array) filter_input(INPUT_POST, $nombreCampo);
+            $nombreCampo = str_replace(" ", "_", $campo->getTitulo());
+            $casillasSeleccionadas = $_POST[$nombreCampo]; // NOTA: No se utiliza filter_input en este caso porque no funciona bien con grupos de casillas de verificación. Al utilizarla, retorna el valor booleano false (0).
 
-            if (sizeof($casillasSeleccionadas) > 0) {
+            if (!empty($casillasSeleccionadas)) {
                 $colibri->Body .= "\n" . $campo->getTitulo() . ":\n";
+                $cuerpoHtmlPdf .= '<strong>' . $campo->getTitulo() . '</strong><br/>';
 
                 foreach ($casillasSeleccionadas as $casilla) {
-                    $colibri->Body .= "☑ " . $casilla . "\n";
+                    $colibri->Body .= "(✓) " . $casilla . "\n";
+                    $cuerpoHtmlPdf .= '<div style="display: inline-block;"><img alt="(X)" height="12px" src="../lib/img/documentos-pdf/casilla_verificacion.svg" style="background-color: white;" width="12px"> ' . $casilla . '</div>';
                 }
 
                 $colibri->Body .= "\n";
+                $cuerpoHtmlPdf .= '<br/>';
             }
         } else {
             $nombreCampo = "nombre_" . str_replace(" ", "_", $campo->getTitulo());
@@ -95,10 +88,12 @@ if ($resultadoCaptcha && $puntajeCaptcha > 0.5) {
 
             if ($valorCampo != "") {
                 $colibri->Body .= $campo->getTitulo() . ": " . $valorCampo . "\n";
+                $cuerpoHtmlPdf .= '<strong>' . $campo->getTitulo() . '</strong><br/>' . $valorCampo . '<br/><br/>';
             }
         }
     }
 
+    FabricaPDF::generar($formulario->getID(), $formulario->getTitulo(), $formulario->incrementarRespuestas(), $cuerpoHtmlPdf);
     BDConexion::getInstancia("bdFormularios")->autocommit(false);
 
     $consulta = BDConexion::getInstancia()->query("" .

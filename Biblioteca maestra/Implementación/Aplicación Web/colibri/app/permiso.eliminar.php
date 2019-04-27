@@ -30,7 +30,7 @@ $Permiso = new Permiso($id);
                         <p class="alert alert-warning ">
                             <span class="oi oi-warning"></span> ATENCIóN. Esta operación no puede deshacerse.
                         </p>
-                        <p>¿Está seguro que desea eliminar el permiso <b><?= $Permiso->getNombre(); ?></b>?</p>
+                        <p>¿Está seguro que desea eliminar el permiso <strong><?= $Permiso->getNombre(); ?></strong>?</p>
                     </div>
                     <div class="card-footer">
                         <input type="hidden" name="id" class="form-control" id="id" value="<?= $Permiso->getId(); ?>" >

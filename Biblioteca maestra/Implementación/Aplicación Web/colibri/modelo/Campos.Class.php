@@ -4,7 +4,7 @@
  * Esta clase no se puede instanciar y abstrae los atributos y funciones más
  * generales de los campos de un formulario.
  *
- * @author Ariel Machini
+ * @author Ariel Machini <arielmachini@pm.me> <arielmachini@pm.me>
  * @version 1.0
  */
 abstract class Campo {
@@ -86,7 +86,7 @@ abstract class Campo {
 /**
  * Esta clase abstrae a campos <textarea></textarea>.
  *
- * @author Ariel Machini
+ * @author Ariel Machini <arielmachini@pm.me> <arielmachini@pm.me>
  * @version 1.0
  */
 class AreaTexto extends Campo {
@@ -134,7 +134,7 @@ class AreaTexto extends Campo {
 /**
  * Esta clase abstrae a campos <input/> de tipo "text".
  *
- * @author Ariel Machini
+ * @author Ariel Machini <arielmachini@pm.me>
  * @version 1.0
  */
 class CampoTexto extends Campo {
@@ -242,7 +242,7 @@ class CampoTexto extends Campo {
 /**
  * Esta clase a campos <input/> de tipo "date".
  * 
- * @author Ariel Machini
+ * @author Ariel Machini <arielmachini@pm.me>
  * @version 1.0
  */
 class Fecha extends Campo {
@@ -286,7 +286,7 @@ class Fecha extends Campo {
  * Esta clase no se puede instanciar y abstrae los atributos y funciones
  * generales de todos los tipos de lista que se pueden instanciar.
  *
- * @author Ariel Machini
+ * @author Ariel Machini <arielmachini@pm.me>
  * @version 1.0
  */
 abstract class Lista extends Campo {
@@ -314,7 +314,7 @@ abstract class Lista extends Campo {
 /**
  * Esta clase abstrae a conjuntos de campos <input/> de tipo "checkbox".
  * 
- * @author Ariel Machini
+ * @author Ariel Machini <arielmachini@pm.me>
  * @version 1.0
  */
 class ListaCheckbox extends Lista {
@@ -374,7 +374,7 @@ class ListaCheckbox extends Lista {
 /**
  * Esta clase abstrae a campos <select/><option></option> ... <option></option></select>
  *
- * @author Ariel Machini
+ * @author Ariel Machini <arielmachini@pm.me>
  * @version 1.0
  */
 class ListaDesplegable extends Lista {
@@ -424,7 +424,7 @@ class ListaDesplegable extends Lista {
 /**
  * Esta clase abstrae a conjuntos de campos <input/> de tipo "radio".
  * 
- * @author Ariel Machini
+ * @author Ariel Machini <arielmachini@pm.me>
  * @version 1.0
  */
 class ListaRadio extends Lista {

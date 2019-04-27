@@ -7,7 +7,7 @@ require_once '../modelo/BDConexion.Class.php';
 require_once '../modelo/Usuario.Class.php';
 
 $formularios = BDConexion::getInstancia()->query("" .
-        "SELECT `idFormulario`, `titulo` " .
+        "SELECT `idFormulario`, `titulo`, `fechaApertura`, `fechaCierre` " .
         "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
         "WHERE `estaHabilitado` = 1");
 ?>
@@ -46,17 +46,32 @@ $formularios = BDConexion::getInstancia()->query("" .
 
                     <div id="listaFormularios">
                         <?php while ($formulario = $formularios->fetch_assoc()) { ?>
-                            <div class="formulario-recuadro">
-                                <div class="formulario-titulo" title="<?= $formulario['titulo']; ?>">
-                                    <span class="oi oi-document" style="padding-right: 5px;"></span><?= $formulario['titulo']; ?>
-                                </div>
+                            <?php
+                            /**
+                             * NOTA: Sí, todas estas variables no son necesarias,
+                             * pero están puestas para mejorar la legibilidad
+                             * del código. De otro modo, se tendría una única
+                             * línea con un condicional IF larguísimo.
+                             */
+                            
+                            $fechaApertura = $formulario['fechaApertura'];
+                            $fechaCierre = $formulario['fechaCierre'];
+                            $estaOculto = (($fechaApertura != "" && date("Y-m-d") < $fechaApertura) || ($fechaCierre != "" && date("Y-m-d") > $fechaCierre));
+                            
+                            if (!$estaOculto) {
+                            ?>
+                                <div class="formulario-recuadro">
+                                    <div class="formulario-titulo" title="<?= $formulario['titulo']; ?>">
+                                        <span class="oi oi-document" style="padding-right: 5px;"></span><?= $formulario['titulo']; ?>
+                                    </div>
 
-                                <a href="formulario.ver.php?id=<?= $formulario['idFormulario']; ?>">
-                                    <button class="btn btn-sm btn-dark">
-                                        <span class="oi oi-eye" style="padding-right: 5px;"></span>Ver formulario
-                                    </button>
-                                </a>
-                            </div>
+                                    <a href="formulario.ver.php?id=<?= $formulario['idFormulario']; ?>">
+                                        <button class="btn btn-sm btn-dark">
+                                            <span class="oi oi-eye" style="padding-right: 5px;"></span>Ver formulario
+                                        </button>
+                                    </a>
+                                </div>
+                            <?php } ?>
                         <?php } ?>
                     </div>
                 </div>

@@ -49,6 +49,7 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
                 </div>
                 <div class="card-body">
                     <p>Aquí podrá ver y gestionar todos los formularios en el sistema que estén bajo su responsabilidad.</p>
+
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
                             <div class="input-group-text"><span class="oi oi-magnifying-glass"></span></div>
@@ -70,41 +71,67 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
 
                         <tbody id="listaFormularios">
                             <?php while ($formulario = $formularios->fetch_assoc()) { ?>
+
                                 <tr>
                                     <td style="vertical-align: middle;"><?= $formulario['titulo']; ?></td>
                                     <td style="vertical-align: middle;"><?= $formulario['fechaCreacion']; ?></td>
                                     <td style="vertical-align: middle;">
+                                        
                                         <?php
                                         $estaHabilitado = $formulario['estaHabilitado'];
-                                        $fechaApertura = $formulario['fechaInicio'];
-                                        $fechaCierre = $formulario['fechaFin'];
+                                        $fechaApertura = $formulario['fechaApertura'];
+                                        $fechaCierre = $formulario['fechaCierre'];
 
                                         if ($estaHabilitado == 0) {
-                                            ?>
+                                        ?>
+                                        
                                             <span class="estado-deshabilitado">DESHABILITADO</span>
-                                        <?php } else if (($fechaApertura != "" && $fechaApertura > date("Y-m-d")) || ($fechaCierre != "" && $fechaCierre < date("Y-m-d"))) { ?>
+
+                                        <?php
+                                        } else if (($fechaApertura != "" && date("Y-m-d") < $fechaApertura) || ($fechaCierre != "" && date("Y-m-d") > $fechaCierre)) {
+                                            $estaOculto = true;
+                                        ?>
+
                                             <span class="estado-habilitado">HABILITADO</span><span class="estado-oculto" title="Esto significa que, si bien este formulario está habilitado, su fecha de apertura/cierre impide el acceso al mismo.">OCULTO</span>
+
                                         <?php } else { ?>
+
                                             <span class="estado-habilitado">HABILITADO</span>
+
                                         <?php } ?>
+
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
-                                        <a href="formulario.ver.php?id=<?= $formulario['idFormulario']; ?>" title="Visitar este formulario."><button class="btn btn-light" style="margin-bottom: 2px;" type="button"><span class="oi oi-eye"></span></button></a>
+
+                                        <?php if ($estaHabilitado == 1 && !$estaOculto) { ?>
+
+                                            <a href="formulario.ver.php?id=<?= $formulario['idFormulario']; ?>" title="Visitar este formulario."><button class="btn btn-light" style="margin-bottom: 2px;" type="button"><span class="oi oi-eye"></span></button></a>
+
+                                        <?php } ?>
+                                        
                                         <a href="formulario.ver.detalles.php?id=<?= $formulario['idFormulario']; ?>" title="Ver más detalles acerca de este formulario."><button class="btn btn-outline-info" style="margin-bottom: 2px;" type="button"><span class="oi oi-zoom-in"></span></button></a>
 
                                         <?php if ($estaHabilitado == 0) { ?>
+
                                             <a href="formulario.modificar.estado.php?id=<?= $formulario['idFormulario']; ?>&estado=1" title="Habilitar este formulario."><button class="btn btn-outline-success" style="margin-bottom: 2px;" type="button"><span class="oi oi-check"></span></button></a>
+
                                         <?php } else { ?>
+
                                             <a href="formulario.modificar.estado.php?id=<?= $formulario['idFormulario']; ?>&estado=0" title="Deshabilitar este formulario."><button class="btn btn-outline-dark" style="margin-bottom: 2px;" type="button"><span class="oi oi-x"></span></button></a>
+
                                         <?php } ?>
 
                                         <a href="formulario.modificar.php?id=<?= $formulario['idFormulario']; ?>" title="Modificar este formulario."><button class="btn btn-outline-warning" style="margin-bottom: 2px;" type="button"><span class="oi oi-pencil"></span></button></a>
 
                                         <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ELIMINAR_FORMULARIOS)) { ?>
+
                                             <a title="Eliminar este formulario." href="formulario.eliminar.php?id=<?= $formulario['idFormulario']; ?>"><button class="btn btn-outline-danger" style="margin-bottom: 2px;" type="button"><span class="oi oi-trash"></span></button></a>
+
                                         <?php } ?>
+
                                     </td>
                                 </tr>
+
                             <?php } ?>
                         </tbody>
                     </table>
@@ -150,4 +177,3 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
     </script>
 
 </html>
-

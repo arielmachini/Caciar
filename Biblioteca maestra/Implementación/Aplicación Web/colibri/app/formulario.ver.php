@@ -6,19 +6,6 @@ require_once '../modelo/BDConexion.Class.php';
 require_once '../modelo/Formulario.Class.php';
 require_once '../modelo/Usuario.Class.php';
 
-function cancelarCarga() {
-    echo("" .
-    "<script type=\"text/javascript\">" .
-    "window.location.replace(\"formularios.php\");" .
-    "</script>");
-
-    /**
-     * Si el usuario tiene desactivado JavaScript en su navegador, de igual
-     * manera se cancela la carga del formulario.
-     */
-    die();
-}
-
 BDConexion::getInstancia()->autocommit(true);
 
 /**
@@ -43,7 +30,7 @@ if (isset($_SESSION['usuario']->id)) {
 
     if (!$consulta) {
         /* No existe formulario con la ID recibida por GET. */
-        cancelarCarga();
+        ControlAcceso::redireccionar();
     }
 
     while ($idRol = $consulta->fetch_assoc()['idRol']) {
@@ -56,7 +43,7 @@ if (isset($_SESSION['usuario']->id)) {
 
     if (!$tienePermiso) {
         /* El usuario no tiene permitido ver el formulario. Se cancela la carga. */
-        cancelarCarga();
+        ControlAcceso::redireccionar();
     }
 } else {
     /**
@@ -79,12 +66,12 @@ $consulta = BDConexion::getInstancia()->query("" .
 
 if (!$consulta) {
     /* No existe formulario con la ID recibida por GET. */
-    cancelarCarga();
+    ControlAcceso::redireccionar();
 }
 
 if ($consulta['estaHabilitado'] == 0) {
     /* El formulario no está habilitado. */
-    cancelarCarga();
+    ControlAcceso::redireccionar();
 }
 
 $formulario = new Formulario($consulta['fechaCreacion']);
@@ -93,9 +80,18 @@ $formulario->setID($idFormulario);
 $formulario->setFechaApertura($consulta['fechaApertura']);
 $formulario->setFechaCierre($consulta['fechaCierre']);
 
-if (($formulario->getFechaApertura() != "" && $formulario->getFechaApertura() > date("Y-m-d")) || ($formulario->getFechaCierre() != "" && $formulario->getFechaCierre() < date("Y-m-d"))) {
-    /* El formulario no está habilitado. */
-    cancelarCarga();
+if ($formulario->getFechaApertura() != "") {
+    if (date("Y-m-d") < $formulario->getFechaApertura()) {
+        /* El formulario no está habilitado. */
+        ControlAcceso::redireccionar();
+    }
+}
+
+if ($formulario->getFechaCierre() != "") {
+    if (date("Y-m-d") > $formulario->getFechaCierre()) {
+        /* El formulario no está habilitado. */
+        ControlAcceso::redireccionar();
+    }
 }
 
 $formulario->setEmailReceptor($consulta['emailReceptor']);
@@ -301,7 +297,7 @@ $_SESSION['formulario'] = $formulario;
                 </div>
                 <div class="card-body">
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <b>Atención:</b> Todos los campos acompañados por un asterisco (<span style="color: red; font-weight: bold;">*</span>) son obligatorios.
+                        <strong>Atención:</strong> Todos los campos acompañados por un asterisco (<span style="color: red; font-weight: bold;">*</span>) son obligatorios.
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

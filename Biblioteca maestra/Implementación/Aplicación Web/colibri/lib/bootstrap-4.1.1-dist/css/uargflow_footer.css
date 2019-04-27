@@ -31,3 +31,8 @@ body {
     background-color: #343a40 !important; 
     border-top: 5px solid #17a2b8;            
 }
+
+a.enlace-pie {
+    color: #ffb25b;
+    text-decoration: none;
+}

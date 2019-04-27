@@ -7,26 +7,13 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
 require_once '../modelo/BDConexion.Class.php';
 require_once '../modelo/Usuario.Class.php';
 
-function cancelarCarga() {
-    echo("" .
-    "<script type=\"text/javascript\">" .
-    "window.location.replace(\"formulario.gestor.php\");" .
-    "</script>");
-
-    /**
-     * Si el usuario tiene desactivado JavaScript en su navegador, de igual
-     * manera se cancela la carga del formulario.
-     */
-    die();
-}
-
 /* Se sanitiza la variable recibida por GET. */
 $idFormulario = filter_var(filter_input(INPUT_GET, "id"), FILTER_SANITIZE_NUMBER_INT);
 $nuevoEstado = filter_var(filter_input(INPUT_GET, "estado"), FILTER_SANITIZE_NUMBER_INT);
 
 if ($nuevoEstado != 0 && $nuevoEstado != 1) {
     /* El estado recibido por GET no es válido. */
-    cancelarCarga();
+    ControlAcceso::redireccionar("formulario.gestor.php");
 }
 
 $usuario = new Usuario($_SESSION['usuario']->id);
@@ -72,9 +59,9 @@ $consulta = BDConexion::getInstancia("bdFormularios")->query($query);
                     <?php if ($consulta) { ?>
                         <div class="alert alert-success" role="alert">
                             <?php if ($nuevoEstado == 1) { ?>
-                                Ahora el formulario está <b>habilitado</b>. Si desea verlo ahora, <a class="alert-link" href="formulario.ver.php?id=<?= $idFormulario; ?>" target="_blank">haga clic aquí</a>.
+                                Ahora el formulario está <strong>habilitado</strong>. Si desea verlo ahora, <a class="alert-link" href="formulario.ver.php?id=<?= $idFormulario; ?>" target="_blank">haga clic aquí</a>.
                             <?php } else { ?>
-                                Ahora el formulario está <b>deshabilitado</b>. Tenga en cuenta que no podrá ser visualizado por nadie hasta que vuelva a ser habilitado.
+                                Ahora el formulario está <strong>deshabilitado</strong>. Tenga en cuenta que no podrá ser visualizado por nadie hasta que vuelva a ser habilitado.
                             <?php } ?>
                         </div>
                     <?php } else { ?>

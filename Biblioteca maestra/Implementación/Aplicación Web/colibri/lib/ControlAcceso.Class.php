@@ -262,7 +262,8 @@ class ControlAcceso {
          */
         if ($this->ubicacion != Constantes::HOMEURL) {
             unset($_SESSION["HTTP_REFERER"]);
-            self::verificaLogin();
+
+            $this->verificarUbicacion();
         } else {
             $_SESSION["HTTP_REFERER"] = Constantes::HOMEURL;
         }
@@ -346,6 +347,22 @@ class ControlAcceso {
     }
 
     /**
+     * Se creó esta función privada en lugar de modificar verificaLogin
+     * (función estática) porque, más allá de que esa función se utiliza sólo
+     * en esta clase (ControlAcceso), puede que sea necesaria como función
+     * estática en futuras versiones de UARGFlow.
+     * 
+     * @author Ariel Machini <arielmachini@pm.me>
+     * @since 2019-04-27
+     * @see ControlAcceso::verificaLogin()
+     */
+    private function verificarUbicacion() {
+        if ($this->ubicacion != Constantes::FORMSURL && $this->ubicacion != Constantes::VERFORMURL && $this->ubicacion != Constantes::ENVIARFORMURL && $this->ubicacion != Constantes::NOSCRIPTURL) {
+            self::verificaLogin();
+        }
+    }
+
+    /**
      * 
      * @param type $email_
      * @param type $metodo_
@@ -367,12 +384,13 @@ class ControlAcceso {
         $_SESSION['usuario'] = $Usuario;
     }
 
-    /**
-     * 
-     */
     function redireccionaIndex() {
         $this->ubicacion = Constantes::HOMEAUTH;
         header("Location: {$this->ubicacion}");
+    }
+
+    static function redireccionar($urlDestino_ = Constantes::HOMEAUTH) {
+        header("Location: {$urlDestino_}");
     }
 
 }

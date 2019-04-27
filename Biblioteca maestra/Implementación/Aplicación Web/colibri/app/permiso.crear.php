@@ -23,8 +23,8 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_PERMISOS);
                         <h3>Crear Permiso</h3>
                         <p>
                             Complete los campos a continuación. 
-                            Luego, presione el botón <b>Confirmar</b>.<br />
-                            Si desea cancelar, presione el botón <b>Cancelar</b>.
+                            Luego, presione el botón <strong>Confirmar</strong>.<br />
+                            Si desea cancelar, presione el botón <strong>Cancelar</strong>.
                         </p>
                     </div>
                     <div class="card-body">

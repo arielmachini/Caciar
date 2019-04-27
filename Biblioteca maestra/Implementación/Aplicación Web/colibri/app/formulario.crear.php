@@ -5,7 +5,7 @@ include_once '../lib/ControlAcceso.Class.php';
 ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
 
 if (preg_match('/MSIE\s(?P<v>\d+)/i', filter_input(INPUT_SERVER, "HTTP_USER_AGENT"), $B) && $B['v'] <= 8) {
-    echo "Debe actualizar su navegador para poder acceder a esta página.";
+    echo "Tiene que actualizar su navegador para poder acceder a esta página. Disculpe las molestias.";
 
     die();
 }
@@ -17,7 +17,13 @@ $ColeccionRoles = new ColeccionRoles();
 <html>
     <head>
         <noscript>
-        <meta http-equiv="refresh" content="0; url=noscript.php">
+            <style>
+                body {
+                    display: none;
+                }
+            </style>
+
+            <meta http-equiv="refresh" content="0; url=noscript.php">
         </noscript>
 
         <meta charset="UTF-8">
@@ -50,14 +56,14 @@ $ColeccionRoles = new ColeccionRoles();
                 </div>
                 <div class="card-body">
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <b>Atención:</b> Todos los campos acompañados por un asterisco (<span style="color: red; font-weight: bold;">*</span>) son obligatorios. Si no los rellena no podrá crear el formulario.
+                        <strong>Atención:</strong> Todos los campos acompañados por un asterisco (<span style="color: red; font-weight: bold;">*</span>) son obligatorios. Si no los rellena no podrá crear el formulario.
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
 
                     <div class="alert alert-danger fade show" id="errorSinCampos" role="alert" style="display: none;">
-                        <b>Error:</b> Debe agregar al menos un campo a su formulario.
+                        <strong>Error:</strong> Debe agregar al menos un campo a su formulario.
                     </div>
 
                     <form action="formulario.crear.procesar.php" id="crearFormulario" method="post" novalidate>
@@ -88,7 +94,7 @@ $ColeccionRoles = new ColeccionRoles();
 
                         <div>
                             <p class="campo-cabecera" for="rolesDestinoFormulario">Destinatarios del formulario<span style="color: red; font-weight: bold;">*</span></p>
-                            <p class="campo-descripcion">Seleccione uno o más roles a los que estará dirigido su formulario. Aquellos usuarios con roles que no seleccione no podrán acceder al formulario.<br/><b>Consejo:</b> Mantenga presionada la tecla control (Ctrl) mientras esté haciendo clic para realizar una selección múltiple.</p>
+                            <p class="campo-descripcion">Seleccione uno o más roles a los que estará dirigido su formulario. Aquellos usuarios con roles que no seleccione no podrán acceder al formulario.<br/><strong>Consejo:</strong> Mantenga presionada la tecla control (Ctrl) mientras esté haciendo clic para realizar una selección múltiple.</p>
                             <select class="form-control" id="rolesDestinoFormulario" multiple="multiple" name="rolesDestinoFormulario[]" required style="max-height: 150px;" title="Puede seleccionar uno o más roles. Mantenga presionada la tecla control (Ctrl) mientras esté haciendo clic para realizar una selección múltiple.">
                                 <option value="-1">Invitado</option>
                                 <?php foreach ($ColeccionRoles->getRoles() as $Rol) { ?>
@@ -102,7 +108,7 @@ $ColeccionRoles = new ColeccionRoles();
                         <br/>
 
                         <p class="campo-cabecera">Fechas límite</p>
-                        <p class="campo-descripcion">Si lo desea, puede definir una fecha a partir de la cual el formulario comenzará a aceptar respuestas, así como también puede definir una fecha en la que el formulario dejará de estar disponible. <b>Estos campos son opcionales y, si no los rellena, el formulario que cree estará disponible hasta que lo deshabilite manualmente desde el gestor de formularios</b>.</p>
+                        <p class="campo-descripcion">Si lo desea, puede definir una fecha a partir de la cual el formulario comenzará a aceptar respuestas, así como también puede definir una fecha en la que el formulario dejará de estar disponible. <strong>Estos campos son opcionales y, si no los rellena, el formulario que cree estará disponible hasta que lo deshabilite manualmente desde el gestor de formularios</strong>.</p>
                         <p class="campo-descripcion" style="font-style: italic;">Abierto desde:</p>
                         <button type="button" class="btn btn-outline-danger" id="borrarFechaApertura" style="float: right;" title="Haga clic aquí para borrar la fecha de apertura del formulario.">
                             <span class="oi oi-delete"></span>
@@ -124,7 +130,7 @@ $ColeccionRoles = new ColeccionRoles();
                         <hr/>
 
                         <p class="campo-cabecera">Campos de su formulario<span style="color: red; font-weight: bold;">*</span></p>
-                        <p class="campo-descripcion">A través de la siguiente herramienta puede agregar y editar los campos que tendrá su formulario.<br/><b>Consejo:</b> Si no entiende para qué sirve un determinado campo, sitúe su cursor sobre el <span class="campo-tipo-ayuda oi oi-question-mark"></span> ubicado junto al nombre de dicho campo para visualizar una breve descripción sobre este.</p>
+                        <p class="campo-descripcion">A través de la siguiente herramienta puede agregar y editar los campos que tendrá su formulario.<br/><strong>Consejo:</strong> Si no entiende para qué sirve un determinado campo, sitúe su cursor sobre el <span class="campo-tipo-ayuda oi oi-question-mark"></span> ubicado junto al nombre de dicho campo para visualizar una breve descripción sobre este.</p>
                         <table class="editor">
                             <tbody>
                                 <tr>

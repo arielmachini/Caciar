@@ -2,17 +2,16 @@
 
 <?php
 include_once '../lib/ControlAcceso.Class.php';
-ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
 ?>
 
 <html>    
     <head>
         <script type="text/javascript">
             /**
-             * Si el usuario habilita JavaScript, se lo redirecciona al creador
-             * de formularios.
+             * Si el usuario habilita JavaScript, se lo redirecciona a la página
+             * de la cual vino.
              */
-            window.location.replace('formulario.crear.php');
+            window.history.back();
         </script>
 
         <meta charset="UTF-8">
@@ -27,11 +26,11 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
         <div class="container">
             <div class="card">
                 <div class="card-header">
-                    <h3>Crear formulario</h3>
+                    <h3>JavaScript deshabilitado</h3>
                 </div>
                 <div class="card-body">
                     <div class="alert alert-warning" role="alert">
-                        <span class="oi oi-warning"></span> Debe habilitar JavaScript para poder utilizar el creador de formularios. Para aprender cómo, <a class="alert-link" href="https://www.enable-javascript.com/es" target="_blank">haga clic aquí</a>.
+                        <span class="oi oi-warning"></span> Debe habilitar JavaScript para poder visualizar la página a la que intenta acceder. Para aprender cómo, <a class="alert-link" href="https://www.enable-javascript.com/es" target="_blank">haga clic aquí</a>.
                     </div>
                 </div>
             </div>

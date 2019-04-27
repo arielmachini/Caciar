@@ -7,19 +7,6 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
 require_once '../modelo/BDConexion.Class.php';
 require_once '../modelo/Usuario.Class.php';
 
-function cancelarCarga() {
-    echo("" .
-    "<script type=\"text/javascript\">" .
-    "window.location.replace(\"formulario.gestor.php\");" .
-    "</script>");
-
-    /**
-     * Si el usuario tiene desactivado JavaScript en su navegador, de igual
-     * manera se cancela la carga del formulario.
-     */
-    die();
-}
-
 $usuario = new Usuario($_SESSION['usuario']->id);
 
 /* Se sanitiza la variable recibida por GET. */
@@ -41,7 +28,7 @@ $formulario = BDConexion::getInstancia("bdFormularios")->query($query);
 
 if (mysqli_num_rows($formulario) == 0) {
     /* El formulario no existe o el usuario que intenta acceder no tiene acceso a este. */
-    cancelarCarga();
+    ControlAcceso::redireccionar("formulario.gestor.php");
 }
 
 $formulario = $formulario->fetch_assoc();
