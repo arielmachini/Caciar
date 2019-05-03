@@ -31,7 +31,7 @@ $Rol = new Rol($id);
                         <p class="alert alert-warning ">
                             <span class="oi oi-warning"></span> ATENCIóN. Esta operación no puede deshacerse.
                         </p>
-                        <p>¿Está seguro que desea eliminar el rol <b><?= $Rol->getNombre(); ?></b>?</p>
+                        <p>¿Está seguro que desea eliminar el rol <strong><?= $Rol->getNombre(); ?></strong>?</p>
                     </div>
                     <div class="card-footer">
                         <input type="hidden" name="id" class="form-control" id="id" value="<?= $Rol->getId(); ?>" >

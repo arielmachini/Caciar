@@ -33,7 +33,7 @@ $Usuario = new Usuario($idUsuario);
                         <h3>Dar de baja a un gestor de formularios</h3>
                     </div>
                     <div class="card-body">
-                        <p>¿Confirma que desea dar de baja como gestor de formularios a <b><?= $Usuario->getNombre(); ?></b> (<?= $Usuario->getEmail(); ?>)? Tenga en cuenta que los formularios que ya haya creado en el sistema no se eliminarán, pero si continúa dichos formularios sólo podrán ser gestionados por un administrador.</p>
+                        <p>¿Confirma que desea dar de baja como gestor de formularios a <strong><?= $Usuario->getNombre(); ?></strong> (<?= $Usuario->getEmail(); ?>)? Tenga en cuenta que los formularios que ya haya creado en el sistema no se eliminarán, pero si continúa dichos formularios sólo podrán ser gestionados por un administrador.</p>
                     </div>
                     <div class="card-footer">
                         <input type="hidden" name="idUsuario" class="form-control" value="<?= $idUsuario ?>" >

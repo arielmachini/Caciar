@@ -28,7 +28,7 @@ session_destroy();
                     <div class="alert alert-warning" role="alert">
                         Acaba de cerrar sesión en el sistema <?php echo Constantes::NOMBRE_SISTEMA; ?>.
                     </div>
-                    <p><b>¿Qué desea hacer a continuación?</b></p>
+                    <p><strong>¿Qué desea hacer a continuación?</strong></p>
                     <a href="index.php">
                         <button type="button" class="btn btn-outline-primary">
                             <span class="oi oi-account-logout"></span> Volver a la página de inicio de <?php echo Constantes::NOMBRE_SISTEMA; ?>

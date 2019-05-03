@@ -18,53 +18,32 @@
     </head>
     <body>
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="border-bottom-color: #f7ce3e;">
-            <div class="container navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">
-                    <img src="../lib/img/logo_colibri.png" class="d-inline-block align-top" alt="Colibrí">
-                </a>
-            </div>
-        </nav>
+        <?php include_once '../gui/navbar.php'; ?>
 
         <div class="container">
             <section id="main-content">
                 <article>
                     <div class="card">
                         <div class="card-header">
-                            <h3>Bienvenido al sistema <?php echo Constantes::NOMBRE_SISTEMA; ?></h3>
+                            <h3>Bienvenido</h3>
                         </div>
                         <div class="card-body">
-                            <p>Puede <b>iniciar sesión con su dirección de correo institucional</b> o puede <a href="formularios.php"><b>ver los formularios disponibles para invitados</b></a>.</p>
-
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="alert alert-danger" role="alert">
-                                        <div class="row vertical-align">
-                                            <div class="col-1 text-center">
-                                                <span class="oi oi-info"></span> 
-                                            </div>
-                                            <div class="col-11">
-                                                <b>Importante:</b> Para acceder al sistema es necesario disponer de un correo de <a href="https://www.gmail.com/" target="_blank">Gmail</a>.
-                                            </div>
-                                        </div>
-                                    </div>      
-                                </div>
-                            </div>
+                            <h5>Iniciar sesión</h5>
+                            <p>Puede iniciar sesión en el sistema Colibrí con su dirección de correo institucional (terminada en @uarg.unpa.edu.ar).</p>
+                            <div id="okgoogle" class="g-signin2" data-onsuccess="onSignIn"></div>
 
                             <hr/>
-                            <h5>Iniciar sesión</h5>
-                            <p>Podrá iniciar sesión si accede a Gmail con una dirección de correo institucional (terminada en @uarg.unpa.edu.ar). Si dispone de una, puede iniciar sesión haciendo clic en el siguiente botón:</p>
-                            <div id="okgoogle" class="g-signin2" data-onsuccess="onSignIn"></div>
+
+                            <h5>Acceso para invitados</h5>
+                            <p>Si no dispone de una dirección de correo institucional, podrá acceder al sistema como invitado.</p>
+                            <a href="formularios.php" title="Ver formularios disponibles para invitados"><button class="btn btn-outline-success" type="button"><span class="oi oi-document"></span> Ver formularios</button></a>
                         </div>
                     </div>
                 </article>
             </section>
         </div>
-        <footer class="footer" style="border-top-color: #f7ce3e;">
-            <?php echo Constantes::NOMBRE_SISTEMA; ?>
-            <span class="oi oi-globe"></span> 
-            UNPA-UARG
-        </footer>
+        
+        <?php include_once '../gui/footer.php'; ?>
     </body>
 </html>
 

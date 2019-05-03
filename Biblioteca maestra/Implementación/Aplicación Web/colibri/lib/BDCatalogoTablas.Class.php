@@ -7,6 +7,7 @@ include_once 'BDCatalogoEsquemas.Class.php';
  * Colibrí.
  *
  * @author Ariel Machini <arielmachini@pm.me>
+ * @since 2019-03-15
  */
 class BDCatalogoTablas {
     

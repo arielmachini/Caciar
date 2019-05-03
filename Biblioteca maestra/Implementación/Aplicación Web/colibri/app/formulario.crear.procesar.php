@@ -11,20 +11,7 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
  * vacíos accediendo directamente a esta página.
  */
 if (empty($_POST)) {
-    /**
-     * Primero, se intenta redireccionar al usuario al creador de formularios
-     * mediante JavaScript.
-     */
-    echo("" .
-    "<script type=\"text/javascript\">" .
-    "window.location.replace(\"formulario.crear.php\");" .
-    "</script>");
-
-    /**
-     * Si el usuario tiene desactivado JavaScript en su navegador, de igual
-     * manera se cancela el procesamiento del formulario.
-     */
-    die();
+    ControlAcceso::redireccionar("formulario.crear.php");
 }
 
 require_once '../modelo/BDConexion.Class.php';

@@ -2,7 +2,7 @@
  * El código en este archivo corresponde a aquellas partes del sistema Colibrí
  * en las que se muestre un formulario.
  * 
- * @author Ariel Machini
+ * @author Ariel Machini <arielmachini@pm.me>
  */
 
 function limpiarCampoFecha(nombreCampo) {

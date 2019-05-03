@@ -8,7 +8,7 @@ include_once 'Campos.Class.php';
  * particularidades para, posteriormente, permitir almacenar toda su
  * información de manera ágil.
  *
- * @author Ariel Machini
+ * @author Ariel Machini <arielmachini@pm.me>
  * @version 1.0
  */
 class Formulario {

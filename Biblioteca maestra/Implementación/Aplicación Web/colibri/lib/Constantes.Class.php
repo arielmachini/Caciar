@@ -11,13 +11,19 @@ setlocale(LC_TIME, 'es_AR.utf8');
  * 
  */
 class Constantes {
+    
+    /* Constantes propias del sistema Colibrí */
+    const FORMSURL = self::APPURL . "/app/formularios.php";
+    const VERFORMURL = self::APPURL . "/app/formulario.ver.php";
+    const ENVIARFORMURL = self::APPURL . "/app/formulario.enviar.php";
+    const NOSCRIPTURL = self::APPURL . "/app/noscript.php";
 
     const NOMBRE_SISTEMA = "Colibrí";
     const WEBROOT = "/var/www/html/colibri/";
     const APPDIR = "colibri";
     const SERVER = "http://localhost";
     const APPURL = "http://localhost/colibri";
-    const HOMEURL = "http://localhost/colibri/app/index.php";
-    const HOMEAUTH = "http://localhost/colibri/app/formularios.php";
+    const HOMEURL = self::APPURL . "/app/index.php";
+    const HOMEAUTH = Constantes::FORMSURL;
 
 }

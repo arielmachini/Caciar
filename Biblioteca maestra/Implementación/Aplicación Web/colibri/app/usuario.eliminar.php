@@ -30,7 +30,7 @@ $Usuario = new Usuario($id);
                         <p class="alert alert-warning ">
                             <span class="oi oi-warning"></span> ATENCIóN. Esta operación no puede deshacerse.
                         </p>
-                        <p>¿Está seguro que desea eliminar el usuario <b><?= $Usuario->getNombre(); ?></b>?
+                        <p>¿Está seguro que desea eliminar el usuario <strong><?= $Usuario->getNombre(); ?></strong>?
                     </div>
                     <div class="card-footer">
                         <input type="hidden" name="id" class="form-control" id="id" value="<?= $Usuario->getId(); ?>" >
