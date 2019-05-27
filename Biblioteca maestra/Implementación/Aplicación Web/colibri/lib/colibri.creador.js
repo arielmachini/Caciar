@@ -302,7 +302,7 @@ $('#agregarOpcionLista').click(function () {
         var opcionNueva = $('<input class=\"campo-editor\" id=\"opcionNumero' + idOpcionNueva + '\" maxlength=\"40\" placeholder=\"Opción ' + idOpcionNueva + '\" style=\"margin-top: 5px;\" type=\"text\"/>');
 
         $('#opcionesListaDesplegable').append(opcionNueva);
-        $("#opcionesListaDesplegable").scrollTop($("#opcionesListaDesplegable")[0].scrollHeight);
+        $('#opcionesListaDesplegable').scrollTop($('#opcionesListaDesplegable')[0].scrollHeight);
     }
 });
 
@@ -312,6 +312,29 @@ $('#eliminarOpcionLista').click(function () {
 
     if (identificadorPrimeraOpcion !== identificadorUltimaOpcion) {
         var ultimaOpcion = $('#opcionesListaDesplegable input:last');
+
+        ultimaOpcion.remove();
+    }
+});
+
+$('#agregarOpcionListaEdicion').click(function () {
+    /* Se obtiene el ID numérico del último campo. */
+    var idOpcionNueva = parseInt($('#opcionesListaDesplegableEdicion input:last').attr('id').substring(12)) + 1;
+
+    if (idOpcionNueva <= 50) {
+        var opcionNueva = $('<input class=\"campo-editor\" id=\"opcionNumero' + idOpcionNueva + '\" maxlength=\"40\" placeholder=\"Opción ' + idOpcionNueva + '\" style=\"margin-top: 5px;\" type=\"text\"/>');
+
+        $('#opcionesListaDesplegableEdicion').append(opcionNueva);
+        $('#opcionesListaDesplegableEdicion').scrollTop($('#opcionesListaDesplegableEdicion')[0].scrollHeight);
+    }
+});
+
+$('#eliminarOpcionListaEdicion').click(function () {
+    var identificadorPrimeraOpcion = $('#opcionesListaDesplegableEdicion input:first').attr('id');
+    var identificadorUltimaOpcion = $('#opcionesListaDesplegableEdicion input:last').attr('id');
+
+    if (identificadorPrimeraOpcion !== identificadorUltimaOpcion) {
+        var ultimaOpcion = $('#opcionesListaDesplegableEdicion input:last');
 
         ultimaOpcion.remove();
     }
@@ -650,7 +673,7 @@ $('#agregarCasillaVerificacion').click(function () {
         var opcionNueva = $('<input class=\"campo-editor\" id=\"opcionNumero' + idOpcionNueva + '\" maxlength=\"40\" placeholder=\"Casilla de verificación ' + idOpcionNueva + '\" style=\"margin-top: 5px;\" type=\"text\"/>');
 
         $('#opcionesCasillasVerificacion').append(opcionNueva);
-        $("#opcionesCasillasVerificacion").scrollTop($("#opcionesCasillasVerificacion")[0].scrollHeight);
+        $('#opcionesCasillasVerificacion').scrollTop($('#opcionesCasillasVerificacion')[0].scrollHeight);
     }
 });
 
@@ -660,6 +683,29 @@ $('#eliminarCasillaVerificacion').click(function () {
 
     if (identificadorPrimeraOpcion !== identificadorUltimaOpcion) {
         var ultimaOpcion = $('#opcionesCasillasVerificacion input:last');
+
+        ultimaOpcion.remove();
+    }
+});
+
+$('#agregarCasillaVerificacionEdicion').click(function () {
+    /* Se obtiene el ID numérico del último campo. */
+    var idOpcionNueva = parseInt($('#opcionesCasillasVerificacionEdicion input:last').attr('id').substring(12)) + 1;
+
+    if (idOpcionNueva <= 20) {
+        var opcionNueva = $('<input class=\"campo-editor\" id=\"opcionNumero' + idOpcionNueva + '\" maxlength=\"40\" placeholder=\"Casilla de verificación ' + idOpcionNueva + '\" style=\"margin-top: 5px;\" type=\"text\"/>');
+
+        $('#opcionesCasillasVerificacionEdicion').append(opcionNueva);
+        $('#opcionesCasillasVerificacionEdicion').scrollTop($('#opcionesCasillasVerificacionEdicion')[0].scrollHeight);
+    }
+});
+
+$('#eliminarCasillaVerificacionEdicion').click(function () {
+    var identificadorPrimeraOpcion = $('#opcionesCasillasVerificacionEdicion input:first').attr('id');
+    var identificadorUltimaOpcion = $('#opcionesCasillasVerificacionEdicion input:last').attr('id');
+
+    if (identificadorPrimeraOpcion !== identificadorUltimaOpcion) {
+        var ultimaOpcion = $('#opcionesCasillasVerificacionEdicion input:last');
 
         ultimaOpcion.remove();
     }
@@ -1039,6 +1085,29 @@ $('#eliminarBotonRadio').click(function () {
 
     if (identificadorSegundaOpcion !== identificadorUltimaOpcion) {
         var ultimaOpcion = $('#opcionesBotonesRadio input:last');
+
+        ultimaOpcion.remove();
+    }
+});
+
+$('#agregarBotonRadioEdicion').click(function () {
+    /* Se obtiene el ID numérico del último campo. */
+    var idOpcionNueva = parseInt($('#opcionesBotonesRadioEdicion input:last').attr('id').substring(12)) + 1;
+
+    if (idOpcionNueva <= 20) {
+        var opcionNueva = $('<input class=\"campo-editor\" id=\"opcionNumero' + idOpcionNueva + '\" maxlength=\"40\" placeholder=\"Botón de radio ' + idOpcionNueva + '\" style=\"margin-top: 5px;\" type=\"text\"/>');
+
+        $('#opcionesBotonesRadioEdicion').append(opcionNueva);
+        $("#opcionesBotonesRadioEdicion").scrollTop($("#opcionesBotonesRadioEdicion")[0].scrollHeight);
+    }
+});
+
+$('#eliminarBotonRadioEdicion').click(function () {
+    var identificadorSegundaOpcion = $('#opcionesBotonesRadioEdicion input:nth-child(2)').attr('id');
+    var identificadorUltimaOpcion = $('#opcionesBotonesRadioEdicion input:last').attr('id');
+
+    if (identificadorSegundaOpcion !== identificadorUltimaOpcion) {
+        var ultimaOpcion = $('#opcionesBotonesRadioEdicion input:last');
 
         ultimaOpcion.remove();
     }

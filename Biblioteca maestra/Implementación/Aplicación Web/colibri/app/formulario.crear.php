@@ -238,7 +238,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesListaDesplegable" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div></span>
                                             <div class="editor-opciones-botones" style="margin-bottom: 10px;">
                                                 <button class="btn btn-sm btn-outline-primary" id="agregarOpcionLista" type="button"><span class="oi oi-plus"></span> Agregar</button>
-                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarOpcionLista" title="Haga clic aquí para eliminar la última opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
+                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarOpcionLista" title="Haga clic aquí para eliminar LA ÚLTIMA opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
                                             </div>
 
                                             <fieldset class="opciones-lista" id="opcionesListaDesplegable">
@@ -299,7 +299,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesCasillasVerificacion" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div></span>
                                             <div class="editor-opciones-botones" style="margin-bottom: 10px;">
                                                 <button class="btn btn-sm btn-outline-primary" id="agregarCasillaVerificacion" type="button"><span class="oi oi-plus"></span> Agregar</button>
-                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarCasillaVerificacion" title="Haga clic aquí para eliminar la última opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
+                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarCasillaVerificacion" title="Haga clic aquí para eliminar LA ÚLTIMA opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
                                             </div>
 
                                             <fieldset class="opciones-lista" id="opcionesCasillasVerificacion">
@@ -366,7 +366,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesBotonesRadio" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div><div class="campo-error" id="errorOpcionesBotonesRadioIguales" style="display: none;" title="No puede ingresar el mismo valor para todas las opciones."><span class="oi oi-warning"></span> CAMBIAR</div></span>
                                             <div class="editor-opciones-botones" style="margin-bottom: 10px;">
                                                 <button class="btn btn-sm btn-outline-primary" id="agregarBotonRadio" type="button"><span class="oi oi-plus"></span> Agregar</button>
-                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarBotonRadio" title="Haga clic aquí para eliminar la última opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
+                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarBotonRadio" title="Haga clic aquí para eliminar LA ÚLTIMA opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
                                             </div>
 
                                             <fieldset class="opciones-lista" id="opcionesBotonesRadio">
@@ -444,9 +444,9 @@ $ColeccionRoles = new ColeccionRoles();
 
                                             <hr/>
                                             <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesListaDesplegableEdicion" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div></span>
-                                            <div class="editor-opciones-botones" style="margin-bottom: 10px;">
-                                                <button class="btn btn-sm btn-outline-primary" id="agregarOpcionListaEdicion" type="button"><span class="oi oi-plus"></span> Agregar</button>
-                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarOpcionListaEdicion" title="Haga clic aquí para eliminar la última opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
+                                            <div class="editor-opciones-botones" style="justify-content: flex-start; margin-bottom: 10px;">
+                                                <button class="btn btn-sm btn-outline-primary" id="agregarOpcionListaEdicion" style="margin-right: 5px; width: auto !important;" type="button"><span class="oi oi-plus"></span> Agregar</button>
+                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarOpcionListaEdicion" style="width: auto !important;" title="Haga clic aquí para eliminar LA ÚLTIMA opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
                                             </div>
 
                                             <fieldset class="opciones-lista" id="opcionesListaDesplegableEdicion"></fieldset>
@@ -499,9 +499,9 @@ $ColeccionRoles = new ColeccionRoles();
 
                                             <hr/>
                                             <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesCasillasVerificacionEdicion" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div></span>
-                                            <div class="editor-opciones-botones" style="margin-bottom: 10px;">
-                                                <button class="btn btn-sm btn-outline-primary" id="agregarCasillaVerificacionEdicion" type="button"><span class="oi oi-plus"></span> Agregar</button>
-                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarCasillaVerificacionEdicion" title="Haga clic aquí para eliminar la última opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
+                                            <div class="editor-opciones-botones" style="justify-content: flex-start; margin-bottom: 10px;">
+                                                <button class="btn btn-sm btn-outline-primary" id="agregarCasillaVerificacionEdicion" style="margin-right: 5px; width: auto !important;" type="button"><span class="oi oi-plus"></span> Agregar</button>
+                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarCasillaVerificacionEdicion" style="width: auto !important;" title="Haga clic aquí para eliminar LA ÚLTIMA opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
                                             </div>
 
                                             <fieldset class="opciones-lista" id="opcionesCasillasVerificacionEdicion"></fieldset>
@@ -560,9 +560,9 @@ $ColeccionRoles = new ColeccionRoles();
 
                                             <hr/>
                                             <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesBotonesRadioEdicion" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div><div class="campo-error" id="errorOpcionesBotonesRadioIgualesEdicion" style="display: none;" title="No puede ingresar el mismo valor para todas las opciones."><span class="oi oi-warning"></span> CAMBIAR</div></span>
-                                            <div class="editor-opciones-botones" style="margin-bottom: 10px;">
-                                                <button class="btn btn-sm btn-outline-primary" id="agregarBotonRadioEdicion" type="button"><span class="oi oi-plus"></span> Agregar</button>
-                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarBotonRadioEdicion" title="Haga clic aquí para eliminar la última opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
+                                            <div class="editor-opciones-botones" style="justify-content: flex-start; margin-bottom: 10px;">
+                                                <button class="btn btn-sm btn-outline-primary" id="agregarBotonRadioEdicion" style="margin-right: 5px; width: auto !important;" type="button"><span class="oi oi-plus"></span> Agregar</button>
+                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarBotonRadioEdicion" style="width: auto !important;" title="Haga clic aquí para eliminar LA ÚLTIMA opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
                                             </div>
 
                                             <fieldset class="opciones-lista" id="opcionesBotonesRadioEdicion"></fieldset>
