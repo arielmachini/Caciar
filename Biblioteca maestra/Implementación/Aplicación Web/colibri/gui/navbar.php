@@ -16,8 +16,8 @@
             <?php if (!$estaIdentificado) { ?>
                 <li class="nav-item">
                     <a class="nav-link" href="../app/index.php">
-                        <span class="oi oi-home" />
-                        Inicio
+                        <span class="oi oi-account-login" />
+                        Iniciar sesión
                     </a>
                 </li>
             <?php } ?>

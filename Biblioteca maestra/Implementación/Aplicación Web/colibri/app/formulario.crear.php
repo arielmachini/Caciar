@@ -131,7 +131,8 @@ $ColeccionRoles = new ColeccionRoles();
 
                         <p class="campo-cabecera">Campos de su formulario<span style="color: red; font-weight: bold;">*</span></p>
                         <p class="campo-descripcion">A través de la siguiente herramienta puede agregar y editar los campos que tendrá su formulario.<br/><strong>Consejo:</strong> Si no entiende para qué sirve un determinado campo, sitúe su cursor sobre el <span class="campo-tipo-ayuda oi oi-question-mark"></span> ubicado junto al nombre de dicho campo para visualizar una breve descripción sobre este.</p>
-                        <table class="editor">
+                        
+                        <table class="editor" id="editorCamposCrear">
                             <tbody>
                                 <tr>
                                     <td style="border-right: 2px solid #ececec; padding-right: 15px;">
@@ -178,13 +179,13 @@ $ColeccionRoles = new ColeccionRoles();
                                     </td>
 
                                     <td style="min-width: 220px; padding-left: 15px;">
-                                        <div class="div-editor" id="editorInicial">
+                                        <div class="div-crear" id="editorInicial">
                                             <span class="editor-cabecera">EDITOR DE CAMPOS</span>
 
                                             <span class="editor-propiedad-pista" style="padding-top: 10px;"><span class="oi oi-info" style="padding-right: 3px;"></span> Seleccione un campo del expositor para comenzar.</span>
                                         </div>
 
-                                        <div class="div-editor oculto" id="editorCampoTexto">
+                                        <div class="div-crear oculto" id="editorCampoTexto">
                                             <span class="editor-cabecera" id="cabeceraCampoTexto">CAMPO DE TEXTO</span>
 
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloCampoTexto" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
@@ -210,7 +211,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <br/>
                                             <button class="btn btn-sm btn-outline-success" id="guardarCampoTexto" style="margin-bottom: 10px; width: 100%;" type="button">
                                                 <span class="oi oi-check"></span>
-                                                Guardar
+                                                Crear campo
                                             </button>
 
                                             <button class="btn btn-sm btn-outline-danger" id="descartarCampoTexto" style="width: 100%;" type="button">
@@ -219,7 +220,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             </button>
                                         </div>
 
-                                        <div class="div-editor oculto" id="editorListaDesplegable">
+                                        <div class="div-crear oculto" id="editorListaDesplegable">
                                             <span class="editor-cabecera" id="cabeceraListaDesplegable">LISTA DESPLEGABLE</span>
 
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloListaDesplegable" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
@@ -248,7 +249,7 @@ $ColeccionRoles = new ColeccionRoles();
 
                                             <button class="btn btn-sm btn-outline-success" id="guardarListaDesplegable" style="margin-bottom: 10px; width: 100%;" type="button">
                                                 <span class="oi oi-check"></span>
-                                                Guardar
+                                                Crear campo
                                             </button>
 
                                             <button class="btn btn-sm btn-outline-danger" id="descartarListaDesplegable" style="width: 100%;" type="button">
@@ -257,7 +258,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             </button>
                                         </div>
 
-                                        <div class="div-editor oculto" id="editorCampoFecha">
+                                        <div class="div-crear oculto" id="editorCampoFecha">
                                             <span class="editor-cabecera" id="cabeceraCampoFecha">SELECTOR DE FECHA</span>
 
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloCampoFecha" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
@@ -274,7 +275,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <br/>
                                             <button class="btn btn-sm btn-outline-success" id="guardarCampoFecha" style="margin-bottom: 10px; width: 100%;" type="button">
                                                 <span class="oi oi-check"></span>
-                                                Guardar
+                                                Crear campo
                                             </button>
 
                                             <button class="btn btn-sm btn-outline-danger" id="descartarCampoFecha" style="width: 100%;" type="button">
@@ -283,7 +284,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             </button>
                                         </div>
 
-                                        <div class="div-editor oculto" id="editorCasillasVerificacion">
+                                        <div class="div-crear oculto" id="editorCasillasVerificacion">
                                             <span class="editor-cabecera" id="cabeceraCasillasVerificacion">CASILLAS DE VERIFICACIÓN</span>
 
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloCasillasVerificacion" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
@@ -309,7 +310,7 @@ $ColeccionRoles = new ColeccionRoles();
 
                                             <button class="btn btn-sm btn-outline-success" id="guardarCasillasVerificacion" style="margin-bottom: 10px; width: 100%;" type="button">
                                                 <span class="oi oi-check"></span>
-                                                Guardar
+                                                Crear campo
                                             </button>
 
                                             <button class="btn btn-sm btn-outline-danger" id="descartarCasillasVerificacion" style="width: 100%;" type="button">
@@ -318,7 +319,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             </button>
                                         </div>
 
-                                        <div class="div-editor oculto" id="editorAreaTexto">
+                                        <div class="div-crear oculto" id="editorAreaTexto">
                                             <span class="editor-cabecera" id="cabeceraAreaTexto">ÁREA DE TEXTO</span>
 
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloAreaTexto" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
@@ -338,7 +339,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <br/>
                                             <button class="btn btn-sm btn-outline-success" id="guardarAreaTexto" style="margin-bottom: 10px; width: 100%;" type="button">
                                                 <span class="oi oi-check"></span>
-                                                Guardar
+                                                Crear campo
                                             </button>
 
                                             <button class="btn btn-sm btn-outline-danger" id="descartarAreaTexto" style="width: 100%;" type="button">
@@ -347,7 +348,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             </button>
                                         </div>
 
-                                        <div class="div-editor oculto" id="editorBotonesRadio">
+                                        <div class="div-crear oculto" id="editorBotonesRadio">
                                             <span class="editor-cabecera" id="cabeceraBotonesRadio">BOTONES DE RADIO</span>
 
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloBotonesRadio" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
@@ -362,7 +363,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <label for="obligatorioBotonesRadio" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioBotonesRadio" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
 
                                             <hr/>
-                                            <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesBotonesRadio" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div></span>
+                                            <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesBotonesRadio" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div><div class="campo-error" id="errorOpcionesBotonesRadioIguales" style="display: none;" title="No puede ingresar el mismo valor para todas las opciones."><span class="oi oi-warning"></span> CAMBIAR</div></span>
                                             <div class="editor-opciones-botones" style="margin-bottom: 10px;">
                                                 <button class="btn btn-sm btn-outline-primary" id="agregarBotonRadio" type="button"><span class="oi oi-plus"></span> Agregar</button>
                                                 <button class="btn btn-sm btn-outline-secondary" id="eliminarBotonRadio" title="Haga clic aquí para eliminar la última opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
@@ -377,7 +378,7 @@ $ColeccionRoles = new ColeccionRoles();
 
                                             <button class="btn btn-sm btn-outline-success" id="guardarBotonesRadio" style="margin-bottom: 10px; width: 100%;" type="button">
                                                 <span class="oi oi-check"></span>
-                                                Guardar
+                                                Crear campo
                                             </button>
 
                                             <button class="btn btn-sm btn-outline-danger" id="descartarBotonesRadio" style="width: 100%;" type="button">
@@ -389,8 +390,201 @@ $ColeccionRoles = new ColeccionRoles();
                                 </tr>
                             </tbody>
                         </table>
-                        <br/>
+                        
+                        <table class="editor oculto" id="editorCamposEditar">
+                            <tbody>
+                                <tr>
+                                    <td><span class="editor-cabecera" id="cabeceraEdicionCampo" style="margin-bottom: 17.5px;">EDITANDO CAMPO</span>
+                                        <input id="idCampoEditado" type="hidden" value="">
+                                        
+                                        <div class="div-editar oculto" id="edicionCampoTexto">
+                                            <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloCampoTextoEdicion" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
+                                            <input class="campo-editor" id="tituloCampoTextoEdicion" maxlength="30"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
 
+                                            <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
+                                            <textarea class="campo-editor" id="descripcionCampoTextoEdicion" maxlength="200" style="max-height: 120px;"></textarea>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 200.</span>
+
+                                            <span class="editor-propiedad-cabecera">¿ES OBLIGATORIO?</span>
+                                            <label for="obligatorioCampoTexto" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioCampoTextoEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
+
+                                            <span class="editor-propiedad-cabecera">PISTA <span class="campo-tipo-info oi oi-info" title="Es el texto que se muestra dentro del campo antes de que el usuario escriba algo en él."></span></span>
+                                            <input class="campo-editor" id="pistaCampoTextoEdicion" maxlength="50" placeholder="Esta es una pista de ejemplo"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 50.</span>
+
+                                            <span class="editor-propiedad-cabecera">SUBTIPO <span class="campo-tipo-info oi oi-info" title="Determina el tipo de información que el usuario deberá ingresar en este campo."></span><div class="campo-error" id="errorSubtipoCampoTextoEdicion" style="display: none;" title="Debe especificar un subtipo para el campo de texto."><span class="oi oi-warning"></span> COMPLETAR</div></span>
+                                            <label for="campoTextoEmailEdicion" style="font-size: 13px;"><input class="campo-opcion" id="campoTextoEmailEdicion" name="subtipoCampoTextoEdicion" type="radio"/> E-mail</label>
+                                            <label for="campoTextoNumericoEdicion" style="font-size: 13px;"><input class="campo-opcion" id="campoTextoNumericoEdicion" name="subtipoCampoTextoEdicion" type="radio"/> Numérico</label>
+                                            <label for="campoTextoTextoEdicion" style="font-size: 13px;"><input class="campo-opcion" id="campoTextoTextoEdicion" name="subtipoCampoTextoEdicion" type="radio"/> Texto</label>
+
+                                            <br/>
+                                            <button class="btn btn-sm btn-outline-success" id="guardarEdicionCampoTexto" type="button">
+                                                <span class="oi oi-check"></span>
+                                                Guardar cambios
+                                            </button>
+                                            
+                                            <button class="btn btn-sm btn-outline-danger" id="descartarEdicionCampoTexto" type="button">
+                                                <span class="oi oi-x"></span>
+                                                Cancelar
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="div-editar oculto" id="edicionListaDesplegable">
+                                            <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloListaDesplegableEdicion" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
+                                            <input class="campo-editor" id="tituloListaDesplegableEdicion" maxlength="30"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+
+                                            <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
+                                            <textarea class="campo-editor" id="descripcionListaDesplegableEdicion" maxlength="200" style="max-height: 120px;"></textarea>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 200.</span>
+
+                                            <span class="editor-propiedad-cabecera">¿ES OBLIGATORIO?</span>
+                                            <label for="obligatorioListaDesplegable" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioListaDesplegableEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
+
+                                            <hr/>
+                                            <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesListaDesplegableEdicion" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div></span>
+                                            <div class="editor-opciones-botones" style="margin-bottom: 10px;">
+                                                <button class="btn btn-sm btn-outline-primary" id="agregarOpcionListaEdicion" type="button"><span class="oi oi-plus"></span> Agregar</button>
+                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarOpcionListaEdicion" title="Haga clic aquí para eliminar la última opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
+                                            </div>
+
+                                            <fieldset class="opciones-lista" id="opcionesListaDesplegableEdicion"></fieldset>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 50.</span>
+                                            <hr/>
+
+                                            <button class="btn btn-sm btn-outline-success" id="guardarEdicionListaDesplegable" type="button">
+                                                <span class="oi oi-check"></span>
+                                                Guardar cambios
+                                            </button>
+
+                                            <button class="btn btn-sm btn-outline-danger" id="descartarEdicionListaDesplegable" type="button">
+                                                <span class="oi oi-x"></span>
+                                                Cancelar
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="div-editar oculto" id="edicionCampoFecha">
+                                            <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloCampoFechaEdicion" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
+                                            <input class="campo-editor" id="tituloCampoFechaEdicion" maxlength="30"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+
+                                            <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
+                                            <textarea class="campo-editor" id="descripcionCampoFechaEdicion" maxlength="200" style="max-height: 120px;"></textarea>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 200.</span>
+
+                                            <span class="editor-propiedad-cabecera">¿ES OBLIGATORIO?</span>
+                                            <label for="obligatorioCampoFecha" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioCampoFechaEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
+
+                                            <br/>
+                                            <button class="btn btn-sm btn-outline-success" id="guardarEdicionCampoFecha" type="button">
+                                                <span class="oi oi-check"></span>
+                                                Guardar cambios
+                                            </button>
+
+                                            <button class="btn btn-sm btn-outline-danger" id="descartarEdicionCampoFecha" type="button">
+                                                <span class="oi oi-x"></span>
+                                                Cancelar
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="div-editar oculto" id="edicionCasillasVerificacion">
+                                            <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloCasillasVerificacionEdicion" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
+                                            <input class="campo-editor" id="tituloCasillasVerificacionEdicion" maxlength="30"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+
+                                            <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
+                                            <textarea class="campo-editor" id="descripcionCasillasVerificacionEdicion" maxlength="200" style="max-height: 120px;"></textarea>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 200.</span>
+
+                                            <hr/>
+                                            <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesCasillasVerificacionEdicion" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div></span>
+                                            <div class="editor-opciones-botones" style="margin-bottom: 10px;">
+                                                <button class="btn btn-sm btn-outline-primary" id="agregarCasillaVerificacionEdicion" type="button"><span class="oi oi-plus"></span> Agregar</button>
+                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarCasillaVerificacionEdicion" title="Haga clic aquí para eliminar la última opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
+                                            </div>
+
+                                            <fieldset class="opciones-lista" id="opcionesCasillasVerificacionEdicion"></fieldset>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 20.</span>
+                                            <hr/>
+
+                                            <button class="btn btn-sm btn-outline-success" id="guardarEdicionCasillasVerificacion" type="button">
+                                                <span class="oi oi-check"></span>
+                                                Guardar cambios
+                                            </button>
+
+                                            <button class="btn btn-sm btn-outline-danger" id="descartarEdicionCasillasVerificacion" type="button">
+                                                <span class="oi oi-x"></span>
+                                                Cancelar
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="div-editar oculto" id="edicionAreaTexto">
+                                            <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloAreaTextoEdicion" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
+                                            <input class="campo-editor" id="tituloAreaTextoEdicion" maxlength="30"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+
+                                            <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
+                                            <textarea class="campo-editor" id="descripcionAreaTextoEdicion" maxlength="200" style="max-height: 120px;"></textarea>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 200.</span>
+
+                                            <span class="editor-propiedad-cabecera">¿ES OBLIGATORIO?</span>
+                                            <label for="obligatorioAreaTexto" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioAreaTextoEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
+
+                                            <span class="editor-propiedad-cabecera">LÍMITE <span class="campo-tipo-info oi oi-info" title="Es la cantidad máxima de caracteres que el usuario podrá escribir en el área de texto. El valor mínimo que puede definir es 100 y el máximo 500."></span><div class="campo-error" id="errorLimiteAreaTextoEdicion" style="display: none;" title="Debe especificar un límite de caracteres (entre 100 y 500) para el área de texto."><span class="oi oi-warning"></span> COMPLETAR</div></span>
+                                            <input class="campo-editor" id="limiteAreaTextoEdicion" max="500" min="100" step="5" type="number"/>
+
+                                            <br/>
+                                            <button class="btn btn-sm btn-outline-success" id="guardarEdicionAreaTexto" type="button">
+                                                <span class="oi oi-check"></span>
+                                                Guardar cambios
+                                            </button>
+
+                                            <button class="btn btn-sm btn-outline-danger" id="descartarEdicionAreaTexto" type="button">
+                                                <span class="oi oi-x"></span>
+                                                Cancelar
+                                            </button>
+                                        </div>
+
+                                        <div class="div-editar oculto" id="edicionBotonesRadio">
+                                            <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloBotonesRadioEdicion" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
+                                            <input class="campo-editor" id="tituloBotonesRadioEdicion" maxlength="30"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+
+                                            <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
+                                            <textarea class="campo-editor" id="descripcionBotonesRadioEdicion" maxlength="200" style="max-height: 120px;"></textarea>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 200.</span>
+
+                                            <span class="editor-propiedad-cabecera">¿ES OBLIGATORIO?</span>
+                                            <label for="obligatorioBotonesRadio" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioBotonesRadioEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
+
+                                            <hr/>
+                                            <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesBotonesRadioEdicion" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div><div class="campo-error" id="errorOpcionesBotonesRadioIgualesEdicion" style="display: none;" title="No puede ingresar el mismo valor para todas las opciones."><span class="oi oi-warning"></span> CAMBIAR</div></span>
+                                            <div class="editor-opciones-botones" style="margin-bottom: 10px;">
+                                                <button class="btn btn-sm btn-outline-primary" id="agregarBotonRadioEdicion" type="button"><span class="oi oi-plus"></span> Agregar</button>
+                                                <button class="btn btn-sm btn-outline-secondary" id="eliminarBotonRadioEdicion" title="Haga clic aquí para eliminar la última opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>
+                                            </div>
+
+                                            <fieldset class="opciones-lista" id="opcionesBotonesRadioEdicion"></fieldset>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 20.</span>
+                                            <hr/>
+
+                                            <button class="btn btn-sm btn-outline-success" id="guardarEdicionBotonesRadio" type="button">
+                                                <span class="oi oi-check"></span>
+                                                Guardar cambios
+                                            </button>
+
+                                            <button class="btn btn-sm btn-outline-danger" id="descartarEdicionBotonesRadio" type="button">
+                                                <span class="oi oi-x"></span>
+                                                Cancelar
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <br/>
                         <table class="previa-formulario oculto">
                             <tbody>
                                 <tr>
@@ -415,6 +609,7 @@ $ColeccionRoles = new ColeccionRoles();
                             <span class="oi oi-check"></span>
                             Crear formulario
                         </button>
+                        
                         <button class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea borrar el progreso realizado sobre el formulario? Esta acción no se puede deshacer.');" type="reset" value="Empezar de nuevo">
                             <span class="oi oi-trash"></span>
                             Empezar de nuevo

@@ -1,1 +1,1 @@
-<?php header("Location: app/index.php"); ?>
+<?php header("Location: app/formularios.php"); ?>
