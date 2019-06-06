@@ -7,7 +7,7 @@ include_once '../lib/ControlAcceso.Class.php';
 <html>    
     <head>
         <script type="text/javascript">
-            /**
+            /*
              * Si el usuario habilita JavaScript, se lo redirecciona a la página
              * de la cual vino.
              */

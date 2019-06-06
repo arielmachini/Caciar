@@ -73,7 +73,7 @@ class Formulario {
     private $ColeccionRoles;
     
     
-    function __construct($fechaCreacion_) {
+    function __construct($fechaCreacion_ = null) {
         $this->cantidadRespuestas = 0;
         $this->descripcion = null;
         $this->estaHabilitado = false;
@@ -86,15 +86,15 @@ class Formulario {
     }
     
     function agregarDestinatario($idrol_) {
-        foreach($this->ColeccionRoles->getRoles() as $Rol) {
-            if($Rol->getId() === $idrol_) {
+        foreach ($this->ColeccionRoles->getRoles() as $Rol) {
+            if ($Rol->getId() == $idrol_) {
                 array_push($this->rolesDestino, $idrol_);
+
+                break;
             }
-            
-            break;
         }
     }
-    
+
     function estaHabilitado() {
         return $this->estaHabilitado;
     }
