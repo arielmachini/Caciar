@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-include_once 'BDCatalogoEsquemas.Class.php';
+include_once 'BDCatalogoTablas.Class.php'; // Antes: BDCatalogoEsquemas.Class.php. Se cambió porque en algunos lados del sistema hacía falta.
 include_once 'Constantes.Class.php';
 include_once '../modelo/BDColeccionGenerica.Class.php';
 
@@ -38,11 +38,11 @@ class PermisosSistema {
     const PERMISO_ROLES = "Roles";
 
     /**
-     * Roles del Sistema.
-     * La definición de los todos roles es Opcional, pero se requiere cargar un rol Estandar para el autoregistro de Usuarios.
-     * 
+     * Roles del sistema.
+     * La definición de los todos roles es opcional, pero se requiere cargar un rol estándar para el autoregistro de usuarios.
      */
-    const ROL_ESTANDAR = 'Usuario Comun';
+    const ROL_ESTANDAR = "Usuario registrado";
+    const ROL_ADMINISTRADOR = "Administrador";
 
     /**
      * Permisos y roles correspondientes a Colibrí.
@@ -52,6 +52,7 @@ class PermisosSistema {
     const PERMISO_ADMINISTRAR_GESTORES = "Administrar gestores de formularios";
     const ROL_GESTOR = "Gestor de formularios";
     const ROL_ADMINISTRADOR_GESTORES = "Administrador de gestores de formularios";
+    const IDROL_PUBLICO_GENERAL = -1;
 
 }
 

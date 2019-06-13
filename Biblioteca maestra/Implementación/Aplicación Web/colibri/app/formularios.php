@@ -6,10 +6,17 @@ include_once '../lib/BDCatalogoTablas.Class.php';
 require_once '../modelo/BDConexion.Class.php';
 require_once '../modelo/Usuario.Class.php';
 
-$formularios = BDConexion::getInstancia()->query("" .
-        "SELECT `idFormulario`, `titulo`, `fechaApertura`, `fechaCierre` " .
-        "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
-        "WHERE `estaHabilitado` = 1");
+if (isset($_SESSION['usuario']->id)) {
+    $formularios = BDConexion::getInstancia()->query("" .
+            "SELECT `idFormulario`, `titulo`, `fechaApertura`, `fechaCierre` " .
+            "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
+            "WHERE `estaHabilitado` = 1");
+} else {
+    $formularios = BDConexion::getInstancia()->query("" .
+            "SELECT `idFormulario`, `titulo`, `fechaApertura`, `fechaCierre` " .
+            "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " NATURAL JOIN " . BDCatalogoTablas::BD_TABLA_FORMULARIO_ROL . " " .
+            "WHERE `estaHabilitado` = 1 AND `idRol` = " . PermisosSistema::IDROL_PUBLICO_GENERAL);
+}
 ?>
 
 <html>
@@ -47,25 +54,48 @@ $formularios = BDConexion::getInstancia()->query("" .
                     <div id="listaFormularios">
                         <?php while ($formulario = $formularios->fetch_assoc()) { ?>
                             <?php
-                            /**
+                            /*
                              * NOTA: Sí, todas estas variables no son necesarias,
                              * pero están puestas para mejorar la legibilidad
                              * del código. De otro modo, se tendría una única
                              * línea con un condicional IF larguísimo.
                              */
-                            
                             $fechaApertura = $formulario['fechaApertura'];
                             $fechaCierre = $formulario['fechaCierre'];
                             $estaOculto = (($fechaApertura != "" && date("Y-m-d") < $fechaApertura) || ($fechaCierre != "" && date("Y-m-d") > $fechaCierre));
-                            
-                            if (!$estaOculto) {
+                            $idFormulario = $formulario['idFormulario'];
+
+                            if (isset($_SESSION['usuario']->id)) {
+                                $rolesDestino = BDConexion::getInstancia()->query("" .
+                                        "SELECT `idRol` " .
+                                        "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO_ROL . " " .
+                                        "WHERE `idFormulario` = {$idFormulario}");
+
+                                $idRol;
+                                $tienePermiso = false;
+                                $usuario = new Usuario($_SESSION['usuario']->id);
+
+                                while ($idRol = $rolesDestino->fetch_assoc()['idRol']) {
+                                    if ($usuario->buscarRolPorId($idRol)) {
+                                        $tienePermiso = true;
+
+                                        break;
+                                    }
+                                }
+                                
+                                $condicion = !$estaOculto && $tienePermiso;
+                            } else {
+                                $condicion = !$estaOculto;
+                            }
+
+                            if ($condicion) {
                             ?>
                                 <div class="formulario-recuadro">
                                     <div class="formulario-titulo" title="<?= $formulario['titulo']; ?>">
                                         <span class="oi oi-document" style="padding-right: 5px;"></span><?= $formulario['titulo']; ?>
                                     </div>
 
-                                    <a href="formulario.ver.php?id=<?= $formulario['idFormulario']; ?>">
+                                    <a href="formulario.ver.php?id=<?= $idFormulario; ?>">
                                         <button class="btn btn-sm btn-dark">
                                             <span class="oi oi-eye" style="padding-right: 5px;"></span>Ver formulario
                                         </button>

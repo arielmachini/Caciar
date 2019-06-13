@@ -40,6 +40,13 @@ class BDConexion extends mysqli {
                 die("Error de Conexion a la Base de Datos: " . $e->getCode() . ".");
             }
         }
+        
+        /*
+         * La siguiente consulta es necesaria para que los valores con caracteres
+         * "foráneos al inglés" (como "á" o "ñ") se muestren correctamente.
+         */
+        self::$instancia->query("SET CHARACTER SET 'utf8'");
+
         return self::$instancia;
     }
 

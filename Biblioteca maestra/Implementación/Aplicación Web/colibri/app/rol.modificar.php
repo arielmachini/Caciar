@@ -8,6 +8,12 @@ include_once '../modelo/Rol.Class.php';
 include_once '../modelo/ColeccionPermisos.php';
 
 $id = $_GET["id"];
+
+if ($id == PermisosSistema::IDROL_PUBLICO_GENERAL) {
+    /* El rol "Público general" no debe ser modificado. */
+    ControlAcceso::redireccionar("roles.php");
+}
+
 $Rol = new Rol($id);
 $PermisosSistema = new ColeccionPermisos();
 ?>

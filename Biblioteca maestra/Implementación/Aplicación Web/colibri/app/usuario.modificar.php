@@ -47,7 +47,7 @@ $RolesSistema = new ColeccionRoles();
                         <hr />
                         <h3>Roles</h3>
                         <?php foreach ($RolesSistema->getRoles() as $RolSistema) {
-                            ?>
+                            if ($RolSistema->getId() != PermisosSistema::IDROL_PUBLICO_GENERAL) { ?>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" 
                                        id="rol[<?= $RolSistema->getId(); ?>]" name="rol[<?= $RolSistema->getId(); ?>]"
@@ -60,7 +60,8 @@ $RolesSistema = new ColeccionRoles();
 
                                 </label>
                             </div>
-                        <?php } ?>
+                        <?php }
+                    } ?>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-outline-success">

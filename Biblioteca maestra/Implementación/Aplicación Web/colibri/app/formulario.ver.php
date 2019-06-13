@@ -8,13 +8,6 @@ require_once '../modelo/Usuario.Class.php';
 
 BDConexion::getInstancia()->autocommit(true);
 
-/**
- * La siguiente consulta es necesaria para que los valores con caracteres
- * "foráneos al inglés" (como "á" o "ñ") se muestren correctamente.
- */
-BDConexion::getInstancia()->query("" .
-        "SET CHARACTER SET 'utf8'");
-
 /* Se sanitiza la variable recibida por GET. */
 $idFormulario = filter_var(filter_input(INPUT_GET, "id"), FILTER_SANITIZE_NUMBER_INT);
 
@@ -40,23 +33,34 @@ if (isset($_SESSION['usuario']->id)) {
             break;
         }
     }
+    
+    $creador = BDConexion::getInstancia()->query("" .
+                "SELECT `idCreador` " .
+                "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
+                "WHERE `idFormulario` = {$idFormulario}")->fetch_assoc();
+    
+    if ($usuario->getId() == $creador['idCreador']) {
+        /* Si el usuario creó el formulario, entonces puede verlo. */
+        $tienePermiso = true;
+    }
 
     if (!$tienePermiso) {
         /* El usuario no tiene permitido ver el formulario. Se cancela la carga. */
         ControlAcceso::redireccionar();
     }
 } else {
-    /**
-     * Comprobar si el formulario es visible para invitados.
-     * 
-     * Ideas de implementación:
-     * ¿Agregar en CREAR FORMULARIO un idRol "-1" para "Invitado"? Eso
-     * provocaría un problema con la clave foránea que referencia a "id" de
-     * "rol".
-     * Otra idea es preguntar si hay un rol creado en el sistema para
-     * "Invitado", así como lo había en la versión anterior de UARGFlow. De lo
-     * contrario, preguntar si se puede implementar.
-     */
+    $consulta = BDConexion::getInstancia()->query("" .
+            "SELECT `idRol` " .
+            "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO_ROL . " " .
+            "WHERE `idFormulario` = {$idFormulario} AND `idRol` = " . PermisosSistema::IDROL_PUBLICO_GENERAL);
+
+    if (!$consulta) {
+        /* Esto puede ocurrir por dos razones: O no existe formulario con la ID
+         * recibida por GET o el formulario no es visible para el público
+         * general.
+         */
+        ControlAcceso::redireccionar();
+    }
 }
 
 $consulta = BDConexion::getInstancia()->query("" .
@@ -194,7 +198,8 @@ while ($campo = $consulta->fetch_assoc()) {
         $elementos = BDConexion::getInstancia()->query("" .
                 "SELECT * " .
                 "FROM " . BDCatalogoTablas::BD_TABLA_OPCION . " " .
-                "WHERE `idLista` = {$idCampo}");
+                "WHERE `idLista` = {$idCampo} " .
+                "ORDER BY `posicion` ASC");
 
         while ($elemento = $elementos->fetch_assoc()) {
             $valorElemento = $elemento['textoOpcion'];
@@ -224,7 +229,8 @@ while ($campo = $consulta->fetch_assoc()) {
         $elementos = BDConexion::getInstancia()->query("" .
                 "SELECT * " .
                 "FROM " . BDCatalogoTablas::BD_TABLA_CHECKBOX . " " .
-                "WHERE `idLista` = {$idCampo}");
+                "WHERE `idLista` = {$idCampo} " .
+                "ORDER BY `posicion` ASC");
 
         while ($elemento = $elementos->fetch_assoc()) {
             $valorElemento = $elemento['textoOpcion'];
@@ -248,7 +254,8 @@ while ($campo = $consulta->fetch_assoc()) {
     $elementos = BDConexion::getInstancia()->query("" .
             "SELECT * " .
             "FROM " . BDCatalogoTablas::BD_TABLA_BOTON_RADIO . " " .
-            "WHERE `idLista` = {$idCampo}");
+            "WHERE `idLista` = {$idCampo} " .
+            "ORDER BY `posicion` ASC");
 
     while ($elemento = $elementos->fetch_assoc()) {
         $valorElemento = $elemento['textoOpcion'];
@@ -259,8 +266,7 @@ while ($campo = $consulta->fetch_assoc()) {
     $formulario->agregarCampo($listaRadio);
 }
 
-/**
- * El formulario ya fue recuperado. Ahora, se almacena en el arreglo SESSION
+/* El formulario ya fue recuperado. Ahora, se almacena en el arreglo SESSION
  * para poder acceder a sus datos más adelante.
  */
 $_SESSION['formulario'] = $formulario;

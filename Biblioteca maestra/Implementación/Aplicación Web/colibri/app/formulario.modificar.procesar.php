@@ -12,7 +12,7 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
  * vacíos accediendo directamente a esta página.
  */
 if (empty($_POST)) {
-    ControlAcceso::redireccionar("formulario.crear.php");
+    ControlAcceso::redireccionar("formulario.gestor.php");
 }
 
 require_once '../modelo/BDConexion.Class.php';
@@ -33,7 +33,10 @@ BDConexion::getInstancia()->query("" .
 BDConexion::getInstancia()->autocommit(false);
 BDConexion::getInstancia()->begin_transaction();
 
-$formulario = new Formulario(date("Y") . "-" . date("m") . "-" . date("d"));
+$idFormulario = $_SESSION['idFormulario'];
+unset($_SESSION['idFormulario']);
+
+$formulario = new Formulario();
 $i = 1;
 
 $campo = json_decode(stripslashes(filter_input(INPUT_POST, "campoID" . $i)));
@@ -156,28 +159,45 @@ $formulario->setTitulo(sanitizar(filter_input(INPUT_POST, "tituloFormulario")));
 
 if (empty($formulario->getFechaApertura()) && empty($formulario->getFechaCierre())) {
     $consulta = BDConexion::getInstancia()->query("" .
-            "INSERT INTO " . BDCatalogoTablas::BD_TABLA_FORMULARIO . "(`idCreador`, `emailReceptor`, `titulo`, `descripcion`, `fechaCreacion`, `fechaApertura`, `fechaCierre`, `estaHabilitado`, `cantidadRespuestas`) " .
-            "VALUES ({$_SESSION['usuario']->id}, '{$formulario->getEmailReceptor()}', '{$formulario->getTitulo()}', '{$formulario->getDescripcion()}', STR_TO_DATE('{$formulario->getFechaCreacion()}', '%Y-%m-%d'), NULL, NULL, 0, 0)");
+            "UPDATE " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " SET " .
+                "`emailReceptor` = '{$formulario->getEmailReceptor()}', " .
+                "`titulo` = '{$formulario->getTitulo()}', " .
+                "`descripcion` = '{$formulario->getDescripcion()}', " .
+                "`fechaApertura` = NULL, " .
+                "`fechaCierre` = NULL " .
+            "WHERE `idFormulario` = {$idFormulario}");
 } else if (empty($formulario->getFechaCierre())) {
     $consulta = BDConexion::getInstancia()->query("" .
-            "INSERT INTO " . BDCatalogoTablas::BD_TABLA_FORMULARIO . "(`idCreador`, `emailReceptor`, `titulo`, `descripcion`, `fechaCreacion`, `fechaApertura`, `fechaCierre`, `estaHabilitado`, `cantidadRespuestas`) " .
-            "VALUES ({$_SESSION['usuario']->id}, '{$formulario->getEmailReceptor()}', '{$formulario->getTitulo()}', '{$formulario->getDescripcion()}', STR_TO_DATE('{$formulario->getFechaCreacion()}', '%Y-%m-%d'), STR_TO_DATE('{$formulario->getFechaApertura()}', '%Y-%m-%d'), NULL, 0, 0)");
+            "UPDATE " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " SET " .
+                "`emailReceptor` = '{$formulario->getEmailReceptor()}', " .
+                "`titulo` = '{$formulario->getTitulo()}', " .
+                "`descripcion` = '{$formulario->getDescripcion()}', " .
+                "`fechaApertura` = STR_TO_DATE('{$formulario->getFechaApertura()}', '%Y-%m-%d'), " .
+                "`fechaCierre` = NULL " .
+            "WHERE `idFormulario` = {$idFormulario}");
 } else if (empty($formulario->getFechaApertura())) {
     $consulta = BDConexion::getInstancia()->query("" .
-            "INSERT INTO " . BDCatalogoTablas::BD_TABLA_FORMULARIO . "(`idCreador`, `emailReceptor`, `titulo`, `descripcion`, `fechaCreacion`, `fechaApertura`, `fechaCierre`, `estaHabilitado`, `cantidadRespuestas`) " .
-            "VALUES ({$_SESSION['usuario']->id}, '{$formulario->getEmailReceptor()}', '{$formulario->getTitulo()}', '{$formulario->getDescripcion()}', STR_TO_DATE('{$formulario->getFechaCreacion()}', '%Y-%m-%d'), NULL, STR_TO_DATE('{$formulario->getFechaCierre()}', '%Y-%m-%d'), 0, 0)");
+            "UPDATE " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " SET " .
+                "`emailReceptor` = '{$formulario->getEmailReceptor()}', " .
+                "`titulo` = '{$formulario->getTitulo()}', " .
+                "`descripcion` = '{$formulario->getDescripcion()}', " .
+                "`fechaApertura` = NULL, " .
+                "`fechaCierre` = STR_TO_DATE('{$formulario->getFechaCierre()}', '%Y-%m-%d') " .
+            "WHERE `idFormulario` = {$idFormulario}");
 } else {
     $consulta = BDConexion::getInstancia()->query("" .
-            "INSERT INTO " . BDCatalogoTablas::BD_TABLA_FORMULARIO . "(`idCreador`, `emailReceptor`, `titulo`, `descripcion`, `fechaCreacion`, `fechaApertura`, `fechaCierre`, `estaHabilitado`, `cantidadRespuestas`) " .
-            "VALUES ({$_SESSION['usuario']->id}, '{$formulario->getEmailReceptor()}', '{$formulario->getTitulo()}', '{$formulario->getDescripcion()}', STR_TO_DATE('{$formulario->getFechaCreacion()}', '%Y-%m-%d'), STR_TO_DATE('{$formulario->getFechaApertura()}', '%Y-%m-%d'), STR_TO_DATE('{$formulario->getFechaCierre()}', '%Y-%m-%d'), 0, 0)");
+            "UPDATE " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " SET " .
+                "`emailReceptor` = '{$formulario->getEmailReceptor()}', " .
+                "`titulo` = '{$formulario->getTitulo()}', " .
+                "`descripcion` = '{$formulario->getDescripcion()}', " .
+                "`fechaApertura` = STR_TO_DATE('{$formulario->getFechaApertura()}', '%Y-%m-%d'), " .
+                "`fechaCierre` = STR_TO_DATE('{$formulario->getFechaCierre()}', '%Y-%m-%d') " .
+            "WHERE `idFormulario` = {$idFormulario}");
 }
 
 if ($consulta) { // Si la inserción del formulario se completó exitosamente, se continúa con el procesamiento.
-    $idFormulario = BDConexion::getInstancia()->query("" .
-                    "SELECT `idFormulario` " .
-                    "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
-                    "WHERE `titulo` = '{$formulario->getTitulo()}'")->fetch_assoc()['idFormulario'];
-
+    $elimCorrectaFormularioRol = BDConexion::getInstancia()->query("DELETE FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO_ROL . " WHERE `idFormulario` = {$idFormulario}");
+    
     /* Se guardan los roles de destino para el formulario. */
     $rolesDestinoFormulario = filter_input(INPUT_POST, "rolesDestinoFormulario", FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
@@ -186,7 +206,7 @@ if ($consulta) { // Si la inserción del formulario se completó exitosamente, s
                 "INSERT INTO " . BDCatalogoTablas::BD_TABLA_FORMULARIO_ROL . " " .
                 "VALUES ({$idFormulario}, {$idRol})");
     }
-
+    
     $ColeccionRoles = new ColeccionRoles();
     $numeroOcurrencias = 0;
 
@@ -215,6 +235,8 @@ if ($consulta) { // Si la inserción del formulario se completó exitosamente, s
     $consulta = BDConexion::getInstancia()->query("" .
             "INSERT INTO " . BDCatalogoTablas::BD_TABLA_FORMULARIO_ROL . " " .
             "VALUES ({$idFormulario}, {$idAdministrador})");
+
+    $elimCorrectaCampos = BDConexion::getInstancia()->query("DELETE FROM " . BDCatalogoTablas::BD_TABLA_CAMPO . " WHERE `idFormulario` = {$idFormulario}");
 
     /* A partir de este punto, se procede con la inserción de los campos del formulario. */
     foreach ($formulario->getCampos() as $campo) {
@@ -306,7 +328,7 @@ if ($consulta) { // Si la inserción del formulario se completó exitosamente, s
         }
     }
 
-    if ($consulta) {
+    if ($elimCorrectaFormularioRol && $elimCorrectaCampos && $consulta) {
         BDConexion::getInstancia()->commit();
     } else {
         BDConexion::getInstancia()->rollback();
@@ -328,7 +350,7 @@ if ($consulta) { // Si la inserción del formulario se completó exitosamente, s
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
 
-        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear formulario</title>
+        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Modificar formulario</title>
     </head>
     <body>
         <?php include_once '../gui/navbar.php'; ?>
@@ -336,12 +358,12 @@ if ($consulta) { // Si la inserción del formulario se completó exitosamente, s
         <div class="container">
             <div class="card">
                 <div class="card-header">
-                    <h3>Crear formulario</h3>
+                    <h3>Modificar formulario</h3>
                 </div>
                 <div class="card-body">
                     <?php if ($consulta) { ?>
                         <div class="alert alert-success" role="alert">
-                            Su formulario ha sido creado exitosamente. Recuerde que puede habilitarlo desde el gestor de formularios.
+                            El formulario ha sido modificado con éxito. Podrá encontrarlo en el gestor de formularios con el título "<?= $formulario->getTitulo(); ?>".
                         </div>
                     <?php } else { ?>
                         <div class="alert alert-danger" role="alert">

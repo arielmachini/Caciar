@@ -24,7 +24,7 @@ if ($usuario->esAdministradorDeGestores()) {
             "WHERE `idCreador` = {$_SESSION['usuario']->id} AND `idFormulario` = {$idFormulario}";
 }
 
-$formulario = BDConexion::getInstancia("bdFormularios")->query($query);
+$formulario = BDConexion::getInstancia()->query($query);
 
 if (mysqli_num_rows($formulario) == 0) {
     /* El formulario no existe o el usuario que intenta acceder no tiene acceso a este. */
@@ -74,9 +74,13 @@ $rolesDestino = BDConexion::getInstancia()->query("" .
                     <p>«<i><?= $formulario['descripcion']; ?></i>»</p>
                     <hr/>
                     <h4 class="card-text">Destinatarios del formulario</h4>
-                    <?php while ($rol = $rolesDestino->fetch_assoc()) { ?>
-                        <p><?= $rol['nombre']; ?></p>
-                    <?php } ?>
+                    <?php while ($rol = $rolesDestino->fetch_assoc()) {
+                        $nombreRol = $rol['nombre'];
+                        
+                        if ($nombreRol !== PermisosSistema::ROL_GESTOR && $nombreRol !== PermisosSistema::ROL_ADMINISTRADOR_GESTORES && $nombreRol !== PermisosSistema::ROL_ADMINISTRADOR) { ?>
+                            <p><?= $nombreRol; ?></p>
+                        <?php }
+                    } ?>
                     <hr/>
                     <h4 class="card-text">Fecha de creación</h4>
                     <p><?= $formulario['fechaCreacion']; ?></p>

@@ -41,7 +41,7 @@ $ColeccionRoles = new ColeccionRoles();
                         </tr>
 
                         <?php foreach ($ColeccionRoles->getRoles() as $Rol) {
-                            ?>
+                            if ($Rol->getId() != PermisosSistema::IDROL_PUBLICO_GENERAL) { ?>
                             <tr>
                                 <td><?= $Rol->getNombre(); ?></td>
                                 <td>
@@ -62,7 +62,8 @@ $ColeccionRoles = new ColeccionRoles();
                                     </a>
                                 </td>
                             </tr>
-                        <?php } ?>
+                        <?php }
+                    } ?>
                     </table>
                 </div>
             </div>

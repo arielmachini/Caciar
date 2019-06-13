@@ -24,7 +24,7 @@ function reCaptcha() {
     return $resultado;
 }
 
-/**
+/*
  * Se realiza esta comprobación para evitar que el usuario acceda directamente
  * a esta página.
  */
@@ -68,7 +68,7 @@ if ($resultadoCaptcha && $puntajeCaptcha > 0.5) {
     foreach ($formulario->getCampos() as $campo) {
         if ($campo instanceof ListaCheckbox) { // Sólo hay que realizar un tratamiento diferente para la lista de casillas de verificación.
             $nombreCampo = str_replace(" ", "_", $campo->getTitulo());
-            $casillasSeleccionadas = $_POST[$nombreCampo]; // NOTA: No se utiliza filter_input en este caso porque no funciona bien con grupos de casillas de verificación. Al utilizarla, retorna el valor booleano false (0).
+            $casillasSeleccionadas = filter_input(INPUT_POST, $nombreCampo, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
             if (!empty($casillasSeleccionadas)) {
                 $colibri->Body .= "\n" . $campo->getTitulo() . ":\n";

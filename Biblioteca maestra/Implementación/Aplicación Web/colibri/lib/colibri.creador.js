@@ -9,7 +9,7 @@
 
 $(document).ready(function () {
     "use strict"; // PARA DEBUGGING.
-    
+
     /* Se establecen límites en la selección de fechas de apertura y cierre. */
     $('#fechaApertura').datepicker({minDate: 0});
     $('#fechaCierre').datepicker({minDate: 1});
@@ -34,7 +34,7 @@ $(document).ready(function () {
     $('#borrarFechaCierre').click(function () {
         document.getElementById('fechaCierre').value = '';
     });
-    
+
     /*
      * Se deshabilita el selector de fecha predeterminado del navegador,
      * de manera que no interfiera con el selector de fecha de jQuery.
@@ -49,7 +49,7 @@ $(document).ready(function () {
             duration: 275
         }
     });
-    
+
     /*
      * Se deshabilita la posibilidad de enviar el formulario con la tecla INTRO.
      * Esto se hace para que no se pueda enviar el formulario apretando dicha
@@ -61,6 +61,82 @@ $(document).ready(function () {
             event.preventDefault();
         }
     });
+    
+    $('#creacionDescartar').click(function () {
+        $.confirm({
+            icon: 'oi oi-signpost',
+            title: 'Empezar de nuevo',
+            content: '¿Desea descartar su progreso actual y empezar de nuevo? Esta acción <b>no se puede deshacer</b>.',
+            animation: 'none',
+            closeAnimation: 'none',
+            theme: 'material',
+            type: 'red',
+            useBootstrap: false,
+            buttons: {
+                confirm: {
+                    btnClass: 'btn-red',
+                    text: 'Descartar mi progreso',
+                    action: function () {
+                        $('#crearFormulario').trigger('reset');
+                        $('#vistaPreviaFormulario').empty();
+                        $('#botonesPreviaFormulario').empty();
+                        $('.previa-formulario').addClass('oculto');
+                        $('#camposCreados').empty();
+                        
+                        $('html, body').animate({
+                            scrollTop: 0
+                        }, 500);
+                    }
+                },
+                cancelar: {
+                    text: 'Cancelar'
+                }
+            }
+        });
+    });
+    
+    $('#edicionCancelar').click(function () {
+        $.confirm({
+            icon: 'oi oi-signpost',
+            title: 'Cancelar edición',
+            content: '¿Desea descartar todos los cambios realizados sobre este formulario? Esta acción <b>no se puede deshacer</b>.',
+            animation: 'none',
+            closeAnimation: 'none',
+            theme: 'material',
+            type: 'orange',
+            useBootstrap: false,
+            buttons: {
+                confirm: {
+                    btnClass: 'btn-orange',
+                    text: 'Descartar mis cambios',
+                    action: function () {
+                        window.location.replace('formulario.gestor.php');
+                    }
+                },
+                seguirEditando: {
+                    text: 'Seguir editando'
+                }
+            }
+        });
+    });
+
+    /*
+     * Se previene que la sesión expire (por inactividad) mientras el usuario
+     * esté creando o modificando un formulario.
+     * 
+     * NOTA: Por defecto, una sesión en PHP expira al cumplirse 24 minutos de
+     * inactividad.
+     */
+    var tiempoRefresco = 1200000; // Equivale a 20 minutos.
+
+    window.setInterval(function () {
+        $.ajax({
+            cache: false,
+            type: 'GET',
+            url: '../lib/mantenerSesion.php',
+            success: function (data) {}
+        });
+    }, tiempoRefresco);
 });
 
 /*
@@ -235,9 +311,7 @@ $('#guardarEdicionCampoTexto').click(function () {
             }
         }
 
-        var alturaDivAcciones = $('#campoID' + idCampoEditado).height() + 11;
-        
-        $('#accionesCampoID' + idCampoEditado).height(alturaDivAcciones);
+        $('#accionesCampoID' + idCampoEditado).css('height', $('#campoID' + idCampoEditado).height() + 11 + 'px');
         $('input[name=campoID' + idCampoEditado + ']').val(campoTexto);
 
         descartarEdicionCampoTexto();
@@ -271,9 +345,9 @@ function descartarEdicionCampoTexto() {
     $('#campoTextoNumericoEdicion').prop('checked', false);
     $('#campoTextoTextoEdicion').prop('checked', false);
     $('#idCampoEditado').val('');
-    
+
     $('.editor').removeClass('oculto').not('#editorCamposCrear').addClass('oculto');
-    
+
     /* Se reactivan los botones de acción que se desactivaron durante la edición. */
     reactivarBotonesAccion();
 }
@@ -491,9 +565,7 @@ $('#guardarEdicionListaDesplegable').click(function () {
 
         listaDesplegable = JSON.stringify(listaDesplegable);
 
-        var alturaDivAcciones = $('#campoID' + idCampoEditado).height() + 11;
-        
-        $('#accionesCampoID' + idCampoEditado).height(alturaDivAcciones);
+        $('#accionesCampoID' + idCampoEditado).css('height', $('#campoID' + idCampoEditado).height() + 11 + 'px');
         $('input[name=campoID' + idCampoEditado + ']').val(listaDesplegable);
 
         descartarEdicionListaDesplegable();
@@ -530,9 +602,9 @@ function descartarEdicionListaDesplegable() {
     $('#obligatorioListaDesplegableEdicion').prop('checked', false);
     $('#opcionesListaDesplegableEdicion input').remove();
     $('#idCampoEditado').val('');
-    
+
     $('.editor').removeClass('oculto').not('#editorCamposCrear').addClass('oculto');
-    
+
     /* Se reactivan los botones de acción que se desactivaron durante la edición. */
     reactivarBotonesAccion();
 }
@@ -614,9 +686,7 @@ $('#guardarEdicionCampoFecha').click(function () {
 
         campoFecha = JSON.stringify(campoFecha);
 
-        var alturaDivAcciones = $('#campoID' + idCampoEditado).height() + 11;
-        
-        $('#accionesCampoID' + idCampoEditado).height(alturaDivAcciones);
+        $('#accionesCampoID' + idCampoEditado).css('height', $('#campoID' + idCampoEditado).height() + 11 + 'px');
         $('input[name=campoID' + idCampoEditado + ']').val(campoFecha);
 
         descartarEdicionCampoFecha();
@@ -827,11 +897,11 @@ $('#guardarEdicionCasillasVerificacion').click(function () {
             }
         }
 
+        $('#campoID' + idCampoEditado).html('<p class=\"campo-cabecera\" style=\"font-size: 14px !important;\">' + $('#tituloCasillasVerificacionEdicion').val() + '</p><p class=\"campo-descripcion\" style=\"font-size: 13px !important;\">' + $('#descripcionCasillasVerificacionEdicion').val() + '</p>' + listaOpciones);
+
         listaCheckbox = JSON.stringify(listaCheckbox);
 
-        var alturaDivAcciones = $('#campoID' + idCampoEditado).height() + 11;
-        
-        $('#accionesCampoID' + idCampoEditado).height(alturaDivAcciones);
+        $('#accionesCampoID' + idCampoEditado).css('height', $('#campoID' + idCampoEditado).height() + 11 + 'px');
         $('input[name=campoID' + idCampoEditado + ']').val(listaCheckbox);
 
         descartarEdicionCasillasVerificacion();
@@ -1014,9 +1084,7 @@ $('#guardarEdicionAreaTexto').click(function () {
 
         areaTexto = JSON.stringify(areaTexto);
 
-        var alturaDivAcciones = $('#campoID' + idCampoEditado).height() + 11;
-        
-        $('#accionesCampoID' + idCampoEditado).height(alturaDivAcciones);
+        $('#accionesCampoID' + idCampoEditado).css('height', $('#campoID' + idCampoEditado).height() + 11 + 'px');
         $('input[name=campoID' + idCampoEditado + ']').val(areaTexto);
 
         descartarEdicionAreaTexto();
@@ -1128,7 +1196,7 @@ $('#guardarBotonesRadio').click(function () {
 
     var opciones = document.getElementById('opcionesBotonesRadio').getElementsByTagName('input');
     opciones = Array.from(opciones);
-    
+
     if (opciones.every(opcion => opcion.value === opciones[0].value)) {
         $('#guardarBotonesRadio').addClass('animacion-error');
         $('#errorOpcionesBotonesRadioIguales').fadeIn(300).css('display', 'inline-block');
@@ -1284,9 +1352,7 @@ $('#guardarEdicionBotonesRadio').click(function () {
 
         listaBotonRadio = JSON.stringify(listaBotonRadio);
 
-        var alturaDivAcciones = $('#campoID' + idCampoEditado).height() + 11;
-        
-        $('#accionesCampoID' + idCampoEditado).height(alturaDivAcciones);
+        $('#accionesCampoID' + idCampoEditado).css('height', $('#campoID' + idCampoEditado).height() + 11 + 'px');
         $('input[name=campoID' + idCampoEditado + ']').val(listaBotonRadio);
 
         descartarEdicionBotonesRadio();
@@ -1338,7 +1404,7 @@ $('#descartarEdicionBotonesRadio').click(function () {
 function desactivarBotonesMoverInnecesarios() {
     var idAnteultimo = $("#botonesPreviaFormulario > div").length - 1;
     var idUltimo = $("#botonesPreviaFormulario > div").length;
-    
+
     $('#accionesCampoID1 :button[onclick*=ARRIBA]').fadeTo(200, 0.1).attr('disabled', true);
     $('#accionesCampoID' + idAnteultimo + ' :button[onclick*=ABAJO]').fadeTo(200, 1).attr('disabled', false);
     $('#accionesCampoID' + idUltimo + ' :button[onclick*=ABAJO]').fadeTo(200, 0.1).attr('disabled', true);
@@ -1348,6 +1414,7 @@ function editarCampo(idCampo) {
     /* Se desactivan los botones para eliminar y mover campos durante la edición. */
     $('#botonesPreviaFormulario .btn-danger').fadeTo(300, 0.1).attr('disabled', true);
     $('#botonesPreviaFormulario .btn-primary').fadeTo(300, 0.1).attr('disabled', true);
+    $('#botonesPreviaFormulario .btn-warning').fadeTo(200, 1).attr('disabled', false);
 
     /* Se desactivan los botones de acción para este campo durante la edición. */
     $('#accionesCampoID' + idCampo + ' .btn-warning').fadeTo(300, 0.1).attr('disabled', true);
@@ -1552,44 +1619,73 @@ function editarCampo(idCampo) {
 }
 
 function eliminarCampo(idCampo) {
-    $('#camposCreados').find('input[name=campoID' + idCampo + ']').remove();
-    $('#campoID' + idCampo).remove();
-    $('#accionesCampoID' + idCampo).remove();
+    var nombreCampo = $('#campoID' + idCampo).find('.campo-cabecera').text();
 
-    /* Se reasignan los ID para los campos siguientes. */
-    var campoInferior = $('#campoID' + (idCampo + 1));
-    
-    console.log(campoInferior.val());
+    if ($('#camposCreados').find('input[name=campoID' + idCampo + ']').val().replace(/\s+/g, '').indexOf('"obligatorio":1') > -1) {
+        nombreCampo = nombreCampo.substring(0, nombreCampo.length - 1);
+    }
 
-    while (campoInferior.val() !== undefined) {
-        idCampo++;
-        var nuevaIdCampo = idCampo - 1;
+    $.confirm({
+        icon: 'oi oi-trash',
+        title: 'Eliminar campo',
+        content: '¿Desea eliminar el campo «<i>' + nombreCampo + '</i>» de su formulario? Esta acción <b>no se puede deshacer</b>.',
+        animation: 'none',
+        boxWidth: '500px',
+        closeAnimation: 'none',
+        theme: 'material',
+        type: 'red',
+        useBootstrap: false,
+        buttons: {
+            confirm: {
+                btnClass: 'btn-red',
+                text: 'Sí',
+                action: function () {
+                    $('#camposCreados').find('input[name=campoID' + idCampo + ']').remove();
+                    $('#campoID' + idCampo).remove();
+                    $('#accionesCampoID' + idCampo).remove();
 
-        $('#camposCreados').find('input[name=campoID' + idCampo + ']').attr('name', 'campoID' + nuevaIdCampo);
-        campoInferior.attr('id', 'campoID' + nuevaIdCampo);
-        $('#accionesCampoID' + idCampo).attr('id', 'accionesCampoID' + nuevaIdCampo);
+                    /* Se reasignan los ID para los campos siguientes. */
+                    var campoInferior = $('#campoID' + (idCampo + 1));
 
-        $('#accionesCampoID' + nuevaIdCampo).children().each(function () {
-            if ($(this).attr('onclick').indexOf('ARRIBA') > -1) {
-                $(this).attr('onclick', 'moverCampo(' + nuevaIdCampo + ', \'ARRIBA\')');
-            } else if ($(this).attr('onclick').indexOf('ABAJO') > -1) {
-                $(this).attr('onclick', 'moverCampo(' + nuevaIdCampo + ', \'ABAJO\')');
-            } else if ($(this).attr('onclick').indexOf('editarCampo') > -1) {
-                $(this).attr('onclick', 'editarCampo(' + nuevaIdCampo + ')');
-            } else {
-                $(this).attr('onclick', 'eliminarCampo(' + nuevaIdCampo + ')');
+                    while (campoInferior.val() !== undefined) {
+                        idCampo++;
+                        var nuevaIdCampo = idCampo - 1;
+
+                        $('#camposCreados').find('input[name=campoID' + idCampo + ']').attr('name', 'campoID' + nuevaIdCampo);
+                        campoInferior.attr('id', 'campoID' + nuevaIdCampo);
+                        $('#accionesCampoID' + idCampo).attr('id', 'accionesCampoID' + nuevaIdCampo);
+
+                        $('#accionesCampoID' + nuevaIdCampo).children().each(function () {
+                            if ($(this).attr('onclick').indexOf('ARRIBA') > -1) {
+                                $(this).attr('onclick', 'moverCampo(' + nuevaIdCampo + ', \'ARRIBA\')');
+                            } else if ($(this).attr('onclick').indexOf('ABAJO') > -1) {
+                                $(this).attr('onclick', 'moverCampo(' + nuevaIdCampo + ', \'ABAJO\')');
+                            } else if ($(this).attr('onclick').indexOf('editarCampo') > -1) {
+                                $(this).attr('onclick', 'editarCampo(' + nuevaIdCampo + ')');
+                            } else {
+                                $(this).attr('onclick', 'eliminarCampo(' + nuevaIdCampo + ')');
+                            }
+                        });
+
+                        campoInferior = $('#campoID' + (idCampo + 1));
+                    }
+
+                    /* También se "elimina" el campo en sessionStorage. */
+                    sessionStorage.setItem('id', Number(sessionStorage.getItem('id')) - 1);
+
+                    /* Si no existen más campos, se oculta la vista previa del formulario. */
+                    if ($('#vistaPreviaFormulario').text().trim() === "") {
+                        $('.previa-formulario').addClass('oculto');
+                    } else {
+                        desactivarBotonesMoverInnecesarios();
+                    }
+                }
+            },
+            cancelar: {
+                text: 'No'
             }
-        });
-
-        campoInferior = $('#campoID' + (idCampo + 1));
-    }
-
-    /* Si no existen más campos, se oculta la vista previa del formulario. */
-    if ($('#vistaPreviaFormulario').is(':empty')) {
-        $('.previa-formulario').addClass('oculto');
-    } else {
-        desactivarBotonesMoverInnecesarios();
-    }
+        }
+    });
 }
 
 function moverCampo(idCampo, direccionDesplazamiento) {
@@ -1607,9 +1703,9 @@ function moverCampo(idCampo, direccionDesplazamiento) {
 
         $('#campoID' + idCampoInferior).html(htmlCampo);
         $('#campoID' + idCampo).html(htmlCampoInferior);
-        
+
         var alturaDivAcciones = $('#accionesCampoID' + idCampo).height();
-        
+
         $('#accionesCampoID' + idCampo).height($('#accionesCampoID' + idCampoInferior).height());
         $('#accionesCampoID' + idCampoInferior).height(alturaDivAcciones);
     } else if (direccionDesplazamiento === 'ARRIBA') {
@@ -1626,9 +1722,9 @@ function moverCampo(idCampo, direccionDesplazamiento) {
 
         $('#campoID' + idCampoSuperior).html(htmlCampo);
         $('#campoID' + idCampo).html(htmlCampoSuperior);
-        
+
         var alturaDivAcciones = $('#accionesCampoID' + idCampo).height();
-        
+
         $('#accionesCampoID' + idCampo).height($('#accionesCampoID' + idCampoSuperior).height());
         $('#accionesCampoID' + idCampoSuperior).height(alturaDivAcciones);
     }
@@ -1656,16 +1752,25 @@ function reactivarBotonesAccion() {
                 event.preventDefault();
                 event.stopPropagation();
             }
-            
-            if ($('#camposCreados').is(':empty')) {
+
+            if (!$('input[name="rolesDestinoFormulario[]"]').is(':checked')) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                $('#errorSinDestinatarios').css('display', 'block');
+            } else {
+                $('#errorSinDestinatarios').css('display', 'none');
+            }
+
+            if ($('#camposCreados').html().trim() === "") {
                 event.preventDefault();
                 event.stopPropagation;
-                
+
                 $('#errorSinCampos').css('display', 'block');
             } else {
                 $('#errorSinCampos').css('display', 'none');
             }
-            
+
             $('html, body').animate({
                 scrollTop: 0
             }, 750);

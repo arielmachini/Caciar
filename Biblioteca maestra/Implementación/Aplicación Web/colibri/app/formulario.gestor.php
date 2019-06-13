@@ -105,7 +105,7 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
 
                                         <?php if ($estaHabilitado == 1 && !$estaOculto) { ?>
 
-                                            <a href="formulario.ver.php?id=<?= $formulario['idFormulario']; ?>" title="Visitar este formulario."><button class="btn btn-light" style="margin-bottom: 2px;" type="button"><span class="oi oi-eye"></span></button></a>
+                                            <a href="formulario.ver.php?id=<?= $formulario['idFormulario']; ?>" target="_blank" title="Visitar este formulario."><button class="btn btn-light" style="margin-bottom: 2px;" type="button"><span class="oi oi-eye"></span></button></a>
 
                                         <?php } ?>
                                         

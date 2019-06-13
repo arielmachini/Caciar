@@ -11,6 +11,192 @@ if (preg_match('/MSIE\s(?P<v>\d+)/i', filter_input(INPUT_SERVER, "HTTP_USER_AGEN
 }
 
 include_once '../modelo/ColeccionRoles.php';
+require_once '../modelo/BDConexion.Class.php';
+require_once '../modelo/Formulario.Class.php';
+
+BDConexion::getInstancia()->autocommit(true);
+
+/* Se sanitiza la variable recibida por GET. */
+$idFormulario = filter_var(filter_input(INPUT_GET, "id"), FILTER_SANITIZE_NUMBER_INT);
+
+$consulta = BDConexion::getInstancia()->query("" .
+        "SELECT * " .
+        "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
+        "WHERE `idFormulario` = " . $idFormulario)->fetch_assoc();
+
+if (!$consulta) {
+    /* No existe formulario con la ID recibida por GET. */
+    ControlAcceso::redireccionar('formulario.gestor.php');
+}
+
+$formulario = new Formulario();
+
+$formulario->setID($idFormulario);
+$formulario->setDescripcion($consulta['descripcion']);
+$formulario->setEmailReceptor($consulta['emailReceptor']);
+$formulario->setFechaApertura($consulta['fechaApertura']);
+$formulario->setFechaCierre($consulta['fechaCierre']);
+$formulario->setTitulo($consulta['titulo']);
+
+$consulta = BDConexion::getInstancia()->query("" .
+        "SELECT `idRol` " .
+        "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO_ROL . " " .
+        "WHERE `idFormulario` = {$idFormulario}");
+
+while ($idRol = $consulta->fetch_assoc()['idRol']) {
+    $formulario->agregarDestinatario($idRol);
+}
+
+$consulta = BDConexion::getInstancia()->query("" .
+        "SELECT * " .
+        "FROM " . BDCatalogoTablas::BD_TABLA_CAMPO . " " .
+        "WHERE `idFormulario` = {$formulario->getID()} " .
+        "ORDER BY `posicion` ASC");
+
+$arregloCamposJson = array();
+
+while ($campo = $consulta->fetch_assoc()) {
+    /* Se guardan los atributos generales del campo. */
+    $idCampo = $campo['idCampo'];
+    $titulo = $campo['titulo'];
+    $descripcion = $campo['descripcion'];
+    $esObligatorio = $campo['esObligatorio'];
+
+    /* ¿Se trata de un CAMPO DE TEXTO? */
+    $consultaPorSubtipo = BDConexion::getInstancia()->query("" .
+            "SELECT `pista`, `subtipo` " .
+            "FROM " . BDCatalogoTablas::BD_TABLA_CAMPO . " NATURAL JOIN " . BDCatalogoTablas::BD_TABLA_CAMPO_TEXTO . " " .
+            "WHERE `idFormulario` = {$formulario->getID()} AND `idCampo` = {$idCampo}");
+
+    if (mysqli_num_rows($consultaPorSubtipo) != 0) {
+        $consultaPorSubtipo = $consultaPorSubtipo->fetch_assoc();
+        $pista = $consultaPorSubtipo['pista'];
+        $subtipo = $consultaPorSubtipo['subtipo'];
+
+        if ($subtipo == CampoTexto::$CAMPO_TEXTO) {
+            $jsonCampo = '{"tipoCampo": "CampoTexto", "titulo": "' . $titulo . '", "descripcion": "' . $descripcion . '", "obligatorio": ' . $esObligatorio . ', "pista": "' . $pista . '"}';
+        } else if ($subtipo == CampoTexto::$CAMPO_EMAIL) {
+            $jsonCampo = '{"tipoCampo": "CampoEmail", "titulo": "' . $titulo . '", "descripcion": "' . $descripcion . '", "obligatorio": ' . $esObligatorio . ', "pista": "' . $pista . '"}';
+        } else {
+            $jsonCampo = '{"tipoCampo": "CampoNumerico", "titulo": "' . $titulo . '", "descripcion": "' . $descripcion . '", "obligatorio": ' . $esObligatorio . ', "pista": "' . $pista . '"}';
+        }
+
+        array_push($arregloCamposJson, $jsonCampo);
+
+        continue;
+    }
+
+    /* Falso. ¿Se trata de un ÁREA DE TEXTO? */
+    $consultaPorSubtipo = BDConexion::getInstancia()->query("" .
+            "SELECT `limiteCaracteres` " .
+            "FROM " . BDCatalogoTablas::BD_TABLA_CAMPO . " NATURAL JOIN " . BDCatalogoTablas::BD_TABLA_AREA_TEXTO . " " .
+            "WHERE `idFormulario` = {$formulario->getID()} AND `idCampo` = {$idCampo}");
+
+    if (mysqli_num_rows($consultaPorSubtipo) != 0) {
+        $limiteCaracteres = $consultaPorSubtipo->fetch_assoc()['limiteCaracteres'];
+
+        $jsonCampo = '{"tipoCampo": "AreaTexto", "titulo": "' . $titulo . '", "descripcion": "' . $descripcion . '", "obligatorio": ' . $esObligatorio . ', "limite": ' . $limiteCaracteres . '}';
+
+        array_push($arregloCamposJson, $jsonCampo);
+
+        continue;
+    }
+
+    /* Falso. ¿Se trata de un SELECTOR DE FECHAS? */
+    $consultaPorSubtipo = BDConexion::getInstancia()->query("" .
+            "SELECT * " .
+            "FROM " . BDCatalogoTablas::BD_TABLA_CAMPO . " NATURAL JOIN " . BDCatalogoTablas::BD_TABLA_FECHA . " " .
+            "WHERE `idFormulario` = {$formulario->getID()} AND `idCampo` = {$idCampo}");
+
+    if (mysqli_num_rows($consultaPorSubtipo) != 0) {
+        $jsonCampo = '{"tipoCampo": "Fecha", "titulo": "' . $titulo . '", "descripcion": "' . $descripcion . '" , "obligatorio": ' . $esObligatorio . '}';
+
+        array_push($arregloCamposJson, $jsonCampo);
+
+        continue;
+    }
+
+    /* Falso. ¿Se trata de una LISTA DESPLEGABLE? */
+    $consultaPorSubtipo = BDConexion::getInstancia()->query("" .
+            "SELECT * " .
+            "FROM " . BDCatalogoTablas::BD_TABLA_CAMPO . " NATURAL JOIN " . BDCatalogoTablas::BD_TABLA_LISTA_DESPLEGABLE . " " .
+            "WHERE `idFormulario` = {$formulario->getID()} AND `idCampo` = {$idCampo}");
+
+    if (mysqli_num_rows($consultaPorSubtipo) != 0) {
+        $jsonCampo = '{"tipoCampo": "ListaDesplegable", "titulo": "' . $titulo . '", "descripcion": "' . $descripcion . '", "obligatorio": ' . $esObligatorio . ', "opciones": [';
+
+        $elementos = BDConexion::getInstancia()->query("" .
+                "SELECT * " .
+                "FROM " . BDCatalogoTablas::BD_TABLA_OPCION . " " .
+                "WHERE `idLista` = {$idCampo}");
+
+        while ($elemento = $elementos->fetch_assoc()) {
+            $valorElemento = $elemento['textoOpcion'];
+
+            $jsonCampo .= '"' . $valorElemento . '",';
+        }
+
+        $jsonCampo = substr($jsonCampo, 0, -1);
+        $jsonCampo .= ']}';
+
+        array_push($arregloCamposJson, $jsonCampo);
+
+        continue;
+    }
+
+    /* Falso. ¿Se trata de una LISTA DE CASILLAS DE VERIFICACIÓN? */
+    $consultaPorSubtipo = BDConexion::getInstancia()->query("" .
+            "SELECT * " .
+            "FROM " . BDCatalogoTablas::BD_TABLA_CAMPO . " NATURAL JOIN " . BDCatalogoTablas::BD_TABLA_LISTA_CHECKBOX . " " .
+            "WHERE `idFormulario` = {$formulario->getID()} AND `idCampo` = {$idCampo}");
+
+    if (mysqli_num_rows($consultaPorSubtipo) != 0) {
+        $jsonCampo = '{"tipoCampo": "ListaCheckbox", "titulo": "' . $titulo . '", "descripcion": "' . $descripcion . '", "obligatorio": 0, "opciones": [';
+
+        $elementos = BDConexion::getInstancia()->query("" .
+                "SELECT * " .
+                "FROM " . BDCatalogoTablas::BD_TABLA_CHECKBOX . " " .
+                "WHERE `idLista` = {$idCampo}");
+
+        while ($elemento = $elementos->fetch_assoc()) {
+            $valorElemento = $elemento['textoOpcion'];
+
+            $jsonCampo .= '"' . $valorElemento . '",';
+        }
+
+        $jsonCampo = substr($jsonCampo, 0, -1);
+        $jsonCampo .= ']}';
+
+        array_push($arregloCamposJson, $jsonCampo);
+
+        continue;
+    }
+
+    /* Falso. Se trata de una LISTA DE BOTONES DE RADIO. */
+    $jsonCampo = '{"tipoCampo": "ListaBotonRadio", "titulo": "' . $titulo . '", "descripcion": "' . $descripcion . '", "obligatorio": ' . $esObligatorio . ', "opciones": [';
+
+    $elementos = BDConexion::getInstancia()->query("" .
+            "SELECT * " .
+            "FROM " . BDCatalogoTablas::BD_TABLA_BOTON_RADIO . " " .
+            "WHERE `idLista` = {$idCampo}");
+
+    while ($elemento = $elementos->fetch_assoc()) {
+        $valorElemento = $elemento['textoOpcion'];
+
+        $jsonCampo .= '"' . $valorElemento . '",';
+    }
+
+    $jsonCampo = substr($jsonCampo, 0, -1);
+    $jsonCampo .= ']}';
+
+    array_push($arregloCamposJson, $jsonCampo);
+}
+
+/* Se guarda la ID del formulario en el arreglo SESSION para poder acceder a
+ * este más adelante.
+ */
+$_SESSION['idFormulario'] = $formulario->getID();
+
 $ColeccionRoles = new ColeccionRoles();
 ?>
 
@@ -46,7 +232,7 @@ $ColeccionRoles = new ColeccionRoles();
         <script type="text/javascript" src="../lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
-        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Crear formulario</title>
+        <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Modificar formulario</title>
     </head>
     <body>
         <?php include_once '../gui/navbar.php'; ?>
@@ -54,7 +240,7 @@ $ColeccionRoles = new ColeccionRoles();
         <div class="container" style="min-width: 800px;">
             <div class="card">
                 <div class="card-header">
-                    <h3>Crear formulario</h3>
+                    <h3>Modificar formulario</h3>
                 </div>
                 <div class="card-body">
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -65,14 +251,14 @@ $ColeccionRoles = new ColeccionRoles();
                     </div>
 
                     <div class="alert alert-danger fade show" id="errorSinCampos" role="alert" style="display: none;">
-                        <strong>Error:</strong> Debe agregar al menos un campo a su formulario.
+                        <strong>Error:</strong> El formulario debe tener al menos un campo.
                     </div>
 
-                    <form action="formulario.crear.procesar.php" id="crearFormulario" method="post" novalidate>
+                    <form action="formulario.modificar.procesar.php" id="crearFormulario" method="post" novalidate>
                         <p for="destinatarioFormulario" class="campo-cabecera">Dirección de e-mail que recibirá las respuestas<span style="color: red; font-weight: bold;">*</span></p>
                         <div>
                             <p class="campo-descripcion">¿Qué dirección de e-mail debería recibir las respuestas al formulario que está creando?</p>
-                            <input autocomplete="on" class="form-control form-control-lg" id="destinatarioFormulario" maxlength="200" name="destinatarioFormulario" required type="email"/>
+                            <input autocomplete="on" class="form-control form-control-lg" id="destinatarioFormulario" maxlength="200" name="destinatarioFormulario" required type="email" value="<?= $formulario->getEmailReceptor(); ?>"/>
                             <div class="invalid-feedback">
                                 <span class="oi oi-circle-x"></span> La dirección de e-mail que ingresó no es válida.
                             </div>
@@ -82,7 +268,7 @@ $ColeccionRoles = new ColeccionRoles();
                         <div>
                             <p class="campo-cabecera" for="tituloFormulario">Título del formulario<span style="color: red; font-weight: bold;">*</span></p>
                             <p class="campo-descripcion">Ingrese un título corto (pero descriptivo) para el formulario.</p>
-                            <input autocomplete="off" autofocus class="form-control" id="tituloFormulario" maxlength="40" name="tituloFormulario" required spellcheck="true" type="text"/>
+                            <input autocomplete="off" class="form-control" id="tituloFormulario" maxlength="40" name="tituloFormulario" required spellcheck="true" type="text" value="<?= $formulario->getTitulo(); ?>"/>
                             <div class="invalid-feedback">
                                 <span class="oi oi-circle-x"></span> No escribió un título para el formulario.
                             </div>
@@ -91,21 +277,29 @@ $ColeccionRoles = new ColeccionRoles();
 
                         <p class="campo-cabecera">Descripción del formulario</p>
                         <p class="campo-descripcion">Una descripción concisa, que facilite la comprensión de su formulario.</p>
-                        <textarea class="form-control" id="descripcionFormulario" maxlength="400" name="descripcionFormulario" placeholder="Puede escribir una descripción de hasta 400 caracteres." spellcheck="true" style="max-height: 120px; min-height: 60px;"></textarea>
+                        <textarea class="form-control" id="descripcionFormulario" maxlength="400" name="descripcionFormulario" placeholder="Puede escribir una descripción de hasta 400 caracteres." spellcheck="true" style="max-height: 120px; min-height: 60px;"><?= $formulario->getDescripcion(); ?></textarea>
                         <br/>
 
                         <div>
                             <p class="campo-cabecera" for="rolesDestinoFormulario">Destinatarios del formulario<span style="color: red; font-weight: bold;">*</span></p>
                             <p class="campo-descripcion">Seleccione uno o más roles a los que estará dirigido su formulario. Aquellos usuarios con roles que no seleccione no podrán acceder al formulario.</p>
                             <label for="Público general" title="Comprende estudiantes y a otras personas sin correo institucional.">
-                                <input class="campo-opcion" name="rolesDestinoFormulario[]" type="checkbox" value="<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>">
+                                <?php if (in_array(PermisosSistema::IDROL_PUBLICO_GENERAL, $formulario->getDestinatarios())) { ?>
+                                    <input checked class="campo-opcion" name="rolesDestinoFormulario[]" type="checkbox" value="<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>">
+                                <?php } else { ?>
+                                    <input class="campo-opcion" name="rolesDestinoFormulario[]" type="checkbox" value="<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>">
+                                <?php } ?>
                                 Público general
                             </label>
                             
                             <?php foreach ($ColeccionRoles->getRoles() as $Rol) {
                                 if ($Rol->getNombre() !== PermisosSistema::ROL_GESTOR && $Rol->getNombre() !== PermisosSistema::ROL_ADMINISTRADOR_GESTORES && $Rol->getNombre() !== PermisosSistema::ROL_ADMINISTRADOR && $Rol->getId() != PermisosSistema::IDROL_PUBLICO_GENERAL) { // Los roles administrativos no son incumbencia del gestor de formularios. El rol de invitado también se omite ya que se insertó manualmente en el código. ?>
                                     <label for="<?= $Rol->getNombre() ?>">
-                                        <input class="campo-opcion" name="rolesDestinoFormulario[]" type="checkbox" value="<?= $Rol->getId() ?>">
+                                        <?php if (in_array($Rol->getId(), $formulario->getDestinatarios())) {?>
+                                            <input checked class="campo-opcion" name="rolesDestinoFormulario[]" type="checkbox" value="<?= $Rol->getId() ?>">
+                                        <?php } else { ?>
+                                            <input class="campo-opcion" name="rolesDestinoFormulario[]" type="checkbox" value="<?= $Rol->getId() ?>">
+                                        <?php } ?>
                                         <?= $Rol->getNombre() ?>
                                     </label>
                                 <?php }
@@ -124,7 +318,7 @@ $ColeccionRoles = new ColeccionRoles();
                             <span class="oi oi-delete"></span>
                         </button>
                         <div style="overflow: hidden; padding-right: 5px;">
-                            <input autocomplete="off" class="form-control" id="fechaApertura" name="fechaAperturaFormulario" placeholder="Haga clic aquí para abrir el calendario" readonly style="background-color: white; cursor: pointer;" type="date"/>
+                            <input autocomplete="off" class="form-control" id="fechaApertura" name="fechaAperturaFormulario" placeholder="Haga clic aquí para abrir el calendario" readonly style="background-color: white; cursor: pointer;" type="date" value="<?= $formulario->getFechaApertura(); ?>"/>
                         </div>
                         <br/>
 
@@ -133,7 +327,7 @@ $ColeccionRoles = new ColeccionRoles();
                             <span class="oi oi-delete"></span>
                         </button>
                         <div style="overflow: hidden; padding-right: 5px;">
-                            <input autocomplete="off" class="form-control" id="fechaCierre" name="fechaCierreFormulario" placeholder="Haga clic aquí para abrir el calendario" readonly style="background-color: white; cursor: pointer;" type="date"/>
+                            <input autocomplete="off" class="form-control" id="fechaCierre" name="fechaCierreFormulario" placeholder="Haga clic aquí para abrir el calendario" readonly style="background-color: white; cursor: pointer;" type="date" value="<?= $formulario->getFechaCierre(); ?>"/>
                         </div>
                         <br/>
 
@@ -595,17 +789,117 @@ $ColeccionRoles = new ColeccionRoles();
                         </table>
                         
                         <br/>
-                        <table class="previa-formulario oculto">
+                        
+                        <?php if (!empty($arregloCamposJson)) { ?>
+                            <table class="previa-formulario">
+                        <?php } else { ?>
+                            <table class="previa-formulario oculto">
+                        <?php } ?>
                             <tbody>
                                 <tr>
                                     <td style="max-width: 300px;">
                                         <span class="editor-cabecera" style="margin-bottom: 17.5px;">VISTA PREVIA DEL FORMULARIO</span>
-                                        <div id="vistaPreviaFormulario"></div>
+                                        <div id="vistaPreviaFormulario">
+                                            <?php for ($i = 1; $i <= count($arregloCamposJson); $i++) {
+                                                $jsonCampo = json_decode($arregloCamposJson[($i - 1)]);
+                                                
+                                                switch ($jsonCampo->tipoCampo) {
+                                                    case "CampoTexto":
+                                                        if ($jsonCampo->obligatorio == 1) { ?>
+                                                            <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo; ?><span style="color: red; font-weight: bold;">*</span></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p><input class="campo-editor" disabled placeholder="<?= $jsonCampo->pista ?>" type="text"/></div>
+                                                        <?php } else { ?>
+                                                            <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo; ?></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p><input class="campo-editor" disabled placeholder="<?= $jsonCampo->pista ?>" type="text"/></div>
+                                                        <?php }
+                                                        
+                                                        break;
+                                                    case "CampoEmail":
+                                                        if ($jsonCampo->obligatorio == 1) { ?>
+                                                            <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo; ?><span style="color: red; font-weight: bold;">*</span></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p><input class="campo-editor" disabled placeholder="<?= $jsonCampo->pista ?>" type="email"/></div>
+                                                        <?php } else { ?>
+                                                            <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo; ?></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p><input class="campo-editor" disabled placeholder="<?= $jsonCampo->pista ?>" type="email"/></div>
+                                                        <?php }
+                                                        
+                                                        break;
+                                                    case "CampoNumerico":
+                                                        if ($jsonCampo->obligatorio == 1) { ?>
+                                                            <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo; ?><span style="color: red; font-weight: bold;">*</span></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p><input class="campo-editor" disabled placeholder="<?= $jsonCampo->pista ?>" type="number"/></div>
+                                                        <?php } else { ?>
+                                                            <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo; ?></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p><input class="campo-editor" disabled placeholder="<?= $jsonCampo->pista ?>" type="number"/></div>
+                                                        <?php }
+                                                        
+                                                        break;
+                                                    case "AreaTexto":
+                                                        if ($jsonCampo->obligatorio == 1) { ?>
+                                                            <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo; ?><span style="color: red; font-weight: bold;">*</span></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p><textarea class="campo-editor" disabled maxlength="<?= $jsonCampo->limite; ?>" style="resize: none;"></textarea></div>
+                                                        <?php } else { ?>
+                                                            <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo; ?></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p><textarea class="campo-editor" disabled maxlength="<?= $jsonCampo->limite; ?>" style="resize: none;"></textarea></div>
+                                                        <?php }
+                                                        
+                                                        break;
+                                                    case "Fecha":
+                                                        if ($jsonCampo->obligatorio == 1) { ?>
+                                                            <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo; ?><span style="color: red; font-weight: bold;">*</span></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p><input class="campo-editor" disabled type="date"/></div>
+                                                        <?php } else { ?>
+                                                            <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo; ?></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p><input class="campo-editor" disabled type="date"/></div>
+                                                        <?php }
+                                                        
+                                                        break;
+                                                    case "ListaDesplegable":
+                                                        if ($jsonCampo->obligatorio == 1) { ?>
+                                                            <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo; ?><span style="color: red; font-weight: bold;">*</span></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p>
+                                                                <select class="campo-editor" disabled>
+                                                                    <?php foreach ($jsonCampo->opciones as $opcion) { ?>
+                                                                        <option value="<?= $opcion; ?>"><?= $opcion; ?></option>
+                                                                    <?php } ?>
+                                                                </select>
+                                                            </div>
+                                                        <?php } else { ?>
+                                                            <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo; ?></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p>
+                                                                <select class="campo-editor" disabled>
+                                                                    <?php foreach ($jsonCampo->opciones as $opcion) { ?>
+                                                                        <option value="<?= $opcion; ?>"><?= $opcion; ?></option>
+                                                                    <?php } ?>
+                                                                </select>
+                                                            </div>
+                                                        <?php }
+                                                        
+                                                        break;
+                                                    case "ListaCheckbox": ?>
+                                                        <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo; ?></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p>
+                                                            <?php foreach ($jsonCampo->opciones as $opcion) { ?>
+                                                                <label style="font-size: 13px;"><input class="opcion-editor" disabled type="checkbox" value="<?= $opcion; ?>"/> <?= $opcion; ?></label>
+                                                            <?php } ?>
+                                                        </div>
+                                                        <?php break;
+                                                    case "ListaBotonRadio":
+                                                        if ($jsonCampo->obligatorio == 1) { ?>
+                                                            <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo ?><span style="color: red; font-weight: bold;">*</span></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p>
+                                                                <?php foreach ($jsonCampo->opciones as $opcion) { ?>
+                                                                    <label style="font-size: 13px;"><input class="opcion-editor" disabled type="radio" value="<?= $opcion; ?>"/> <?= $opcion; ?></label>
+                                                                <?php } ?>
+                                                            </div>
+                                                        <?php } else { ?>
+                                                            <div id="campoID<?= $i; ?>" style="border-bottom: 1px solid #e9e9e9; display: block; padding-bottom: 10px;"><p class="campo-cabecera" style="font-size: 14px !important;"><?= $jsonCampo->titulo ?></p><p class="campo-descripcion" style="font-size: 13px !important;"><?= $jsonCampo->descripcion; ?></p>
+                                                                <?php foreach ($jsonCampo->opciones as $opcion) { ?>
+                                                                    <label style="font-size: 13px;"><input class="opcion-editor" disabled type="radio" value="<?= $opcion; ?>"/> <?= $opcion; ?></label>
+                                                                <?php } ?>
+                                                            </div>
+                                                        <?php }
+                                                        
+                                                        break;
+                                                }
+                                            } ?>
+                                        </div>
                                     </td>
 
                                     <td style="min-width: 220px; padding-left: 15px; text-align: center; width: 220px;">
                                         <span class="editor-cabecera" style="margin-bottom: 17.5px; margin-top: 9px;">ACCIONES</span>
-                                        <div id="botonesPreviaFormulario"></div>
+                                        <div id="botonesPreviaFormulario">
+                                            <?php for ($i = 1; $i <= count($arregloCamposJson); $i++) {
+                                                $jsonCampo = json_decode($arregloCamposJson[($i - 1)]); ?>
+                                                <div id="accionesCampoID<?= $i; ?>" style="align-items: flex-start; height: auto; display: flex; justify-content: center; padding-top: 10px;"><button class="btn btn-primary" onclick="moverCampo(<?= $i; ?>, 'ARRIBA')" style="flex-grow: 1; margin-right: 5px;" title="Mover este campo una posición arriba." type="button"><span class="oi oi-arrow-top"></span></button><button class="btn btn-primary" onclick="moverCampo(<?= $i; ?>, 'ABAJO')" style="flex-grow: 1; margin-right: 5px;" title="Mover este campo una posición abajo." type="button"><span class="oi oi-arrow-bottom"></span></button><button class="btn btn-warning" onclick="editarCampo(<?= $i; ?>)" style="flex-grow: 1; margin-right: 5px;" title="Editar este campo." type="button"><span class="oi oi-pencil"></span></button><button class="btn btn-danger" onclick="eliminarCampo(<?= $i; ?>)" style="flex-grow: 1;" title="Eliminar este campo del formulario." type="button"><span class="oi oi-trash"></span></button></div>
+                                            <?php } ?>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -613,16 +907,22 @@ $ColeccionRoles = new ColeccionRoles();
 
                         <hr/>
 
-                        <fieldset id="camposCreados" style="display: none;"></fieldset>
+                        <fieldset id="camposCreados" style="display: none;">
+                            <?php $i = 1;
+                            foreach ($arregloCamposJson as $jsonCampo) { ?>
+                            <input name="campoID<?= $i; ?>" type="hidden" value="<?= htmlspecialchars($jsonCampo); ?>">
+                                <?php $i++;
+                            } ?>
+                        </fieldset>
 
-                        <button class="btn btn-success" type="submit" value="Crear formulario">
+                        <button class="btn btn-success" type="submit" value="Guardar cambios">
                             <span class="oi oi-check"></span>
-                            Crear formulario
+                            Guardar cambios
                         </button>
                         
-                        <button class="btn btn-danger" id="creacionDescartar" type="button" value="Empezar de nuevo">
-                            <span class="oi oi-trash"></span>
-                            Empezar de nuevo
+                        <button class="btn btn-warning" id="edicionCancelar" type="button" value="Cancelar edición">
+                            <span class="oi oi-x"></span>
+                            Cancelar edición
                         </button>
                     </form>
                 </div>
@@ -634,5 +934,22 @@ $ColeccionRoles = new ColeccionRoles();
 
     <script type="text/javascript" src="../lib/colibri.creador.js"></script>
     <script type="text/javascript" src="../lib/colibri.formularios.js"></script>
+    <script type="text/javascript">
+        /* Se corrigen detalles visuales en la interfaz. */
+        
+        $(document).ready(function () {
+            desactivarBotonesMoverInnecesarios();
+            
+            var idCampo = 0;
+            
+            $('#botonesPreviaFormulario > div').each(function () {
+                idCampo++;
+                
+                $(this).css('height', $('#campoID' + idCampo).height() + 11 + 'px');
+            });
+            
+            sessionStorage.setItem('id', Number(idCampo));
+        });
+    </script>
 </html>
 

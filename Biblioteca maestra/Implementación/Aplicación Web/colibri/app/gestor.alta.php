@@ -17,9 +17,13 @@ $ColeccionUsuarios = new ColeccionUsuarios();
 
         <!-- Hojas de estilo requeridas por el sistema Colibrí -->
         <link rel="stylesheet" href="../gui/css/colibri.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
+        
+        <!-- Scripts requeridos por el sistema Colibrí -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - Alta de gestor de formularios</title>
     </head>
@@ -63,11 +67,9 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                                             <?= $Usuario->getEmail(); ?>
                                         </td>
                                         <td style="vertical-align: middle;">
-                                            <a href="gestor.alta.procesar.php?id=<?= $Usuario->getId(); ?>">
-                                                <button type="button" class="btn btn-outline-success" onclick="return confirm('¿Confirma que desea dar de alta como gestor de formularios a <?= $Usuario->getNombre(); ?> (<?= $Usuario->getEmail(); ?>)?')">
-                                                    <span class="oi oi-plus"></span> Dar de alta
-                                                </button>
-                                            </a>
+                                            <button type="button" class="btn btn-outline-success" onclick="altaGestorFormularios(<?= $Usuario->getId(); ?>, '<?= $Usuario->getNombre(); ?>', '<?= $Usuario->getEmail(); ?>')">
+                                                <span class="oi oi-plus"></span> Dar de alta
+                                            </button>
                                         </td>
                                     </tr>
                                     <?php
@@ -112,6 +114,31 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                 }
             }
         });
+        
+        function altaGestorFormularios(idUsuario, nombreUsuario, emailUsuario) {
+            $.confirm({
+                icon: 'oi oi-signpost',
+                title: 'Dar de alta',
+                content: '¿Desea dar de alta como gestor de formularios a <b>' + nombreUsuario + '</b> (' + emailUsuario + ')?',
+                animation: 'none',
+                closeAnimation: 'none',
+                theme: 'material',
+                type: 'green',
+                useBootstrap: false,
+                buttons: {
+                    confirm: {
+                        btnClass: 'btn-green',
+                        text: 'Dar de alta',
+                        action: function () {
+                            window.location.href = 'gestor.alta.procesar.php?id=' + idUsuario;
+                        }
+                    },
+                    cancelar: {
+                        text: 'Cancelar'
+                    }
+                }
+            });
+        }
     </script>
 
 </html>

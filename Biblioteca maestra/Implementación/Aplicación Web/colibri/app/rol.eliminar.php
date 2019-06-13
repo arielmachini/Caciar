@@ -7,6 +7,12 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_ROLES);
 include_once '../modelo/Rol.Class.php';
 
 $id = $_GET["id"];
+
+if ($id == PermisosSistema::IDROL_PUBLICO_GENERAL) {
+    /* El rol "Público general" no debe ser eliminado. */
+    ControlAcceso::redireccionar("roles.php");
+}
+
 $Rol = new Rol($id);
 ?>
 <html>
