@@ -323,7 +323,7 @@ class ListaCheckbox extends Lista {
         $codigoGenerado = parent::getCodigo();
 
         $codigoGenerado = $codigoGenerado .
-                "<label for=\"checkboxID0\">";
+                "<label for=\"checkboxID0_" . $this->getPosicion() . "\">";
 
         $codigoGenerado = $codigoGenerado .
                 "<input";
@@ -334,7 +334,7 @@ class ListaCheckbox extends Lista {
         }
 
         $codigoGenerado = $codigoGenerado .
-                " class=\"campo-opcion\" name=\"" . str_replace(" ", "_", $this->getTitulo()) . "[]\"";
+                " class=\"campo-opcion\" id=\"checkboxID0_" . $this->getPosicion() . "\" name=\"" . str_replace(" ", "_", $this->getTitulo()) . "[]\"";
 
         $codigoGenerado = $codigoGenerado .
                 " type=\"checkbox\" value=\"" . $this->getElementos()[0] . "\"> ";
@@ -347,10 +347,10 @@ class ListaCheckbox extends Lista {
 
         for ($i = 1; $i < count($this->getElementos()); $i++) {
             $codigoGenerado = $codigoGenerado .
-                    "<label for=\"checkboxID" . $i . "\">";
+                    "<label for=\"checkboxID" . $i . "_" . $this->getPosicion() . "\">";
 
             $codigoGenerado = $codigoGenerado .
-                    "<input class=\"campo-opcion\" name=\"" . str_replace(" ", "_", $this->getTitulo()) . "[]\" type=\"checkbox\" value=\"" . $this->getElementos()[$i] . "\"> ";
+                    "<input class=\"campo-opcion\" id=\"checkboxID" . $i . "_" . $this->getPosicion() . "\" name=\"" . str_replace(" ", "_", $this->getTitulo()) . "[]\" type=\"checkbox\" value=\"" . $this->getElementos()[$i] . "\"> ";
 
             $codigoGenerado = $codigoGenerado .
                     $this->getElementos()[$i];
@@ -433,7 +433,7 @@ class ListaRadio extends Lista {
         $codigoGenerado = parent::getCodigo();
 
         $codigoGenerado = $codigoGenerado .
-                "<label for=\"botonRadioID0\">";
+                "<label for=\"botonRadioID0_" . $this->getPosicion() . "\">";
 
         $codigoGenerado = $codigoGenerado .
                 "<input";
@@ -444,7 +444,7 @@ class ListaRadio extends Lista {
         }
 
         $codigoGenerado = $codigoGenerado .
-                " class=\"campo-opcion\" name=\"nombre_" . str_replace(" ", "_", $this->getTitulo()) . "\"";
+                " class=\"campo-opcion\" id=\"botonRadioID0_" . $this->getPosicion() . "\" name=\"nombre_" . str_replace(" ", "_", $this->getTitulo()) . "\"";
 
         if ($this->esObligatorio()) {
             $codigoGenerado = $codigoGenerado .
@@ -462,10 +462,10 @@ class ListaRadio extends Lista {
 
         for ($i = 1; $i < count($this->getElementos()); $i++) {
             $codigoGenerado = $codigoGenerado .
-                    "<label for=\"botonRadioID" . $i . "\">";
+                    "<label for=\"botonRadioID" . $i . "_" . $this->getPosicion() . "\">";
 
             $codigoGenerado = $codigoGenerado .
-                    "<input class=\"campo-opcion\" name=\"nombre_" . str_replace(" ", "_", $this->getTitulo()) . "\" type=\"radio\" value=\"" . $this->getElementos()[$i] . "\"> ";
+                    "<input class=\"campo-opcion\" id=\"botonRadioID" . $i . "_" . $this->getPosicion() . "\" name=\"nombre_" . str_replace(" ", "_", $this->getTitulo()) . "\" type=\"radio\" value=\"" . $this->getElementos()[$i] . "\"> ";
 
             $codigoGenerado = $codigoGenerado .
                     $this->getElementos()[$i];

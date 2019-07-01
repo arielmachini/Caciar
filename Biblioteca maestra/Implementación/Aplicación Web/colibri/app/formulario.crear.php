@@ -97,16 +97,16 @@ $ColeccionRoles = new ColeccionRoles();
                         <div>
                             <p class="campo-cabecera" for="rolesDestinoFormulario">Destinatarios del formulario<span style="color: red; font-weight: bold;">*</span></p>
                             <p class="campo-descripcion">Seleccione uno o más roles a los que estará dirigido su formulario. Aquellos usuarios con roles que no seleccione no podrán acceder al formulario.</p>
-                            <label for="Público general" title="Comprende estudiantes y a otras personas sin correo institucional.">
-                                <input class="campo-opcion" name="rolesDestinoFormulario[]" type="checkbox" value="<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>">
+                            <label for="rolId<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>" title="Comprende estudiantes y a otras personas sin correo institucional.">
+                                <input class="campo-opcion" id="rolId<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>" name="rolesDestinoFormulario[]" type="checkbox" value="<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>">
                                 Público general
                             </label>
                             
                             <?php foreach ($ColeccionRoles->getRoles() as $Rol) {
                                 if ($Rol->getNombre() !== PermisosSistema::ROL_GESTOR && $Rol->getNombre() !== PermisosSistema::ROL_ADMINISTRADOR_GESTORES && $Rol->getNombre() !== PermisosSistema::ROL_ADMINISTRADOR && $Rol->getId() != PermisosSistema::IDROL_PUBLICO_GENERAL) { // Los roles administrativos no son incumbencia del gestor de formularios. El rol de invitado también se omite ya que se insertó manualmente en el código. ?>
-                                    <label for="<?= $Rol->getNombre() ?>">
-                                        <input class="campo-opcion" name="rolesDestinoFormulario[]" type="checkbox" value="<?= $Rol->getId() ?>">
-                                        <?= $Rol->getNombre() ?>
+                                    <label for="rolId<?= $Rol->getId(); ?>">
+                                        <input class="campo-opcion" id="rolId<?= $Rol->getId(); ?>" name="rolesDestinoFormulario[]" type="checkbox" value="<?= $Rol->getId(); ?>">
+                                        <?= $Rol->getNombre(); ?>
                                     </label>
                                 <?php }
                             } ?>

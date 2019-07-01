@@ -15,27 +15,11 @@ $idUsuario = filter_var(filter_input(INPUT_POST, "idUsuario"), FILTER_SANITIZE_N
 
 $Usuario = new Usuario($idUsuario);
 
-foreach ($ColeccionRoles->getRoles() as $Rol) {
-    if ($Rol->getNombre() === PermisosSistema::ROL_GESTOR) {
-        $idRolGestorFormularios = $Rol->getId();
-
-        break 1;
-    }
-}
-
 BDConexion::getInstancia()->autocommit(false);
 BDConexion::getInstancia()->begin_transaction();
 
-$consulta = BDConexion::getInstancia()->query("" .
-        "INSERT INTO " . BDCatalogoTablas::BD_TABLA_USUARIO_ROL . " " .
-        "VALUES ({$idUsuario}, {$idRolGestorFormularios})");
-
-if (!$consulta) {
-    BDConexion::getInstancia()->rollback();
-}
-
-$query = "INSERT INTO " . BDCatalogoTablas::BD_TABLA_GESTOR_FORMULARIOS . " " .
-        "VALUES ({$idUsuario}, ";
+$query = "UPDATE " . BDCatalogoTablas::BD_TABLA_GESTOR_FORMULARIOS . " " .
+        "SET `cuotaCreacion` = ";
 
 $cuotaIlimitada = filter_input(INPUT_POST, "cuotaIlimitada");
 
@@ -50,10 +34,12 @@ if (isset($cuotaIlimitada)) {
 $puedePublicar = filter_input(INPUT_POST, "puedePublicar");
 
 if (!isset($puedePublicar)) {
-    $query .= "0)";
+    $query .= "`puedePublicar` = 0 ";
 } else {
-    $query .= "1)";
+    $query .= "`puedePublicar` = 1 ";
 }
+
+$query .= "WHERE `idUsuario` = {$idUsuario}";
 
 $consulta = BDConexion::getInstancia()->query($query);
 
@@ -90,7 +76,7 @@ BDConexion::getInstancia()->autocommit(true);
                 <div class="card-body">
                     <?php if ($consulta) { ?>
                         <div class="alert alert-success" role="alert">
-                            Operación completada con éxito. <?= $Usuario->getNombre(); ?> (<?= $Usuario->getEmail(); ?>) podrá crear y gestionar sus propios formularios en el sistema.
+                            Operación completada con éxito.
                         </div>
                     <?php } else { ?>
                         <div class="alert alert-danger" role="alert">

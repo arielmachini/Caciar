@@ -67,9 +67,9 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                                             <?= $Usuario->getEmail(); ?>
                                         </td>
                                         <td style="vertical-align: middle;">
-                                            <button type="button" class="btn btn-outline-success" onclick="altaGestorFormularios(<?= $Usuario->getId(); ?>, '<?= $Usuario->getNombre(); ?>', '<?= $Usuario->getEmail(); ?>')">
-                                                <span class="oi oi-plus"></span> Dar de alta
-                                            </button>
+                                            <a class="btn btn-outline-success" href="gestor.alta.parametros.php?id=<?= $Usuario->getId(); ?>">
+                                                <span class="oi oi-external-link"></span> Dar de alta
+                                            </a>
                                         </td>
                                     </tr>
                                     <?php
@@ -115,30 +115,30 @@ $ColeccionUsuarios = new ColeccionUsuarios();
             }
         });
         
-        function altaGestorFormularios(idUsuario, nombreUsuario, emailUsuario) {
-            $.confirm({
-                icon: 'oi oi-signpost',
-                title: 'Dar de alta',
-                content: '¿Desea dar de alta como gestor de formularios a <b>' + nombreUsuario + '</b> (' + emailUsuario + ')?',
-                animation: 'none',
-                closeAnimation: 'none',
-                theme: 'material',
-                type: 'green',
-                useBootstrap: false,
-                buttons: {
-                    confirm: {
-                        btnClass: 'btn-green',
-                        text: 'Dar de alta',
-                        action: function () {
-                            window.location.href = 'gestor.alta.procesar.php?id=' + idUsuario;
-                        }
-                    },
-                    cancelar: {
-                        text: 'Cancelar'
-                    }
-                }
-            });
-        }
+//        function altaGestorFormularios(idUsuario, nombreUsuario, emailUsuario) {
+//            $.confirm({
+//                icon: 'oi oi-signpost',
+//                title: 'Dar de alta',
+//                content: '¿Desea dar de alta como gestor de formularios a <b>' + nombreUsuario + '</b> (' + emailUsuario + ')?',
+//                animation: 'none',
+//                closeAnimation: 'none',
+//                theme: 'material',
+//                type: 'green',
+//                useBootstrap: false,
+//                buttons: {
+//                    confirm: {
+//                        btnClass: 'btn-green',
+//                        text: 'Dar de alta',
+//                        action: function () {
+//                            window.location.href = 'gestor.alta.procesar.php?id=' + idUsuario;
+//                        }
+//                    },
+//                    cancelar: {
+//                        text: 'Cancelar'
+//                    }
+//                }
+//            });
+//        }
     </script>
 
 </html>

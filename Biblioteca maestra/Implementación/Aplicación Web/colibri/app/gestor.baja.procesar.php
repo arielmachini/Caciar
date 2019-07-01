@@ -12,7 +12,7 @@ $idRolGestorFormularios;
 $idUsuario = filter_var(filter_input(INPUT_POST, "idUsuario"), FILTER_SANITIZE_NUMBER_INT);
 
 foreach ($ColeccionRoles->getRoles() as $Rol) {
-    if ($Rol->getNombre() === "Gestor de formularios") {
+    if ($Rol->getNombre() === PermisosSistema::ROL_GESTOR) {
         $idRolGestorFormularios = $Rol->getId();
 
         break 1;
@@ -25,6 +25,14 @@ BDConexion::getInstancia()->begin_transaction();
 $consulta = BDConexion::getInstancia()->query("" .
         "DELETE FROM " . BDCatalogoTablas::BD_TABLA_USUARIO_ROL . " " .
         "WHERE `id_usuario` = {$idUsuario} AND `id_rol` = {$idRolGestorFormularios}");
+
+if (!$consulta) {
+    BDConexion::getInstancia()->rollback();
+}
+
+$consulta = BDConexion::getInstancia()->query("" .
+        "DELETE FROM " . BDCatalogoTablas::BD_TABLA_GESTOR_FORMULARIOS . " " .
+        "WHERE `idUsuario` = {$idUsuario}");
 
 if (!$consulta) {
     BDConexion::getInstancia()->rollback();

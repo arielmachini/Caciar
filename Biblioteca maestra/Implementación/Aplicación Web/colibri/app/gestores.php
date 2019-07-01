@@ -54,10 +54,12 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                                             <?= $Usuario->getEmail(); ?>
                                         </td>
                                         <td>
-                                            <a href="gestor.baja.php?id=<?= $Usuario->getId(); ?>">
-                                                <button type="button" class="btn btn-outline-danger">
-                                                    <span class="oi oi-ban"></span> Dar de baja
-                                                </button>
+                                            <a class="btn btn-outline-primary" href="gestor.modificar.parametros.php?id=<?= $Usuario->getId(); ?>" title="Modificar los parámetros para este gestor de formularios">
+                                                <span class="oi oi-cog"></span> Parámetros
+                                            </a>
+                                            
+                                            <a class="btn btn-outline-danger" href="gestor.baja.php?id=<?= $Usuario->getId(); ?>">
+                                                <span class="oi oi-ban"></span> Dar de baja
                                             </a>
                                         </td>
                                     </tr>

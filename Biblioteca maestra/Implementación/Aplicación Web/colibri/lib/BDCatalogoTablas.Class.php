@@ -27,9 +27,11 @@ class BDCatalogoTablas {
     const BD_TABLA_FECHA = BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS . ".fecha";
     const BD_TABLA_FORMULARIO = BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS . ".formulario";
     const BD_TABLA_FORMULARIO_ROL = BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS . ".formulario_rol";
+    const BD_TABLA_GESTOR_FORMULARIOS = BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS . ".gestor_formularios";
     const BD_TABLA_LISTA_BOTON_RADIO = BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS . ".lista_boton_radio";
     const BD_TABLA_LISTA_CHECKBOX = BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS . ".lista_checkbox";
     const BD_TABLA_LISTA_DESPLEGABLE = BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS . ".lista_desplegable";
     const BD_TABLA_OPCION = BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS . ".opcion";
+    const BD_TABLA_RESPUESTA = BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS . ".respuesta";
 
 }

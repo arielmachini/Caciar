@@ -41,7 +41,7 @@ $ColeccionRoles = new ColeccionRoles();
                         </tr>
 
                         <?php foreach ($ColeccionRoles->getRoles() as $Rol) {
-                            if ($Rol->getId() != PermisosSistema::IDROL_PUBLICO_GENERAL) { ?>
+                            if ($Rol->getId() != PermisosSistema::IDROL_PUBLICO_GENERAL && $Rol->getNombre() != PermisosSistema::ROL_GESTOR) { ?>
                             <tr>
                                 <td><?= $Rol->getNombre(); ?></td>
                                 <td>

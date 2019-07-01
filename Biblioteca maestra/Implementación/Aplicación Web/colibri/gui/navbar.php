@@ -100,12 +100,3 @@
         </ul>
     </div>
 </nav>
-
-<?php if ($estaIdentificado) { ?>
-    <div class="alert alert-info alert-dismissible fade show" role="alert" style="margin: 5px;">
-        <span class="oi oi-info" style="padding-right: 10px;"></span> Usted está identificado como <strong><?= $_SESSION['usuario']->nombre; ?></strong>.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-<?php } ?>

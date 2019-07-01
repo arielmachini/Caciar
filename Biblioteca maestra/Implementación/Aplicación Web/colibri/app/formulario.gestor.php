@@ -64,8 +64,9 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
                             <tr class="table-info">
                                 <th scope="col">Título del formulario</th>
                                 <th scope="col">Fecha de creación</th>
+                                <th scope="col">Respuestas registradas</th>
                                 <th scope="col">Estado</th>
-                                <th scope="col"></th>
+                                <th scope="col">Acciones</th>
                             </tr>
                         </thead>
 
@@ -75,6 +76,7 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
                                 <tr>
                                     <td style="vertical-align: middle;"><?= $formulario['titulo']; ?></td>
                                     <td style="vertical-align: middle;"><?= $formulario['fechaCreacion']; ?></td>
+                                    <td style="vertical-align: middle;"><?= $formulario['cantidadRespuestas']; ?></td>
                                     <td style="vertical-align: middle;">
                                         
                                         <?php
