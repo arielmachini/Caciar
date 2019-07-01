@@ -39,7 +39,7 @@ class FabricaPDF {
         
         ob_end_clean();
         
-        $documentoPDF->Output("Solicitud" . $numeroSolicitud_ . "_" . date("d-m-Y") . "_" . date("H:i") . "_" . $idFormulario_ . ".pdf", "I");
+        $documentoPDF->Output("Solicitud" . $numeroSolicitud_ . "_" . date("d-m-Y") . "_" . date("H:i") . "_" . $idFormulario_ . ".pdf", "D");
     }
 
 }
