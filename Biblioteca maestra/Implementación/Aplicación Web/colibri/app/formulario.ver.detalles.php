@@ -119,10 +119,8 @@ $rolesDestino = BDConexion::getInstancia()->query("" .
                     <?php } ?>
                 </div>
                 <div class="card-footer">
-                    <a href="formulario.gestor.php">
-                        <button type="button" class="btn btn-primary">
-                            <span class="oi oi-account-logout"></span> Volver
-                        </button>
+                    <a class="btn btn-primary" href="formulario.gestor.php">
+                        <span class="oi oi-account-logout"></span> Volver
                     </a>
                 </div>
             </div>

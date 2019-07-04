@@ -30,10 +30,8 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                 </div>
                 <div class="card-body">
                     <p>
-                        <a href="usuario.crear.php">
-                            <button type="button" class="btn btn-success">
-                                <span class="oi oi-plus"></span> Nuevo Usuario
-                            </button>
+                        <a class="btn btn-success" href="usuario.crear.php">
+                            <span class="oi oi-plus"></span> Nuevo Usuario
                         </a>
                     </p>
                     <table class="table table-hover table-sm">
@@ -46,18 +44,15 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                                 ?>
                                 <td><?= $Usuario->getNombre(); ?><br /><?= $Usuario->getEmail(); ?></td>
                                 <td>
-                                    <a title="Ver detalle" href="usuario.ver.php?id=<?= $Usuario->getId(); ?>">
-                                        <button type="button" class="btn btn-outline-info">
-                                            <span class="oi oi-zoom-in"></span>
-                                        </button></a>
-                                    <a title="Modificar" href="usuario.modificar.php?id=<?= $Usuario->getId(); ?>">
-                                        <button type="button" class="btn btn-outline-warning">
-                                            <span class="oi oi-pencil"></span>
-                                        </button></a>
-                                    <a title="Eliminar" href="usuario.eliminar.php?id=<?= $Usuario->getId(); ?>">
-                                        <button type="button" class="btn btn-outline-danger">
-                                            <span class="oi oi-trash"></span>
-                                        </button></a>
+                                    <a class="btn btn-outline-info" title="Ver detalle" href="usuario.ver.php?id=<?= $Usuario->getId(); ?>">
+                                        <span class="oi oi-zoom-in"></span>
+                                    </a>
+                                    <a class="btn btn-outline-warning" title="Modificar" href="usuario.modificar.php?id=<?= $Usuario->getId(); ?>">
+                                        <span class="oi oi-pencil"></span>
+                                    </a>
+                                    <a class="btn btn-outline-danger" title="Eliminar" href="usuario.eliminar.php?id=<?= $Usuario->getId(); ?>">
+                                        <span class="oi oi-trash"></span>
+                                    </a>
                                 </td>
                             </tr>
                         <?php } ?>

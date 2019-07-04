@@ -76,10 +76,8 @@ BDConexion::getInstancia()->autocommit(true);
                     <?php } ?>
                 </div>
                 <div class="card-footer">
-                    <a href="gestores.php">
-                        <button type="button" class="btn btn-primary">
-                            <span class="oi oi-account-logout"></span> Volver
-                        </button>
+                    <a class="btn btn-primary" href="gestores.php">
+                        <span class="oi oi-account-logout"></span> Volver
                     </a>
                 </div>
             </div>

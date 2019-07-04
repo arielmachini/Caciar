@@ -71,10 +71,8 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                     </table>
                 </div>
                 <div class="card-footer">
-                    <a href="gestor.alta.php">
-                        <button type="button" class="btn btn-success">
-                            <span class="oi oi-plus"></span> Nuevo gestor de formularios
-                        </button>
+                    <a class="btn btn-success" href="gestor.alta.php">
+                        <span class="oi oi-plus"></span> Nuevo gestor de formularios
                     </a>
                 </div>
             </div>

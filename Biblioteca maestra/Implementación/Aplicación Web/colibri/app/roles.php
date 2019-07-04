@@ -29,10 +29,8 @@ $ColeccionRoles = new ColeccionRoles();
                 <div class="card-body">
                     <table class="table table-hover table-sm">
                         <p>
-                            <a href="rol.crear.php">
-                                <button type="button" class="btn btn-success">
-                                    <span class="oi oi-plus"></span> Nuevo Rol
-                                </button>
+                            <a class="btn btn-success" href="rol.crear.php">
+                                <span class="oi oi-plus"></span> Nuevo Rol
                             </a>
                         </p>
                         <tr class="table-info">
@@ -45,20 +43,14 @@ $ColeccionRoles = new ColeccionRoles();
                             <tr>
                                 <td><?= $Rol->getNombre(); ?></td>
                                 <td>
-                                    <a title="Ver detalle" href="rol.ver.php?id=<?= $Rol->getId(); ?>">
-                                        <button type="button" class="btn btn-outline-info">
-                                            <span class="oi oi-zoom-in"></span>
-                                        </button>
+                                    <a class="btn btn-outline-info" title="Ver detalle" href="rol.ver.php?id=<?= $Rol->getId(); ?>">
+                                        <span class="oi oi-zoom-in"></span>
                                     </a>
-                                    <a title="Modificar" href="rol.modificar.php?id=<?= $Rol->getId(); ?>">
-                                        <button type="button" class="btn btn-outline-warning">
-                                            <span class="oi oi-pencil"></span>
-                                        </button>
+                                    <a class="btn btn-outline-warning" title="Modificar" href="rol.modificar.php?id=<?= $Rol->getId(); ?>">
+                                        <span class="oi oi-pencil"></span>
                                     </a>
-                                    <a title="Eliminar" href="rol.eliminar.php?id=<?= $Rol->getId(); ?>">
-                                        <button type="button" class="btn btn-outline-danger">
-                                            <span class="oi oi-trash"></span>
-                                        </button>
+                                    <a class="btn btn-outline-danger" title="Eliminar" href="rol.eliminar.php?id=<?= $Rol->getId(); ?>">
+                                        <span class="oi oi-trash"></span>
                                     </a>
                                 </td>
                             </tr>

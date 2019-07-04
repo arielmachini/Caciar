@@ -81,6 +81,13 @@
                                 <span class="oi oi-plus" />
                                 Nuevo formulario
                             </a>
+                            
+                            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS)) { ?>
+                                <a class="dropdown-item" href="../app/formulario.gestor.pendientes.php">
+                                    <span class="oi oi-task" />
+                                    Gestionar formularios pendientes
+                                </a>
+                            <?php } ?>
 
                             <a class="dropdown-item" href="../app/formulario.gestor.php">
                                 <span class="oi oi-spreadsheet" />

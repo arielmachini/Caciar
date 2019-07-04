@@ -137,20 +137,20 @@ if ($resultadoCaptcha && $puntajeCaptcha > 0.5) {
                 <div class="card-body">
                     <?php if (!$resultadoCaptcha || $puntajeCaptcha < 0.5) { ?>
                         <div class="alert alert-warning" role="alert">
-                            Su solicitud no puede ser procesada porque no pasó el desafío de reCAPTCHA.
+                            Su respuesta no puede ser procesada porque no pasó el desafío de reCAPTCHA.
                         </div>
                     <?php } else if (!$consulta || $errorEnvio) { ?>
                         <div class="alert alert-danger" role="alert">
-                            Se produjo un error al intentar procesar su solicitud. Por favor, inténtelo más tarde.
+                            Se produjo un error al intentar procesar su respuesta. Por favor, inténtelo más tarde.
                         </div>
                     <?php } else { ?>
                         <div class="alert alert-success" role="alert">
-                            Su solicitud ha sido enviada con éxito.
+                            Su respuesta ha sido registrada con éxito.
                         </div>
                     <?php } ?>
                 </div>
                 <div class="card-footer">
-                    <a href="formularios.php"><button type="button" class="btn btn-primary"><span class="oi oi-account-logout"></span> Finalizar</button></a>
+                    <a class="btn btn-primary" href="formularios.php"><span class="oi oi-account-logout"></span> Finalizar</a>
                 </div>
             </div>
         </div>

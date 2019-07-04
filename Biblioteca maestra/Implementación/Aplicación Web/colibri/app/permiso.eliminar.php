@@ -37,10 +37,8 @@ $Permiso = new Permiso($id);
                         <button type="submit" class="btn btn-outline-success">
                             <span class="oi oi-check"></span> Sí, deseo eliminar
                         </button>
-                        <a href="permisos.php">
-                            <button type="button" class="btn btn-outline-danger">
-                                <span class="oi oi-x"></span> NO (Salir de esta pantalla)
-                            </button>
+                        <a class="btn btn-outline-danger" href="permisos.php">
+                            NO (Salir de esta pantalla)
                         </a>
                     </div>
                 </div>

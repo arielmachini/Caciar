@@ -52,10 +52,8 @@ $Permiso = new ColeccionPermisos();
                         <button type="submit" class="btn btn-outline-success">
                             <span class="oi oi-check"></span> Confirmar
                         </button>
-                        <a href="roles.php">
-                            <button type="button" class="btn btn-outline-danger">
-                                <span class="oi oi-x"></span> Cancelar
-                            </button>
+                        <a class="btn btn-outline-danger" href="roles.php">
+                            <span class="oi oi-x"></span> Cancelar
                         </a>
                     </div>
                 </div>

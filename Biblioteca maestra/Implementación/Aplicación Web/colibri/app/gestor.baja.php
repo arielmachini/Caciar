@@ -40,10 +40,8 @@ $Usuario = new Usuario($idUsuario);
                         <button type="submit" class="btn btn-outline-success">
                             <span class="oi oi-ban"></span> Confirmar (dar de baja)
                         </button>
-                        <a href="gestores.php">
-                            <button type="button" class="btn btn-outline-danger">
-                                <span class="oi oi-x"></span> Cancelar
-                            </button>
+                        <a class="btn btn-outline-danger" href="gestores.php">
+                            <span class="oi oi-x"></span> Cancelar
                         </a>
                     </div>
                 </div>

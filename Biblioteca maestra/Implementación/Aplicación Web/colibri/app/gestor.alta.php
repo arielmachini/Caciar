@@ -80,10 +80,8 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                     </table>
                 </div>
                 <div class="card-footer">
-                    <a href="gestores.php">
-                        <button type="button" class="btn btn-primary">
-                            <span class="oi oi-account-logout"></span> Volver
-                        </button>
+                    <a class="btn btn-primary" href="gestores.php">
+                        <span class="oi oi-account-logout"></span> Volver
                     </a>
                 </div>
             </div>
@@ -114,31 +112,6 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                 }
             }
         });
-        
-//        function altaGestorFormularios(idUsuario, nombreUsuario, emailUsuario) {
-//            $.confirm({
-//                icon: 'oi oi-signpost',
-//                title: 'Dar de alta',
-//                content: '¿Desea dar de alta como gestor de formularios a <b>' + nombreUsuario + '</b> (' + emailUsuario + ')?',
-//                animation: 'none',
-//                closeAnimation: 'none',
-//                theme: 'material',
-//                type: 'green',
-//                useBootstrap: false,
-//                buttons: {
-//                    confirm: {
-//                        btnClass: 'btn-green',
-//                        text: 'Dar de alta',
-//                        action: function () {
-//                            window.location.href = 'gestor.alta.procesar.php?id=' + idUsuario;
-//                        }
-//                    },
-//                    cancelar: {
-//                        text: 'Cancelar'
-//                    }
-//                }
-//            });
-//        }
     </script>
 
 </html>

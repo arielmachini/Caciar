@@ -29,18 +29,15 @@ session_destroy();
                         Acaba de cerrar sesión en el sistema <?php echo Constantes::NOMBRE_SISTEMA; ?>.
                     </div>
                     <p><strong>¿Qué desea hacer a continuación?</strong></p>
-                    <a href="index.php">
-                        <button type="button" class="btn btn-outline-primary">
-                            <span class="oi oi-account-logout"></span> Volver a la página de inicio de <?php echo Constantes::NOMBRE_SISTEMA; ?>
-                        </button></a>
-                    <a href="https://www.gmail.com/">
-                        <button type="button" class="btn btn-outline-secondary">
-                            <span class="oi oi-inbox"></span> Ir a Gmail
-                        </button></a>
-                    <a href="http://www.uarg.unpa.edu.ar" target="_blank">
-                        <button type="button" class="btn btn-outline-secondary">
-                            <span class="oi oi-globe"></span> Ir al portal UARG
-                        </button></a>
+                    <a class="btn btn-outline-primary" href="index.php">
+                        <span class="oi oi-account-logout"></span> Volver a la página de inicio de <?php echo Constantes::NOMBRE_SISTEMA; ?>
+                    </a>
+                    <a class="btn btn-outline-secondary" href="https://www.gmail.com/">
+                        <span class="oi oi-inbox"></span> Ir a Gmail
+                    </a>
+                    <a class="btn btn-outline-secondary" href="http://www.uarg.unpa.edu.ar" target="_blank">
+                        <span class="oi oi-globe"></span> Ir al portal UARG
+                    </a>
                 </div>
             </div>
         </div>

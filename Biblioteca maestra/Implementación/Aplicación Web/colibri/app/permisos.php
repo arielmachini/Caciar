@@ -31,10 +31,8 @@ $ColeccionPermisos = new ColeccionPermisos();
                 </div>
                 <div class="card-body">
                     <p>
-                        <a href="permiso.crear.php">
-                            <button type="button" class="btn btn-success">
-                                <span class="oi oi-plus"></span> Nuevo Permiso
-                            </button>
+                        <a class="btn btn-success" href="permiso.crear.php">
+                            <span class="oi oi-plus"></span> Nuevo Permiso
                         </a>
                     </p>
                     <table class="table table-hover table-sm">
@@ -46,20 +44,14 @@ $ColeccionPermisos = new ColeccionPermisos();
                             <?php foreach ($ColeccionPermisos->getPermisos() as $Permiso) { ?>
                                 <td><?= $Permiso->getNombre(); ?></td>
                                 <td>
-                                    <a title="Ver detalle" href="permiso.ver.php?id=<?= $Permiso->getId(); ?>">
-                                        <button type="button" class="btn btn-outline-info">
-                                            <span class="oi oi-zoom-in"></span>
-                                        </button>
+                                    <a class="btn btn-outline-info" title="Ver detalle" href="permiso.ver.php?id=<?= $Permiso->getId(); ?>">
+                                        <span class="oi oi-zoom-in"></span>
                                     </a>
-                                    <a title="Modificar" href="permiso.modificar.php?id=<?= $Permiso->getId(); ?>">
-                                        <button type="button" class="btn btn-outline-warning">
-                                            <span class="oi oi-pencil"></span>
-                                        </button>
+                                    <a class="btn btn-outline-warning" title="Modificar" href="permiso.modificar.php?id=<?= $Permiso->getId(); ?>">
+                                        <span class="oi oi-pencil"></span>
                                     </a>
-                                    <a title="Eliminar" href="permiso.eliminar.php?id=<?= $Permiso->getId(); ?>">
-                                        <button type="button" class="btn btn-outline-danger">
-                                            <span class="oi oi-trash"></span>
-                                        </button>
+                                    <a class="btn btn-outline-danger" title="Eliminar" href="permiso.eliminar.php?id=<?= $Permiso->getId(); ?>">
+                                        <span class="oi oi-trash"></span>
                                     </a>  
                                 </td>
                             </tr>

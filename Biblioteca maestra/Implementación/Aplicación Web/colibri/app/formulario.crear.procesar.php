@@ -350,7 +350,7 @@ if ($consulta) { // Si la inserción del formulario se completó exitosamente, s
                     <?php } ?>
                 </div>
                 <div class="card-footer">
-                    <a href="formularios.php"><button type="button" class="btn btn-primary"><span class="oi oi-account-logout"></span> Finalizar</button></a> <a href="formulario.gestor.php"><button type="button" class="btn btn-primary"><span class="oi oi-dashboard"></span> Gestor de formularios</button></a>
+                    <a class="btn btn-primary" href="formularios.php"><span class="oi oi-account-logout"></span> Finalizar</a> <a class="btn btn-primary" href="formulario.gestor.php"><span class="oi oi-dashboard"></span> Gestor de formularios</a>
                 </div>
             </div>
         </div>

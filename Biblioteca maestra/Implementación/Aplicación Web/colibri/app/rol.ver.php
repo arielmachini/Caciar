@@ -38,10 +38,8 @@ $Rol = new Rol($_GET["id"]);
 
                     <hr />
                     <h5 class="card-text">Opciones</h5>
-                    <a href="roles.php">
-                        <button type="button" class="btn btn-primary">
-                            <span class="oi oi-account-logout"></span> Salir
-                        </button>
+                    <a class="btn btn-primary" href="roles.php">
+                        <span class="oi oi-account-logout"></span> Salir
                     </a>
                 </div>
             </div>

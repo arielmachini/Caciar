@@ -68,11 +68,8 @@ $RolesSistema = new ColeccionRoles();
                             <span class="oi oi-check"></span>
                             Confirmar
                         </button>
-                        <a href="usuarios.php">
-                            <button type="button" class="btn btn-outline-danger">
-                                <span class="oi oi-x"></span>
-                                Cancelar
-                            </button>
+                        <a class="btn btn-outline-danger" href="usuarios.php">
+                            <span class="oi oi-x"></span> Cancelar
                         </a>
                     </div>
                 </div>

@@ -139,11 +139,17 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
                     </table>
                 </div>
                 <div class="card-footer">
-                    <a href="formulario.crear.php">
-                        <button type="button" class="btn btn-success">
-                            <span class="oi oi-plus"></span> Nuevo formulario
-                        </button>
+                    <a class="btn btn-success" href="formulario.crear.php">
+                        <span class="oi oi-plus"></span> Nuevo formulario
                     </a>
+                    
+                    <?php if ($usuario->esAdministradorDeGestores()) { ?>
+                    
+                    <a class="btn btn-secondary" href="formulario.gestor.pendientes.php" title="Ver todos los formularios que todavía requieren ser habilitados.">
+                        <span class="oi oi-task"></span> Gestionar formularios pendientes
+                    </a>
+                    
+                    <?php } ?>
                 </div>
             </div>
         </div>
