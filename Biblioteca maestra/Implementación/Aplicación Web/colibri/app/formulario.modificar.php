@@ -29,6 +29,11 @@ if (!$consulta) {
     ControlAcceso::redireccionar('formulario.gestor.php');
 }
 
+if ($formulario['estaHabilitado'] == 1 || $formulario['cantidadRespuestas'] > 0) {
+    /* El formulario está habilitado o registra respuestas, por lo tanto no se puede modificar. */
+    ControlAcceso::redireccionar('formulario.gestor.php');
+}
+
 $formulario = new Formulario();
 
 $formulario->setID($idFormulario);
@@ -252,6 +257,10 @@ $ColeccionRoles = new ColeccionRoles();
 
                     <div class="alert alert-danger fade show" id="errorSinCampos" role="alert" style="display: none;">
                         <strong>Error:</strong> El formulario debe tener al menos un campo.
+                    </div>
+                    
+                    <div class="alert alert-danger fade show" id="errorSinCamposObligatorios" role="alert" style="display: none;">
+                        <strong>Error:</strong> El formulario debe tener al menos un campo <strong>obligatorio</strong>.
                     </div>
 
                     <form action="formulario.modificar.procesar.php" id="crearFormulario" method="post" novalidate>

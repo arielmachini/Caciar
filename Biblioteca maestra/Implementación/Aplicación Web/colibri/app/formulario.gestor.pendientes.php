@@ -59,7 +59,7 @@ $formulariosPendientes = BDConexion::getInstancia("bdFormularios")->query("" .
                                 <th scope="col">Título del formulario</th>
                                 <th scope="col">Fecha de creación</th>
                                 <th scope="col">Creado por</th>
-                                <th scope="col">Acciones</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
 
@@ -86,7 +86,18 @@ $formulariosPendientes = BDConexion::getInstancia("bdFormularios")->query("" .
                                         ?>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
-                                        <button class="btn btn-outline-success" style="margin-bottom: 2px;" onclick="aprobarFormulario('<?= $formulario['idFormulario']; ?>', '<?= $tituloFormulario; ?>', '<?= $nombreCreador; ?>')" title="Habilitar este formulario." type="button"><span class="oi oi-check"></span> Aprobar</button></a>
+                                        <?php $idFormulario = $formulario['idFormulario']; ?>
+                                        <a class="btn btn-light" href="formulario.ver.php?id=<?= $idFormulario; ?>" style="margin-bottom: 2px;" title="Haga clic aquí para abrir una nueva ventana con una vista previa de este formulario." target="_blank">
+                                            <span class="oi oi-eye"></span> Vista previa
+                                        </a>
+                                        
+                                        <button class="btn btn-outline-success" style="margin-bottom: 2px;" onclick="aprobarFormulario('<?= $idFormulario; ?>', '<?= $tituloFormulario; ?>', '<?= $nombreCreador; ?>')" title="Habilitar este formulario." type="button">
+                                            <span class="oi oi-check"></span> Aprobar
+                                        </button>
+                                        
+                                        <a class="btn btn-outline-danger" href="formulario.eliminar.php?id=<?= $idFormulario; ?>" style="margin-bottom: 2px;" title="Eliminar este formulario.">
+                                            <span class="oi oi-trash"></span> Eliminar
+                                        </a>
                                     </td>
                                 </tr>
 

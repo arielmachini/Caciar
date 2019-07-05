@@ -33,7 +33,7 @@ BDConexion::getInstancia()->query("" .
 BDConexion::getInstancia()->autocommit(false);
 BDConexion::getInstancia()->begin_transaction();
 
-$formulario = new Formulario(date("Y") . "-" . date("m") . "-" . date("d"));
+$formulario = new Formulario(null, date("Y") . "-" . date("m") . "-" . date("d"));
 $i = 1;
 
 $campo = json_decode(stripslashes(filter_input(INPUT_POST, "campoID" . $i)));
@@ -308,6 +308,24 @@ if ($consulta) { // Si la inserción del formulario se completó exitosamente, s
 
     if ($consulta) {
         BDConexion::getInstancia()->commit();
+        
+        $cuotaCreacion = $_SESSION['cuotaCreacionGestor'];
+        unset($_SESSION['cuotaCreacionGestor']);
+        
+        if ($cuotaCreacion > 0) {
+            /* Si el gestor de formularios no tiene una cuota de creación
+             * ilimitada y el formulario se creó exitosamente, se reduce su
+             * cuota de creación en 1.
+             */
+            $cuotaCreacion -= 1;
+            
+            BDConexion::getInstancia()->query("" .
+                    "UPDATE " . BDCatalogoTablas::BD_TABLA_GESTOR_FORMULARIOS . " SET " .
+                        "`cuotaCreacion` = {$cuotaCreacion} " .
+                    "WHERE `idUsuario` = {$_SESSION['usuario']->id}");
+                    
+            BDConexion::getInstancia()->commit();
+        }
     } else {
         BDConexion::getInstancia()->rollback();
     }

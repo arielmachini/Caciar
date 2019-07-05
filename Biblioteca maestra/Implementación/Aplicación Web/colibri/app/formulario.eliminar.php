@@ -40,7 +40,7 @@ $formulario = BDConexion::getInstancia()->query("" .
                         <button type="submit" class="btn btn-outline-warning">
                             <span class="oi oi-trash"></span> Confirmar (eliminar el formulario)
                         </button>
-                        <a class="btn btn-outline-danger" href="formulario.gestor.php">
+                        <a class="btn btn-outline-danger" href="#" onclick="window.history.back()">
                             <span class="oi oi-x"></span> Cancelar
                         </a>
                     </div>

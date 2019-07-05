@@ -1766,9 +1766,19 @@ function reactivarBotonesAccion() {
                 event.preventDefault();
                 event.stopPropagation;
 
+                $('#errorSinCamposObligatorios').css('display', 'none');
                 $('#errorSinCampos').css('display', 'block');
             } else {
                 $('#errorSinCampos').css('display', 'none');
+                
+                if ($('#camposCreados').html().trim().indexOf('&quot;obligatorio&quot;:0') > -1) {
+                    event.preventDefault();
+                    event.stopPropagation;
+
+                    $('#errorSinCamposObligatorios').css('display', 'block');
+                } else {
+                    $('#errorSinCamposObligatorios').css('display', 'none');
+                }
             }
 
             $('html, body').animate({

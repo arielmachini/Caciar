@@ -4,11 +4,27 @@
 include_once '../lib/ControlAcceso.Class.php';
 ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
 
+require_once '../modelo/BDConexion.Class.php';
+
 if (preg_match('/MSIE\s(?P<v>\d+)/i', filter_input(INPUT_SERVER, "HTTP_USER_AGENT"), $B) && $B['v'] <= 8) {
     echo "Tiene que actualizar su navegador para poder acceder a esta página. Disculpe las molestias.";
 
     die();
 }
+
+$gestorFormularios = BDConexion::getInstancia()->query("" .
+                "SELECT `cuotaCreacion` " .
+                "FROM " . BDCatalogoTablas::BD_TABLA_GESTOR_FORMULARIOS . " " .
+                "WHERE `idUsuario` = {$_SESSION['usuario']->id}")->fetch_assoc();
+
+$cuotaCreacion = $gestorFormularios['cuotaCreacion'];
+
+if ($cuotaCreacion == 0) {
+    /* ¡Ups! El gestor de formularios ya alcanzó su cuota de creación. */
+    ControlAcceso::redireccionar('formulario.gestor.php');
+}
+
+$_SESSION['cuotaCreacionGestor'] = $cuotaCreacion;
 
 include_once '../modelo/ColeccionRoles.php';
 $ColeccionRoles = new ColeccionRoles();
@@ -66,6 +82,10 @@ $ColeccionRoles = new ColeccionRoles();
 
                     <div class="alert alert-danger fade show" id="errorSinCampos" role="alert" style="display: none;">
                         <strong>Error:</strong> Debe agregar al menos un campo a su formulario.
+                    </div>
+                    
+                    <div class="alert alert-danger fade show" id="errorSinCamposObligatorios" role="alert" style="display: none;">
+                        <strong>Error:</strong> Debe agregar al menos un campo <strong>obligatorio</strong> a su formulario.
                     </div>
 
                     <form action="formulario.crear.procesar.php" id="crearFormulario" method="post" novalidate>

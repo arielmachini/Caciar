@@ -39,8 +39,10 @@ if (isset($_SESSION['usuario']->id)) {
                 "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
                 "WHERE `idFormulario` = {$idFormulario}")->fetch_assoc();
     
-    if ($usuario->getId() == $creador['idCreador']) {
-        /* Si el usuario creó el formulario, entonces puede verlo. */
+    if ($usuario->getId() == $creador['idCreador'] || $usuario->esAdministradorDeGestores()) {
+        /* Si el usuario es administrador de gestores de formularios o creó el
+         * formulario, entonces puede verlo.
+         */
         $tienePermiso = true;
     }
 
@@ -73,9 +75,16 @@ if (!$consulta) {
     ControlAcceso::redireccionar();
 }
 
-if ($consulta['estaHabilitado'] == 0) {
+$formularioHabilitado = $consulta['estaHabilitado'];
+
+if ($formularioHabilitado == 0) {
     /* El formulario no está habilitado. */
-    ControlAcceso::redireccionar();
+    if (!isset($usuario) or !$usuario->esAdministradorDeGestores()) {
+        /* Sin embargo, el usuario sólo será redireccionado si no es un
+         * administrador de gestores de formularios.
+         */
+        ControlAcceso::redireccionar();
+    }
 }
 
 $formulario = new Formulario($consulta['fechaCreacion']);
@@ -137,7 +146,7 @@ while ($campo = $consulta->fetch_assoc()) {
         $campoTexto->setTitulo($titulo);
 
         $formulario->agregarCampo($campoTexto);
-
+        
         continue;
     }
 
@@ -288,7 +297,11 @@ $_SESSION['formulario'] = $formulario;
 
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
-        <script src="https://www.google.com/recaptcha/api.js?render=6LdFxpMUAAAAAKrchJP-4SR5BZrkj5-tdFxuUvsY"></script>
+        
+        <?php if ($formularioHabilitado) { // Si el formulario no está habilitado no puede ser rellenado, por lo tanto no es necesario cargar el script de reCAPTCHA. ?>
+            <script src="https://www.google.com/recaptcha/api.js?render=6LdFxpMUAAAAAKrchJP-4SR5BZrkj5-tdFxuUvsY"></script>
+        <?php } ?>
+
         <script type="text/javascript" src="../lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 
         <title><?php echo Constantes::NOMBRE_SISTEMA; ?> - <?php echo $formulario->getTitulo(); ?></title>
@@ -298,21 +311,37 @@ $_SESSION['formulario'] = $formulario;
 
         <div class="container">
             <div class="card">
-                <div class="card-header">
-                    <h3><?= $formulario->getTitulo(); ?><a href="formularios.php"><button class="btn btn-outline-primary" style="float: right;"><span class="oi oi-account-logout" style="margin-right: 5px;"></span>Salir</button></a></h3>
-                </div>
-                <div class="card-body">
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong>Atención:</strong> Todos los campos acompañados por un asterisco (<span style="color: red; font-weight: bold;">*</span>) son obligatorios.
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                <?php if ($formularioHabilitado) { ?>
+                    <div class="card-header">
+                        <h3><?= $formulario->getTitulo(); ?><a href="formularios.php"><button class="btn btn-outline-primary" style="float: right;"><span class="oi oi-account-logout" style="margin-right: 5px;"></span>Formularios</button></a></h3>
                     </div>
-                    <?php if ($formulario->getDescripcion() != "") { ?>
-                        <p><?= $formulario->getDescripcion(); ?></p>
-                        <hr/>
-                    <?php } ?>
+                    <div class="card-body">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>Atención:</strong> Todos los campos acompañados por un asterisco (<span style="color: red; font-weight: bold;">*</span>) son obligatorios.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                <?php } else { ?>
+                    <div class="card-header">
+                        <h3><?= $formulario->getTitulo(); ?> (Vista previa) <button class="btn btn-outline-dark" onclick="window.close()" style="float: right;"><span class="oi oi-x" style="margin-right: 5px;"></span>Cerrar vista previa</button></h3>
+                    </div>
+                    <div class="card-body">
+                <?php } ?>
+
+                <?php if ($formulario->getDescripcion() != "") { ?>
+
+                    <p><?= $formulario->getDescripcion(); ?></p>
+                    <hr/>
+
+                <?php }
+
+                if ($formularioHabilitado) {
+                ?>
+
                     <?= $formulario->getCodigo(); ?>
+
                     <script>
                         grecaptcha.ready(function () {
                             grecaptcha.execute('6LdFxpMUAAAAAKrchJP-4SR5BZrkj5-tdFxuUvsY', {action: 'homepage'}).then(function (token) {
@@ -320,6 +349,28 @@ $_SESSION['formulario'] = $formulario;
                             });
                         });
                     </script>
+
+                <?php
+                } else {
+                    $codigoHTMLFormulario = $formulario->getCodigo();
+
+                    $codigoHTMLFormulario = str_replace("<form action=\"formulario.enviar.php\" id=\"formulario\" method=\"post\">", "<form action=\"#\" id=\"formulario\">", $codigoHTMLFormulario);
+
+                    /* Se elimina el campo de reCAPTCHA del código HTML del formulario. */
+                    $codigoHTMLFormulario = str_replace("<input name=\"g-recaptcha-response\" type=\"hidden\" value=\"\">", "", $codigoHTMLFormulario);
+
+                    /* Se deshabilitan todos los campos. */
+                    $codigoHTMLFormulario = str_replace("<input ", "<input disabled ", $codigoHTMLFormulario);
+                    $codigoHTMLFormulario = str_replace("<textarea ", "<textarea disabled ", $codigoHTMLFormulario);
+                    $codigoHTMLFormulario = str_replace("<select ", "<select disabled ", $codigoHTMLFormulario);
+
+
+                    /* Se deshabilita el botón para enviar el formulario. */
+                    $codigoHTMLFormulario = str_replace("<button class=\"btn btn-success\" type=\"submit\" value=\"Enviar\"><span class=\"oi oi-check\" style=\"margin-right: 5px;\"></span>Enviar</button>", "<button class=\"btn btn-success\" disabled title=\"No puede responder a este formulario porque está deshabilitado; Esta es una vista previa.\" type=\"button\" value=\"Enviar\"><span class=\"oi oi-check\" style=\"margin-right: 5px;\"></span>Enviar</button>", $codigoHTMLFormulario);
+
+                    echo $codigoHTMLFormulario;
+                }
+                ?>
                 </div>
             </div>
         </div>

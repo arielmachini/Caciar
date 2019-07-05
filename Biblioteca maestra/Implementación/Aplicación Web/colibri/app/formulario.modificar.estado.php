@@ -2,7 +2,10 @@
 
 <?php
 include_once '../lib/ControlAcceso.Class.php';
-ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
+
+if (!(ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS) || ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ADMINISTRAR_GESTORES))) {
+    ControlAcceso::redireccionar();
+}
 
 require_once '../modelo/BDConexion.Class.php';
 require_once '../modelo/Usuario.Class.php';

@@ -69,7 +69,7 @@
                     </li>
                 <?php } ?>
 
-                <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS)) { ?>
+                <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS) || ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ADMINISTRAR_GESTORES)) { ?>
                     <li class="nav-item dropright" style="margin: 5px;">
                         <a class="nav-link dropdown-toggle" href="#" id="menuDesplegableGestionFormularios" style="padding: 10px;" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" role="button">
                             <span class="oi oi-dashboard" />
@@ -77,12 +77,14 @@
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="menuDesplegableGestionFormularios">
-                            <a class="dropdown-item" href="../app/formulario.crear.php">
-                                <span class="oi oi-plus" />
-                                Nuevo formulario
-                            </a>
-                            
                             <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS)) { ?>
+                                <a class="dropdown-item" href="../app/formulario.crear.php">
+                                    <span class="oi oi-plus" />
+                                    Nuevo formulario
+                                </a>
+                            <?php } ?>
+
+                            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ADMINISTRAR_GESTORES)) { ?>
                                 <a class="dropdown-item" href="../app/formulario.gestor.pendientes.php">
                                     <span class="oi oi-task" />
                                     Gestionar formularios pendientes

@@ -2,7 +2,10 @@
 
 <?php
 include_once '../lib/ControlAcceso.Class.php';
-ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
+
+if (!(ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS) || ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ADMINISTRAR_GESTORES))) {
+    ControlAcceso::redireccionar();
+}
 
 require_once '../modelo/BDConexion.Class.php';
 require_once '../modelo/Usuario.Class.php';
@@ -48,7 +51,7 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
                     <h3>Gestor de formularios</h3>
                 </div>
                 <div class="card-body">
-                    <p>Aquí podrá ver y gestionar todos los formularios en el sistema que estén bajo su responsabilidad.</p>
+                    <p>Aquí podrá ver y gestionar todos los formularios en el sistema que estén bajo su responsabilidad.<br/>Por favor tenga en cuenta que sólo podrá modificar formularios que no registren respuestas y que estén deshabilitados.</p>
 
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
@@ -66,7 +69,7 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
                                 <th scope="col">Fecha de creación</th>
                                 <th scope="col">Respuestas registradas</th>
                                 <th scope="col">Estado</th>
-                                <th scope="col">Acciones</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
 
@@ -76,15 +79,23 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
                                 <tr>
                                     <td style="vertical-align: middle;"><?= $formulario['titulo']; ?></td>
                                     <td style="vertical-align: middle;"><?= $formulario['fechaCreacion']; ?></td>
-                                    <td style="vertical-align: middle;"><?= $formulario['cantidadRespuestas']; ?></td>
                                     <td style="vertical-align: middle;">
                                         
                                         <?php
-                                        $estaHabilitado = $formulario['estaHabilitado'];
+                                        $cantidadRespuestas = $formulario['cantidadRespuestas'];
+                                        
+                                        echo $cantidadRespuestas;
+                                        ?>
+                                        
+                                    </td>
+                                    <td style="vertical-align: middle;">
+                                        
+                                        <?php
+                                        $formularioHabilitado = $formulario['estaHabilitado'];
                                         $fechaApertura = $formulario['fechaApertura'];
                                         $fechaCierre = $formulario['fechaCierre'];
 
-                                        if ($estaHabilitado == 0) {
+                                        if ($formularioHabilitado == 0) {
                                         ?>
                                         
                                             <span class="estado-deshabilitado">DESHABILITADO</span>
@@ -104,30 +115,54 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
 
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
-
-                                        <?php if ($estaHabilitado == 1 && !$estaOculto) { ?>
-
-                                            <a href="formulario.ver.php?id=<?= $formulario['idFormulario']; ?>" target="_blank" title="Visitar este formulario."><button class="btn btn-light" style="margin-bottom: 2px;" type="button"><span class="oi oi-eye"></span></button></a>
-
-                                        <?php } ?>
                                         
-                                        <a href="formulario.ver.detalles.php?id=<?= $formulario['idFormulario']; ?>" title="Ver más detalles acerca de este formulario."><button class="btn btn-outline-info" style="margin-bottom: 2px;" type="button"><span class="oi oi-zoom-in"></span></button></a>
+                                        <?php
+                                        if ($formularioHabilitado == 0) {
+                                            if ($cantidadRespuestas == 0 && ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS)) {
+                                        ?>
 
-                                        <?php if ($estaHabilitado == 0) { ?>
+                                            <a class="btn btn-outline-warning" href="formulario.modificar.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Modificar este formulario.">
+                                                <span class="oi oi-pencil"></span>
+                                            </a>    
 
-                                            <a href="formulario.modificar.estado.php?id=<?= $formulario['idFormulario']; ?>&estado=1" title="Habilitar este formulario."><button class="btn btn-outline-success" style="margin-bottom: 2px;" type="button"><span class="oi oi-check"></span></button></a>
+                                        <?php
+                                            }
+                                        } else {
+                                            if (!$estaOculto) {
+                                        ?>
+                                        
+                                            <a class="btn btn-light" href="formulario.ver.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" target="_blank" title="Visitar este formulario.">
+                                                <span class="oi oi-eye"></span>
+                                            </a>
+                                            
+                                        <?php
+                                            }
+                                        }
+                                        ?>
+                                        
+                                        <a class="btn btn-outline-info" href="formulario.ver.detalles.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Ver más detalles acerca de este formulario.">
+                                            <span class="oi oi-zoom-in"></span>
+                                        </a>
+
+                                        <?php if ($formularioHabilitado == 0) { ?>
+
+                                            <a class="btn btn-outline-success" href="formulario.modificar.estado.php?id=<?= $formulario['idFormulario']; ?>&estado=1" style="margin-bottom: 2px;" title="Habilitar este formulario.">
+                                                <span class="oi oi-check"></span>
+                                            </a>
 
                                         <?php } else { ?>
 
-                                            <a href="formulario.modificar.estado.php?id=<?= $formulario['idFormulario']; ?>&estado=0" title="Deshabilitar este formulario."><button class="btn btn-outline-dark" style="margin-bottom: 2px;" type="button"><span class="oi oi-x"></span></button></a>
+                                            <a class="btn btn-outline-dark" href="formulario.modificar.estado.php?id=<?= $formulario['idFormulario']; ?>&estado=0" style="margin-bottom: 2px;" title="Deshabilitar este formulario.">
+                                                <span class="oi oi-x"></span>
+                                            </a>
 
                                         <?php } ?>
 
-                                        <a href="formulario.modificar.php?id=<?= $formulario['idFormulario']; ?>" title="Modificar este formulario."><button class="btn btn-outline-warning" style="margin-bottom: 2px;" type="button"><span class="oi oi-pencil"></span></button></a>
-
                                         <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ELIMINAR_FORMULARIOS)) { ?>
 
-                                            <a title="Eliminar este formulario." href="formulario.eliminar.php?id=<?= $formulario['idFormulario']; ?>"><button class="btn btn-outline-danger" style="margin-bottom: 2px;" type="button"><span class="oi oi-trash"></span></button></a>
+                                            <a class="btn btn-outline-danger" href="formulario.eliminar.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Eliminar este formulario.">
+                                                <span class="oi oi-trash"></span>
+                                            </a>
 
                                         <?php } ?>
 
@@ -139,16 +174,16 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
                     </table>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-success" href="formulario.crear.php">
-                        <span class="oi oi-plus"></span> Nuevo formulario
-                    </a>
+                    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS)) { ?>
+                        <a class="btn btn-success" href="formulario.crear.php">
+                            <span class="oi oi-plus"></span> Nuevo formulario
+                        </a>
+                    <?php } ?>
                     
                     <?php if ($usuario->esAdministradorDeGestores()) { ?>
-                    
-                    <a class="btn btn-secondary" href="formulario.gestor.pendientes.php" title="Ver todos los formularios que todavía requieren ser habilitados.">
-                        <span class="oi oi-task"></span> Gestionar formularios pendientes
-                    </a>
-                    
+                        <a class="btn btn-secondary" href="formulario.gestor.pendientes.php" title="Ver todos los formularios que todavía requieren ser habilitados.">
+                            <span class="oi oi-task"></span> Gestionar formularios pendientes
+                        </a>
                     <?php } ?>
                 </div>
             </div>
