@@ -5,6 +5,8 @@ include_once '../lib/ControlAcceso.Class.php';
 
 if (!(ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS) || ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ADMINISTRAR_GESTORES))) {
     ControlAcceso::redireccionar();
+    
+    exit();
 }
 
 require_once '../modelo/BDConexion.Class.php';
@@ -17,6 +19,8 @@ $nuevoEstado = filter_var(filter_input(INPUT_GET, "estado"), FILTER_SANITIZE_NUM
 if ($nuevoEstado != 0 && $nuevoEstado != 1) {
     /* El estado recibido por GET no es válido. */
     ControlAcceso::redireccionar("formulario.gestor.php");
+    
+    exit();
 }
 
 $usuario = new Usuario($_SESSION['usuario']->id);
@@ -27,10 +31,24 @@ if ($usuario->esAdministradorDeGestores()) {
             "SET `estaHabilitado` = {$nuevoEstado} " .
             "WHERE `idFormulario` = {$idFormulario}";
 } else {
-    $query = "" .
-            "UPDATE " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
-            "SET `estaHabilitado` = {$nuevoEstado} " .
-            "WHERE `idCreador` = {$_SESSION['usuario']->id} AND `idFormulario` = {$idFormulario}";
+    $gestorFormularios = BDConexion::getInstancia()->query("" .
+                    "SELECT `puedePublicar` " .
+                    "FROM " . BDCatalogoTablas::BD_TABLA_GESTOR_FORMULARIOS . " " .
+                    "WHERE `idUsuario` = {$_SESSION['usuario']->id}")->fetch_assoc();
+
+    $puedePublicar = $gestorFormularios['puedePublicar'];
+
+    if ($puedePublicar == 1) {
+        $query = "" .
+                "UPDATE " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
+                "SET `estaHabilitado` = {$nuevoEstado} " .
+                "WHERE `idCreador` = {$_SESSION['usuario']->id} AND `idFormulario` = {$idFormulario}";
+    } else {
+        /* El gestor de formularios no tiene permiso para habilitar/deshabilitar formularios */
+        ControlAcceso::redireccionar("formulario.gestor.php");
+
+        exit();
+    }
 }
 
 $consulta = BDConexion::getInstancia("bdFormularios")->query($query);

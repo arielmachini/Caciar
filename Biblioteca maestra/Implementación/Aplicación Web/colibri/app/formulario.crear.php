@@ -9,7 +9,7 @@ require_once '../modelo/BDConexion.Class.php';
 if (preg_match('/MSIE\s(?P<v>\d+)/i', filter_input(INPUT_SERVER, "HTTP_USER_AGENT"), $B) && $B['v'] <= 8) {
     echo "Tiene que actualizar su navegador para poder acceder a esta página. Disculpe las molestias.";
 
-    die();
+    exit();
 }
 
 $gestorFormularios = BDConexion::getInstancia()->query("" .
@@ -20,8 +20,10 @@ $gestorFormularios = BDConexion::getInstancia()->query("" .
 $cuotaCreacion = $gestorFormularios['cuotaCreacion'];
 
 if ($cuotaCreacion == 0) {
-    /* ¡Ups! El gestor de formularios ya alcanzó su cuota de creación. */
+    /* El gestor de formularios ya alcanzó su cuota de creación. */
     ControlAcceso::redireccionar('formulario.gestor.php');
+    
+    exit();
 }
 
 $_SESSION['cuotaCreacionGestor'] = $cuotaCreacion;

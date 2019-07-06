@@ -13,6 +13,8 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
  */
 if (empty($_POST)) {
     ControlAcceso::redireccionar("formulario.gestor.php");
+    
+    exit();
 }
 
 require_once '../modelo/BDConexion.Class.php';

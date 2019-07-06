@@ -30,6 +30,8 @@ function reCaptcha() {
  */
 if (empty($_POST) || !isset($_SESSION['formulario'])) {
     ControlAcceso::redireccionar();
+    
+    exit();
 }
 
 $formulario = $_SESSION['formulario'];

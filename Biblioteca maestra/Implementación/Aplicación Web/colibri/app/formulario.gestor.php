@@ -5,6 +5,8 @@ include_once '../lib/ControlAcceso.Class.php';
 
 if (!(ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS) || ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ADMINISTRAR_GESTORES))) {
     ControlAcceso::redireccionar();
+    
+    exit();
 }
 
 require_once '../modelo/BDConexion.Class.php';
@@ -12,11 +14,20 @@ require_once '../modelo/Usuario.Class.php';
 
 $usuario = new Usuario($_SESSION['usuario']->id);
 
+$gestorFormularios = BDConexion::getInstancia()->query("" .
+                "SELECT `cuotaCreacion`, `puedePublicar` " .
+                "FROM " . BDCatalogoTablas::BD_TABLA_GESTOR_FORMULARIOS . " " .
+                "WHERE `idUsuario` = {$_SESSION['usuario']->id}")->fetch_assoc();
+
+$cuotaCreacion = $gestorFormularios['cuotaCreacion'];
+
 if ($usuario->esAdministradorDeGestores()) {
     $query = "" .
             "SELECT * " .
             "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO;
 } else {
+    $puedePublicar = $gestorFormularios['puedePublicar'];
+
     $query = "" .
             "SELECT * " .
             "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
@@ -143,8 +154,31 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
                                         <a class="btn btn-outline-info" href="formulario.ver.detalles.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Ver más detalles acerca de este formulario.">
                                             <span class="oi oi-zoom-in"></span>
                                         </a>
-
-                                        <?php if ($formularioHabilitado == 0) { ?>
+                                        
+                                        <?php
+                                        /* ¿Por qué comprobar
+                                         * !isset($puedePublicar)?:
+                                         * 
+                                         * Porque la variable sólo se definirá
+                                         * cuando el usuario NO sea un
+                                         * ADMINISTRADOR DE GESTORES DE
+                                         * FORMULARIOS. Un administrador de
+                                         * gestores de formularios puede
+                                         * habilitar/deshabilitar formularios
+                                         * libremente, sin importar sus
+                                         * parámetros como gestor de formularios.
+                                         * En otras palabras, puede que un
+                                         * usuario no tenga el permiso para
+                                         * publicar asignado como GESTOR DE
+                                         * FORMULARIOS, pero como su autoridad
+                                         * como ADMINISTRADOR DE GESTORES DE
+                                         * FORMULARIOS tiene mayor peso, podrá
+                                         * habilitar/deshabilitar formularios de
+                                         * cualquier manera.
+                                         */
+                                        if (!isset($puedePublicar) or $puedePublicar == 1) {
+                                            if ($formularioHabilitado == 0) {
+                                        ?>
 
                                             <a class="btn btn-outline-success" href="formulario.modificar.estado.php?id=<?= $formulario['idFormulario']; ?>&estado=1" style="margin-bottom: 2px;" title="Habilitar este formulario.">
                                                 <span class="oi oi-check"></span>
@@ -156,7 +190,10 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
                                                 <span class="oi oi-x"></span>
                                             </a>
 
-                                        <?php } ?>
+                                        <?php
+                                            }
+                                        }
+                                        ?>
 
                                         <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ELIMINAR_FORMULARIOS)) { ?>
 
@@ -174,11 +211,21 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
                     </table>
                 </div>
                 <div class="card-footer">
-                    <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS)) { ?>
-                        <a class="btn btn-success" href="formulario.crear.php">
-                            <span class="oi oi-plus"></span> Nuevo formulario
-                        </a>
-                    <?php } ?>
+                    <?php
+                    if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS)) {
+                        if ($cuotaCreacion == -1 || $cuotaCreacion > 0) {
+                    ?>
+                            <a class="btn btn-success" href="formulario.crear.php">
+                                <span class="oi oi-plus"></span> Nuevo formulario
+                            </a>
+                    <?php } else { ?>
+                            <button class="btn btn-success" disabled style="cursor: not-allowed;" title="No puede crear más formularios porque ya alcanzó su límite. Si quiere crear más, contacte con un administrador." type="button">
+                                <span class="oi oi-plus"></span> Nuevo formulario
+                            </button>
+                    <?php
+                        }
+                    }
+                    ?>
                     
                     <?php if ($usuario->esAdministradorDeGestores()) { ?>
                         <a class="btn btn-secondary" href="formulario.gestor.pendientes.php" title="Ver todos los formularios que todavía requieren ser habilitados.">

@@ -24,6 +24,8 @@ if (isset($_SESSION['usuario']->id)) {
     if (!$consulta) {
         /* No existe formulario con la ID recibida por GET. */
         ControlAcceso::redireccionar();
+        
+        exit();
     }
 
     while ($idRol = $consulta->fetch_assoc()['idRol']) {
@@ -49,6 +51,8 @@ if (isset($_SESSION['usuario']->id)) {
     if (!$tienePermiso) {
         /* El usuario no tiene permitido ver el formulario. Se cancela la carga. */
         ControlAcceso::redireccionar();
+        
+        exit();
     }
 } else {
     $consulta = BDConexion::getInstancia()->query("" .
@@ -62,6 +66,8 @@ if (isset($_SESSION['usuario']->id)) {
          * general.
          */
         ControlAcceso::redireccionar();
+        
+        exit();
     }
 }
 
@@ -73,6 +79,8 @@ $consulta = BDConexion::getInstancia()->query("" .
 if (!$consulta) {
     /* No existe formulario con la ID recibida por GET. */
     ControlAcceso::redireccionar();
+    
+    exit();
 }
 
 $formularioHabilitado = $consulta['estaHabilitado'];
@@ -84,6 +92,8 @@ if ($formularioHabilitado == 0) {
          * administrador de gestores de formularios.
          */
         ControlAcceso::redireccionar();
+        
+        exit();
     }
 }
 
@@ -97,6 +107,8 @@ if ($formulario->getFechaApertura() != "") {
     if (date("Y-m-d") < $formulario->getFechaApertura()) {
         /* El formulario no está habilitado. */
         ControlAcceso::redireccionar();
+        
+        exit();
     }
 }
 
@@ -104,6 +116,8 @@ if ($formulario->getFechaCierre() != "") {
     if (date("Y-m-d") > $formulario->getFechaCierre()) {
         /* El formulario no está habilitado. */
         ControlAcceso::redireccionar();
+        
+        exit();
     }
 }
 

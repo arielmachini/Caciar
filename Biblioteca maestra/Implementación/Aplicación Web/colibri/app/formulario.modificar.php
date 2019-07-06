@@ -7,7 +7,7 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
 if (preg_match('/MSIE\s(?P<v>\d+)/i', filter_input(INPUT_SERVER, "HTTP_USER_AGENT"), $B) && $B['v'] <= 8) {
     echo "Tiene que actualizar su navegador para poder acceder a esta página. Disculpe las molestias.";
 
-    die();
+    exit();
 }
 
 include_once '../modelo/ColeccionRoles.php';
@@ -27,11 +27,15 @@ $consulta = BDConexion::getInstancia()->query("" .
 if (!$consulta) {
     /* No existe formulario con la ID recibida por GET. */
     ControlAcceso::redireccionar('formulario.gestor.php');
+    
+    exit();
 }
 
 if ($formulario['estaHabilitado'] == 1 || $formulario['cantidadRespuestas'] > 0) {
     /* El formulario está habilitado o registra respuestas, por lo tanto no se puede modificar. */
     ControlAcceso::redireccionar('formulario.gestor.php');
+    
+    exit();
 }
 
 $formulario = new Formulario();

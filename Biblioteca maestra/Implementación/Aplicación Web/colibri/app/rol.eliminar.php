@@ -11,6 +11,8 @@ $id = $_GET["id"];
 if ($id == PermisosSistema::IDROL_PUBLICO_GENERAL) {
     /* El rol "Público general" no debe ser eliminado. */
     ControlAcceso::redireccionar("roles.php");
+    
+    exit();
 }
 
 $Rol = new Rol($id);

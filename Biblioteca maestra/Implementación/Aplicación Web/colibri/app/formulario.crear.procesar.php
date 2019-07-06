@@ -13,6 +13,8 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
  */
 if (empty($_POST)) {
     ControlAcceso::redireccionar("formulario.crear.php");
+    
+    exit();
 }
 
 require_once '../modelo/BDConexion.Class.php';
@@ -33,7 +35,7 @@ BDConexion::getInstancia()->query("" .
 BDConexion::getInstancia()->autocommit(false);
 BDConexion::getInstancia()->begin_transaction();
 
-$formulario = new Formulario(null, date("Y") . "-" . date("m") . "-" . date("d"));
+$formulario = new Formulario(date("Y") . "-" . date("m") . "-" . date("d"));
 $i = 1;
 
 $campo = json_decode(stripslashes(filter_input(INPUT_POST, "campoID" . $i)));
