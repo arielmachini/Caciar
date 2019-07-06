@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 
 <?php
+require_once '../modelo/Formulario.Class.php';
+include_once '../lib/ControlAcceso.Class.php';
+
 $formulario = $_SESSION['formulario'];
 unset($_SESSION['formulario']);
 
-require_once '../modelo/Formulario.Class.php';
-include_once '../lib/ControlAcceso.Class.php';
 include_once '../lib/FabricaPDF.php';
 require_once '../modelo/BDConexion.Class.php';
 

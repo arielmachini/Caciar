@@ -1771,7 +1771,7 @@ function reactivarBotonesAccion() {
             } else {
                 $('#errorSinCampos').css('display', 'none');
                 
-                if ($('#camposCreados').html().trim().indexOf('&quot;obligatorio&quot;:0') > -1) {
+                if ($('#camposCreados').html().trim().indexOf('&quot;obligatorio&quot;:1') === -1 && $('#camposCreados').html().trim().indexOf('&quot;obligatorio&quot;: 1') === -1) {
                     event.preventDefault();
                     event.stopPropagation;
 

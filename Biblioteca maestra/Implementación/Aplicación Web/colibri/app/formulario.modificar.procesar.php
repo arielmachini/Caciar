@@ -3,10 +3,11 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 
+include_once '../lib/ControlAcceso.Class.php';
+
 $idFormulario = $_SESSION['idFormulario'];
 unset($_SESSION['idFormulario']);
 
-include_once '../lib/ControlAcceso.Class.php';
 include_once '../modelo/ColeccionRoles.php';
 ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
 

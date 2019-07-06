@@ -3,13 +3,14 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 
+include_once '../lib/ControlAcceso.Class.php';
+
 $cuotaCreacion = $_SESSION['cuotaCreacionGestor'];
 unset($_SESSION['cuotaCreacionGestor']);
 
 $puedePublicar = $_SESSION['puedePublicar'];
 unset($_SESSION['puedePublicar']);
 
-include_once '../lib/ControlAcceso.Class.php';
 include_once '../modelo/ColeccionRoles.php';
 ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
 

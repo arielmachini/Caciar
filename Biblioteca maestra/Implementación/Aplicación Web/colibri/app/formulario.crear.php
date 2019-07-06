@@ -440,7 +440,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 200.</span>
 
                                             <span class="editor-propiedad-cabecera">¿ES OBLIGATORIO?</span>
-                                            <label for="obligatorioCampoTexto" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioCampoTextoEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
+                                            <label for="obligatorioCampoTextoEdicion" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioCampoTextoEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
 
                                             <span class="editor-propiedad-cabecera">PISTA <span class="campo-tipo-info oi oi-info" title="Es el texto que se muestra dentro del campo antes de que el usuario escriba algo en él."></span></span>
                                             <input class="campo-editor" id="pistaCampoTextoEdicion" maxlength="50" placeholder="Esta es una pista de ejemplo"/>
@@ -473,7 +473,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 200.</span>
 
                                             <span class="editor-propiedad-cabecera">¿ES OBLIGATORIO?</span>
-                                            <label for="obligatorioListaDesplegable" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioListaDesplegableEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
+                                            <label for="obligatorioListaDesplegableEdicion" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioListaDesplegableEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
 
                                             <hr/>
                                             <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesListaDesplegableEdicion" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div></span>
@@ -507,7 +507,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 200.</span>
 
                                             <span class="editor-propiedad-cabecera">¿ES OBLIGATORIO?</span>
-                                            <label for="obligatorioCampoFecha" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioCampoFechaEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
+                                            <label for="obligatorioCampoFechaEdicion" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioCampoFechaEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
 
                                             <br/>
                                             <button class="btn btn-sm btn-outline-success" id="guardarEdicionCampoFecha" type="button">
@@ -562,7 +562,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 200.</span>
 
                                             <span class="editor-propiedad-cabecera">¿ES OBLIGATORIO?</span>
-                                            <label for="obligatorioAreaTexto" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioAreaTextoEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
+                                            <label for="obligatorioAreaTextoEdicion" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioAreaTextoEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
 
                                             <span class="editor-propiedad-cabecera">LÍMITE <span class="campo-tipo-info oi oi-info" title="Es la cantidad máxima de caracteres que el usuario podrá escribir en el área de texto. El valor mínimo que puede definir es 100 y el máximo 500."></span><div class="campo-error" id="errorLimiteAreaTextoEdicion" style="display: none;" title="Debe especificar un límite de caracteres (entre 100 y 500) para el área de texto."><span class="oi oi-warning"></span> COMPLETAR</div></span>
                                             <input class="campo-editor" id="limiteAreaTextoEdicion" max="500" min="100" step="5" type="number"/>
@@ -589,7 +589,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 200.</span>
 
                                             <span class="editor-propiedad-cabecera">¿ES OBLIGATORIO?</span>
-                                            <label for="obligatorioBotonesRadio" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioBotonesRadioEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
+                                            <label for="obligatorioBotonesRadioEdicion" style="font-size: 13px;"><input class="campo-opcion" id="obligatorioBotonesRadioEdicion" type="checkbox" value="Obligatorio"/> Es obligatorio</label>
 
                                             <hr/>
                                             <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesBotonesRadioEdicion" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div><div class="campo-error" id="errorOpcionesBotonesRadioIgualesEdicion" style="display: none;" title="No puede ingresar el mismo valor para todas las opciones."><span class="oi oi-warning"></span> CAMBIAR</div></span>

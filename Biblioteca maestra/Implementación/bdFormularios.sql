@@ -150,7 +150,7 @@ CREATE TABLE `gestor_formularios` (
     `puedePublicar` BIT(1) NOT NULL DEFAULT b'0',
     PRIMARY KEY (`idUsuario`),
     CONSTRAINT `gestor_formularios_ibfk_1` FOREIGN KEY (`idUsuario`)
-        REFERENCES `bdUsuarios`.`usuario` (`id`)
+        REFERENCES `bdUsuarios`.`usuario_rol` (`id_usuario`)
         ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET='UTF8';
 
