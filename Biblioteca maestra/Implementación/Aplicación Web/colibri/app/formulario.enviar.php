@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 
 <?php
+$formulario = $_SESSION['formulario'];
+unset($_SESSION['formulario']);
+
 require_once '../modelo/Formulario.Class.php';
 include_once '../lib/ControlAcceso.Class.php';
 include_once '../lib/FabricaPDF.php';
@@ -33,9 +36,6 @@ if (empty($_POST) || !isset($_SESSION['formulario'])) {
     
     exit();
 }
-
-$formulario = $_SESSION['formulario'];
-unset($_SESSION['formulario']);
 
 $reCaptcha = reCaptcha();
 

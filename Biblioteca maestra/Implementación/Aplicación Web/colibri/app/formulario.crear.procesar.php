@@ -3,6 +3,12 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 
+$cuotaCreacion = $_SESSION['cuotaCreacionGestor'];
+unset($_SESSION['cuotaCreacionGestor']);
+
+$puedePublicar = $_SESSION['puedePublicar'];
+unset($_SESSION['puedePublicar']);
+
 include_once '../lib/ControlAcceso.Class.php';
 include_once '../modelo/ColeccionRoles.php';
 ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
@@ -311,9 +317,6 @@ if ($consulta) { // Si la inserción del formulario se completó exitosamente, s
     if ($consulta) {
         BDConexion::getInstancia()->commit();
         
-        $cuotaCreacion = $_SESSION['cuotaCreacionGestor'];
-        unset($_SESSION['cuotaCreacionGestor']);
-        
         if ($cuotaCreacion > 0) {
             /* Si el gestor de formularios no tiene una cuota de creación
              * ilimitada y el formulario se creó exitosamente, se reduce su
@@ -359,11 +362,21 @@ if ($consulta) { // Si la inserción del formulario se completó exitosamente, s
                     <h3>Crear formulario</h3>
                 </div>
                 <div class="card-body">
-                    <?php if ($consulta) { ?>
-                        <div class="alert alert-success" role="alert">
-                            Su formulario ha sido creado exitosamente. Recuerde que puede habilitarlo desde el gestor de formularios.
-                        </div>
+                    <?php
+                    if ($consulta) {
+                        if ($puedePublicar) {
+                    ?>
+                            <div class="alert alert-success" role="alert">
+                                Su formulario ha sido creado exitosamente. Recuerde que puede habilitarlo desde el gestor de formularios.
+                            </div>
                     <?php } else { ?>
+                            <div class="alert alert-success" role="alert">
+                                Su formulario ha sido creado exitosamente. Tenga en cuenta que ahora debe ser aprobado por un administrador para que este sea visible.
+                            </div>
+                    <?php
+                        }
+                    } else {
+                    ?>
                         <div class="alert alert-danger" role="alert">
                             Se produjo un error al intentar procesar la solicitud.
                         </div>

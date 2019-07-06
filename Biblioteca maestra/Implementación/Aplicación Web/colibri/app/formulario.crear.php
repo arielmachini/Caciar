@@ -13,7 +13,7 @@ if (preg_match('/MSIE\s(?P<v>\d+)/i', filter_input(INPUT_SERVER, "HTTP_USER_AGEN
 }
 
 $gestorFormularios = BDConexion::getInstancia()->query("" .
-                "SELECT `cuotaCreacion` " .
+                "SELECT `cuotaCreacion`, `puedePublicar` " .
                 "FROM " . BDCatalogoTablas::BD_TABLA_GESTOR_FORMULARIOS . " " .
                 "WHERE `idUsuario` = {$_SESSION['usuario']->id}")->fetch_assoc();
 
@@ -27,6 +27,7 @@ if ($cuotaCreacion == 0) {
 }
 
 $_SESSION['cuotaCreacionGestor'] = $cuotaCreacion;
+$_SESSION['puedePublicar'] = $gestorFormularios['puedePublicar'];
 
 include_once '../modelo/ColeccionRoles.php';
 $ColeccionRoles = new ColeccionRoles();

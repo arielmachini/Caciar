@@ -3,6 +3,9 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 
+$idFormulario = $_SESSION['idFormulario'];
+unset($_SESSION['idFormulario']);
+
 include_once '../lib/ControlAcceso.Class.php';
 include_once '../modelo/ColeccionRoles.php';
 ControlAcceso::requierePermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS);
@@ -34,9 +37,6 @@ BDConexion::getInstancia()->query("" .
 
 BDConexion::getInstancia()->autocommit(false);
 BDConexion::getInstancia()->begin_transaction();
-
-$idFormulario = $_SESSION['idFormulario'];
-unset($_SESSION['idFormulario']);
 
 $formulario = new Formulario();
 $i = 1;
