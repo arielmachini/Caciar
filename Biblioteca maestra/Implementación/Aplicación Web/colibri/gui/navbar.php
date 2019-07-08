@@ -1,8 +1,10 @@
+<link href="https://fonts.googleapis.com/css?family=Merienda&display=swap" rel="stylesheet">
+
 <!-- Los estilos de navbar son definidos en la libreria css de Bootstrap -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="border-bottom-color: #449c73; padding: 20px 5%;">
     <a class="navbar-brand" href="formularios.php" style="display: flex; align-items: center;">
         <img class="d-inline-block align-top" height="50px" src="../lib/img/colibri.svg" style="margin-right: 10px;">
-        <span class="navbar-brand">Colibrí</span>
+        <span class="navbar-brand" style="font-family: 'Merienda', sans-serif; font-size: 1.6rem !important;">Colibrí</span>
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="toggle navigation">

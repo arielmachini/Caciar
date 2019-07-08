@@ -151,7 +151,7 @@ $formularios = BDConexion::getInstancia("bdFormularios")->query($query);
                                         }
                                         ?>
                                         
-                                        <a class="btn btn-outline-info" href="formulario.ver.detalles.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Ver más detalles acerca de este formulario.">
+                                        <a class="btn btn-outline-info" href="formulario.ver.detalles.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Ver más detalles acerca de este formulario y las respuestas que este registra.">
                                             <span class="oi oi-zoom-in"></span>
                                         </a>
                                         

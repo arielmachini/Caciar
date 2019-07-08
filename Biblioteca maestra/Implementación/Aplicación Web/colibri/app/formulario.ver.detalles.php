@@ -51,6 +51,42 @@ $rolesDestino = BDConexion::getInstancia()->query("" .
         <!-- Hojas de estilo requeridas por el sistema Colibrí -->
         <link rel="stylesheet" href="../lib/jquery-ui-1.12.1/jquery-ui.css">
         <link rel="stylesheet" href="../gui/css/colibri.css" />
+        <style>
+            div.informacion {
+                background-color: #e9eaec;
+                border-radius: 10px;
+                -moz-border-radius: 10px;
+                color: #42484d;
+                margin-bottom: 10px;
+                padding: 20px;
+            }
+            
+            div.informacion > h5 {
+                font-weight: bold;
+            }
+            
+            div.informacion > div {
+                display: block;
+            }
+            
+            div.informacion span {
+                margin-right: 10px;
+            }
+            
+            div.informacion-principal {
+                background-color: #d9ecff !important;
+                border: 1px solid;
+                border-color: #b8daff;
+                color: #00438c !important;
+            }
+            
+            div.informacion-respuestas {
+                background-color: #d9f2df !important;
+                border: 1px solid;
+                border-color: #c3e6cb;
+                color: #176028 !important;
+            }
+        </style>
 
         <script type="text/javascript" src="../lib/JQuery/jquery-3.3.1.js"></script>
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
@@ -67,59 +103,84 @@ $rolesDestino = BDConexion::getInstancia()->query("" .
                     <h3>Detalles del formulario</h3>
                 </div>
                 <div class="card-body">
-                    <h4 class="card-text">Título</h4>
-                    <p><?= $formulario['titulo']; ?></p>
-                    <hr/>
-                    <h4 class="card-text">Dirección de e-mail que recibe las respuestas</h4>
-                    <p><?= $formulario['emailReceptor']; ?></p>
-                    <hr/>
-                    <h4 class="card-text">Descripción</h4>
-                    <p>«<i><?= $formulario['descripcion']; ?></i>»</p>
-                    <hr/>
-                    <h4 class="card-text">Destinatarios del formulario</h4>
-                    <?php while ($rol = $rolesDestino->fetch_assoc()) {
-                        $nombreRol = $rol['nombre'];
+                    <div class="informacion informacion-principal">
+                        <h5><span class="oi oi-double-quote-serif-left"></span>Título</h5>
+                        <div><strong><?= $formulario['titulo']; ?></strong></div>
+                        <br/>
                         
-                        if ($nombreRol !== PermisosSistema::ROL_GESTOR && $nombreRol !== PermisosSistema::ROL_ADMINISTRADOR_GESTORES && $nombreRol !== PermisosSistema::ROL_ADMINISTRADOR) { ?>
-                            <p><?= $nombreRol; ?></p>
-                        <?php }
-                    } ?>
-                    <hr/>
-                    <h4 class="card-text">Fecha de creación</h4>
-                    <p><?= $formulario['fechaCreacion']; ?></p>
-                    <hr/>
-                    <h4 class="card-text">Fecha de apertura</h4>
-                    <?php
-                    $fechaApertura = $formulario['fechaApertura'];
-
-                    if ($fechaApertura != "") {
-                        ?>
-                        <p><?= $fechaApertura; ?></p>
-                    <?php } else { ?>
-                        <p><i>No fue definida</i></p>
-                    <?php } ?>
-                    <hr/>
-                    <h4 class="card-text">Fecha de cierre</h4>
-                    <?php
-                    $fechaCierre = $formulario['fechaCierre'];
-
-                    if ($fechaCierre != "") {
-                        ?>
-                        <p><?= $fechaCierre; ?></p>
-                    <?php } else { ?>
-                        <p><i>No fue definida</i></p>
-                    <?php } ?>
-                    <hr/>
-                    <h4 class="card-text">Cantidad de respuestas</h4>
-                    <?php
-                    $cantidadRespuestas = $formulario['cantidadRespuestas'];
-
-                    if ($cantidadRespuestas > 0) {
-                        ?>
-                        <p><?= $cantidadRespuestas; ?> respuestas</p>
-                    <?php } else { ?>
-                        <p><i>Sin respuestas</i></p>
-                    <?php } ?>
+                        <h5><span class="oi oi-excerpt"></span>Descripción</h5>
+                        <div>
+                            <?php if ($formulario['descripcion'] != "") { ?>
+                                «<i><?= $formulario['descripcion']; ?></i>»
+                            <?php } else { ?>
+                                Sin descripción
+                            <?php } ?>
+                        </div>
+                    </div>
+                    
+                    <div class="informacion">
+                        <h5><span class="oi oi-envelope-open"></span>Dirección de e-mail que recibe las respuestas</h5>
+                        <div><?= $formulario['emailReceptor']; ?></div>
+                    </div>
+                    
+                    <div class="informacion">
+                        <h5><span class="oi oi-calendar"></span>Fecha de creación</h5>
+                        <div><?= $formulario['fechaCreacion']; ?></div>
+                        <br/>
+                        
+                        <h5><span class="oi oi-calendar"></span>Fecha de apertura</h5>
+                        <div>
+                            <?php if ($formulario['fechaApertura'] != "") { ?>
+                                <?= $formulario['fechaApertura']; ?>
+                            <?php } else { ?>
+                                No fue definida
+                            <?php } ?>
+                        </div>
+                        <br/>
+                        
+                        <h5><span class="oi oi-calendar"></span>Fecha de cierre</h5>
+                        <div>
+                            <?php if ($formulario['fechaCierre'] != "") { ?>
+                                <?= $formulario['fechaCierre']; ?>
+                            <?php } else { ?>
+                                No fue definida
+                            <?php } ?>
+                        </div>
+                    </div>
+                    
+                    <div class="informacion">
+                        <h5><span class="oi oi-people"></span>Destinatarios del formulario</h5>
+                        <div>
+                            <?php
+                            while ($rol = $rolesDestino->fetch_assoc()) {
+                                if ($rol['nombre'] !== PermisosSistema::ROL_GESTOR && $rol['nombre'] !== PermisosSistema::ROL_ADMINISTRADOR_GESTORES && $rol['nombre'] !== PermisosSistema::ROL_ADMINISTRADOR) {
+                            ?>
+                                    • <?= $rol['nombre']; ?><br/>
+                            <?php
+                                }
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    
+                    <div class="informacion informacion-respuestas">
+                        <h5><span class="oi oi-chat"></span>Respuestas registradas</h5>
+                        <div>
+                            <?php if ($formulario['cantidadRespuestas'] > 0) { ?>
+                                Actualmente, este formulario registra <?= $formulario['cantidadRespuestas']; ?> respuesta(s)<br/>
+                                
+                                <a class="btn btn-sm btn-success" href="formulario.respuestas.php?id=<?= $idFormulario; ?>&csv=true" style="margin-top: 20px;" target="_blank">
+                                    <span class="oi oi-spreadsheet"></span>Descargar respuestas en formato CSV
+                                </a>
+                                
+                                <a class="btn btn-sm btn-secondary" href="formulario.respuestas.php?id=<?= $idFormulario; ?>" style="margin-top: 20px;" target="_blank" title="Haga clic aquí para abrir una nueva ventana donde podrá ver todas las respuestas a este formulario y descargarlas en formato PDF.">
+                                    <span class="oi oi-file"></span>Descargar respuestas en formato PDF
+                                </a>
+                            <?php } else { ?>
+                                Este formularios aún no registra respuestas
+                            <?php } ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <a class="btn btn-primary" href="formulario.gestor.php">

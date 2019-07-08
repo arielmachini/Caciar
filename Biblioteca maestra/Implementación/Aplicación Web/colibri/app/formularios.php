@@ -95,10 +95,8 @@ if (isset($_SESSION['usuario']->id)) {
                                         <span class="oi oi-document" style="padding-right: 5px;"></span><?= $formulario['titulo']; ?>
                                     </div>
 
-                                    <a href="formulario.ver.php?id=<?= $idFormulario; ?>">
-                                        <button class="btn btn-sm btn-dark">
-                                            <span class="oi oi-eye" style="padding-right: 5px;"></span>Ver formulario
-                                        </button>
+                                    <a class="btn btn-sm btn-dark" href="formulario.ver.php?id=<?= $idFormulario; ?>">
+                                        <span class="oi oi-eye" style="padding-right: 5px;"></span>Ver formulario
                                     </a>
                                 </div>
                             <?php } ?>
