@@ -372,7 +372,7 @@ $('#agregarOpcionLista').click(function () {
     /* Se obtiene el ID numérico del último campo. */
     var idOpcionNueva = parseInt($('#opcionesListaDesplegable input:last').attr('id').substring(12)) + 1;
 
-    if (idOpcionNueva <= 50) {
+    if (idOpcionNueva <= 100) {
         var opcionNueva = $('<input class=\"campo-editor\" id=\"opcionNumero' + idOpcionNueva + '\" maxlength=\"40\" placeholder=\"Opción ' + idOpcionNueva + '\" style=\"margin-top: 5px;\" type=\"text\"/>');
 
         $('#opcionesListaDesplegable').append(opcionNueva);
@@ -395,7 +395,7 @@ $('#agregarOpcionListaEdicion').click(function () {
     /* Se obtiene el ID numérico del último campo. */
     var idOpcionNueva = parseInt($('#opcionesListaDesplegableEdicion input:last').attr('id').substring(12)) + 1;
 
-    if (idOpcionNueva <= 50) {
+    if (idOpcionNueva <= 100) {
         var opcionNueva = $('<input class=\"campo-editor\" id=\"opcionNumero' + idOpcionNueva + '\" maxlength=\"40\" placeholder=\"Opción ' + idOpcionNueva + '\" style=\"margin-top: 5px;\" type=\"text\"/>');
 
         $('#opcionesListaDesplegableEdicion').append(opcionNueva);
@@ -739,7 +739,7 @@ $('#agregarCasillaVerificacion').click(function () {
     /* Se obtiene el ID numérico del último campo. */
     var idOpcionNueva = parseInt($('#opcionesCasillasVerificacion input:last').attr('id').substring(12)) + 1;
 
-    if (idOpcionNueva <= 20) {
+    if (idOpcionNueva <= 50) {
         var opcionNueva = $('<input class=\"campo-editor\" id=\"opcionNumero' + idOpcionNueva + '\" maxlength=\"40\" placeholder=\"Casilla de verificación ' + idOpcionNueva + '\" style=\"margin-top: 5px;\" type=\"text\"/>');
 
         $('#opcionesCasillasVerificacion').append(opcionNueva);
@@ -762,7 +762,7 @@ $('#agregarCasillaVerificacionEdicion').click(function () {
     /* Se obtiene el ID numérico del último campo. */
     var idOpcionNueva = parseInt($('#opcionesCasillasVerificacionEdicion input:last').attr('id').substring(12)) + 1;
 
-    if (idOpcionNueva <= 20) {
+    if (idOpcionNueva <= 50) {
         var opcionNueva = $('<input class=\"campo-editor\" id=\"opcionNumero' + idOpcionNueva + '\" maxlength=\"40\" placeholder=\"Casilla de verificación ' + idOpcionNueva + '\" style=\"margin-top: 5px;\" type=\"text\"/>');
 
         $('#opcionesCasillasVerificacionEdicion').append(opcionNueva);
@@ -1139,7 +1139,7 @@ $('#agregarBotonRadio').click(function () {
     /* Se obtiene el ID numérico del último campo. */
     var idOpcionNueva = parseInt($('#opcionesBotonesRadio input:last').attr('id').substring(12)) + 1;
 
-    if (idOpcionNueva <= 20) {
+    if (idOpcionNueva <= 50) {
         var opcionNueva = $('<input class=\"campo-editor\" id=\"opcionNumero' + idOpcionNueva + '\" maxlength=\"40\" placeholder=\"Botón de radio ' + idOpcionNueva + '\" style=\"margin-top: 5px;\" type=\"text\"/>');
 
         $('#opcionesBotonesRadio').append(opcionNueva);
@@ -1162,7 +1162,7 @@ $('#agregarBotonRadioEdicion').click(function () {
     /* Se obtiene el ID numérico del último campo. */
     var idOpcionNueva = parseInt($('#opcionesBotonesRadioEdicion input:last').attr('id').substring(12)) + 1;
 
-    if (idOpcionNueva <= 20) {
+    if (idOpcionNueva <= 50) {
         var opcionNueva = $('<input class=\"campo-editor\" id=\"opcionNumero' + idOpcionNueva + '\" maxlength=\"40\" placeholder=\"Botón de radio ' + idOpcionNueva + '\" style=\"margin-top: 5px;\" type=\"text\"/>');
 
         $('#opcionesBotonesRadioEdicion').append(opcionNueva);

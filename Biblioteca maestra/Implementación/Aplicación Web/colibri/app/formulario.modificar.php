@@ -461,7 +461,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <fieldset class="opciones-lista" id="opcionesListaDesplegable">
                                                 <input class="campo-editor" id="opcionNumero1" maxlength="40" placeholder="Opción 1" type="text"/>
                                             </fieldset>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 50.</span>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 100.</span>
                                             <hr/>
 
                                             <button class="btn btn-sm btn-outline-success" id="guardarListaDesplegable" style="margin-bottom: 10px; width: 100%;" type="button">
@@ -522,7 +522,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <fieldset class="opciones-lista" id="opcionesCasillasVerificacion">
                                                 <input class="campo-editor" id="opcionNumero1" maxlength="40" placeholder="Casilla de verificación 1" type="text"/>
                                             </fieldset>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 20.</span>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 50.</span>
                                             <hr/>
 
                                             <button class="btn btn-sm btn-outline-success" id="guardarCasillasVerificacion" style="margin-bottom: 10px; width: 100%;" type="button">
@@ -590,7 +590,7 @@ $ColeccionRoles = new ColeccionRoles();
                                                 <input class="campo-editor" id="opcionNumero1" maxlength="40" placeholder="Botón de radio 1" type="text"/>
                                                 <input class="campo-editor" id="opcionNumero2" maxlength="40" placeholder="Botón de radio 2" style="margin-top: 5px;" type="text"/>
                                             </fieldset>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 20.</span>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 50.</span>
                                             <hr/>
 
                                             <button class="btn btn-sm btn-outline-success" id="guardarBotonesRadio" style="margin-bottom: 10px; width: 100%;" type="button">
@@ -667,7 +667,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             </div>
 
                                             <fieldset class="opciones-lista" id="opcionesListaDesplegableEdicion"></fieldset>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 50.</span>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 100.</span>
                                             <hr/>
 
                                             <button class="btn btn-sm btn-outline-success" id="guardarEdicionListaDesplegable" type="button">
@@ -722,7 +722,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             </div>
 
                                             <fieldset class="opciones-lista" id="opcionesCasillasVerificacionEdicion"></fieldset>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 20.</span>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 50.</span>
                                             <hr/>
 
                                             <button class="btn btn-sm btn-outline-success" id="guardarEdicionCasillasVerificacion" type="button">
@@ -783,7 +783,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             </div>
 
                                             <fieldset class="opciones-lista" id="opcionesBotonesRadioEdicion"></fieldset>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 20.</span>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de opciones: 50.</span>
                                             <hr/>
 
                                             <button class="btn btn-sm btn-outline-success" id="guardarEdicionBotonesRadio" type="button">
