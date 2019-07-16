@@ -158,8 +158,23 @@ USE `bdUsuarios`;
 
 /* Se agregan los roles y permisos necesarios para el correcto funcionamiento del sistema Colibrí: */
 INSERT INTO `rol` VALUES (-1, "Público general");
+
 INSERT INTO `rol` VALUES (NULL, "Gestor de formularios");
-INSERT INTO `rol` VALUES (NULL, "Administrador de gestores de formularios");
+SELECT @idRolGestorFormularios := LAST_INSERT_ID();
+
 INSERT INTO `permiso` VALUES (NULL, "Crear formularios");
-INSERT INTO `permiso` VALUES (NULL, "Eliminar formularios");
+SELECT @idPermisoCrearFormulario := LAST_INSERT_ID();
+
+INSERT INTO `rol` VALUES (NULL, "Administrador de gestores de formularios");
+SELECT @idRolAdministradorGestores := LAST_INSERT_ID();
+
 INSERT INTO `permiso` VALUES (NULL, "Administrar gestores de formularios");
+SELECT @idPermisoAdministrarGestores := LAST_INSERT_ID();
+
+INSERT INTO `permiso` VALUES (NULL, "Eliminar formularios");
+SELECT @idPermisoEliminarFormulario := LAST_INSERT_ID();
+
+INSERT INTO `rol_permiso` VALUES
+    (@idRolGestorFormularios, @idPermisoCrearFormulario),
+    (@idRolAdministradorGestores, @idPermisoAdministrarGestores),
+    (@idRolAdministradorGestores, @idPermisoEliminarFormulario);
