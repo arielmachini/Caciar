@@ -16,7 +16,6 @@ CREATE TABLE `formulario` (
     `fechaApertura` DATE DEFAULT NULL,
     `fechaCierre` DATE DEFAULT NULL,
     `estaHabilitado` BIT(1) DEFAULT b'0',
-    `cantidadRespuestas` MEDIUMINT(8) UNSIGNED NOT NULL,
     PRIMARY KEY (`idFormulario`),
     UNIQUE KEY `titulo` (`titulo`),
     KEY `idCreador` (`idCreador`),
@@ -158,23 +157,8 @@ USE `bdUsuarios`;
 
 /* Se agregan los roles y permisos necesarios para el correcto funcionamiento del sistema Colibrí: */
 INSERT INTO `rol` VALUES (-1, "Público general");
-
 INSERT INTO `rol` VALUES (NULL, "Gestor de formularios");
-SELECT @idRolGestorFormularios := LAST_INSERT_ID();
-
-INSERT INTO `permiso` VALUES (NULL, "Crear formularios");
-SELECT @idPermisoCrearFormulario := LAST_INSERT_ID();
-
 INSERT INTO `rol` VALUES (NULL, "Administrador de gestores de formularios");
-SELECT @idRolAdministradorGestores := LAST_INSERT_ID();
-
-INSERT INTO `permiso` VALUES (NULL, "Administrar gestores de formularios");
-SELECT @idPermisoAdministrarGestores := LAST_INSERT_ID();
-
+INSERT INTO `permiso` VALUES (NULL, "Crear formularios");
 INSERT INTO `permiso` VALUES (NULL, "Eliminar formularios");
-SELECT @idPermisoEliminarFormulario := LAST_INSERT_ID();
-
-INSERT INTO `rol_permiso` VALUES
-    (@idRolGestorFormularios, @idPermisoCrearFormulario),
-    (@idRolAdministradorGestores, @idPermisoAdministrarGestores),
-    (@idRolAdministradorGestores, @idPermisoEliminarFormulario);
+INSERT INTO `permiso` VALUES (NULL, "Administrar gestores de formularios");
