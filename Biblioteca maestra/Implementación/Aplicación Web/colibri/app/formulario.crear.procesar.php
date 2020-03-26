@@ -165,20 +165,20 @@ $formulario->setTitulo(sanitizar(filter_input(INPUT_POST, "tituloFormulario")));
 
 if (empty($formulario->getFechaApertura()) && empty($formulario->getFechaCierre())) {
     $consulta = BDConexion::getInstancia()->query("" .
-            "INSERT INTO " . BDCatalogoTablas::BD_TABLA_FORMULARIO . "(`idCreador`, `emailReceptor`, `titulo`, `descripcion`, `fechaCreacion`, `fechaApertura`, `fechaCierre`, `estaHabilitado`, `cantidadRespuestas`) " .
-            "VALUES ({$_SESSION['usuario']->id}, '{$formulario->getEmailReceptor()}', '{$formulario->getTitulo()}', '{$formulario->getDescripcion()}', STR_TO_DATE('{$formulario->getFechaCreacion()}', '%Y-%m-%d'), NULL, NULL, 0, 0)");
+            "INSERT INTO " . BDCatalogoTablas::BD_TABLA_FORMULARIO . "(`idCreador`, `emailReceptor`, `titulo`, `descripcion`, `fechaCreacion`, `fechaApertura`, `fechaCierre`, `estaHabilitado`) " .
+            "VALUES ({$_SESSION['usuario']->id}, '{$formulario->getEmailReceptor()}', '{$formulario->getTitulo()}', '{$formulario->getDescripcion()}', STR_TO_DATE('{$formulario->getFechaCreacion()}', '%Y-%m-%d'), NULL, NULL, 0)");
 } else if (empty($formulario->getFechaCierre())) {
     $consulta = BDConexion::getInstancia()->query("" .
-            "INSERT INTO " . BDCatalogoTablas::BD_TABLA_FORMULARIO . "(`idCreador`, `emailReceptor`, `titulo`, `descripcion`, `fechaCreacion`, `fechaApertura`, `fechaCierre`, `estaHabilitado`, `cantidadRespuestas`) " .
-            "VALUES ({$_SESSION['usuario']->id}, '{$formulario->getEmailReceptor()}', '{$formulario->getTitulo()}', '{$formulario->getDescripcion()}', STR_TO_DATE('{$formulario->getFechaCreacion()}', '%Y-%m-%d'), STR_TO_DATE('{$formulario->getFechaApertura()}', '%Y-%m-%d'), NULL, 0, 0)");
+            "INSERT INTO " . BDCatalogoTablas::BD_TABLA_FORMULARIO . "(`idCreador`, `emailReceptor`, `titulo`, `descripcion`, `fechaCreacion`, `fechaApertura`, `fechaCierre`, `estaHabilitado`) " .
+            "VALUES ({$_SESSION['usuario']->id}, '{$formulario->getEmailReceptor()}', '{$formulario->getTitulo()}', '{$formulario->getDescripcion()}', STR_TO_DATE('{$formulario->getFechaCreacion()}', '%Y-%m-%d'), STR_TO_DATE('{$formulario->getFechaApertura()}', '%Y-%m-%d'), NULL, 0)");
 } else if (empty($formulario->getFechaApertura())) {
     $consulta = BDConexion::getInstancia()->query("" .
-            "INSERT INTO " . BDCatalogoTablas::BD_TABLA_FORMULARIO . "(`idCreador`, `emailReceptor`, `titulo`, `descripcion`, `fechaCreacion`, `fechaApertura`, `fechaCierre`, `estaHabilitado`, `cantidadRespuestas`) " .
-            "VALUES ({$_SESSION['usuario']->id}, '{$formulario->getEmailReceptor()}', '{$formulario->getTitulo()}', '{$formulario->getDescripcion()}', STR_TO_DATE('{$formulario->getFechaCreacion()}', '%Y-%m-%d'), NULL, STR_TO_DATE('{$formulario->getFechaCierre()}', '%Y-%m-%d'), 0, 0)");
+            "INSERT INTO " . BDCatalogoTablas::BD_TABLA_FORMULARIO . "(`idCreador`, `emailReceptor`, `titulo`, `descripcion`, `fechaCreacion`, `fechaApertura`, `fechaCierre`, `estaHabilitado`) " .
+            "VALUES ({$_SESSION['usuario']->id}, '{$formulario->getEmailReceptor()}', '{$formulario->getTitulo()}', '{$formulario->getDescripcion()}', STR_TO_DATE('{$formulario->getFechaCreacion()}', '%Y-%m-%d'), NULL, STR_TO_DATE('{$formulario->getFechaCierre()}', '%Y-%m-%d'), 0)");
 } else {
     $consulta = BDConexion::getInstancia()->query("" .
-            "INSERT INTO " . BDCatalogoTablas::BD_TABLA_FORMULARIO . "(`idCreador`, `emailReceptor`, `titulo`, `descripcion`, `fechaCreacion`, `fechaApertura`, `fechaCierre`, `estaHabilitado`, `cantidadRespuestas`) " .
-            "VALUES ({$_SESSION['usuario']->id}, '{$formulario->getEmailReceptor()}', '{$formulario->getTitulo()}', '{$formulario->getDescripcion()}', STR_TO_DATE('{$formulario->getFechaCreacion()}', '%Y-%m-%d'), STR_TO_DATE('{$formulario->getFechaApertura()}', '%Y-%m-%d'), STR_TO_DATE('{$formulario->getFechaCierre()}', '%Y-%m-%d'), 0, 0)");
+            "INSERT INTO " . BDCatalogoTablas::BD_TABLA_FORMULARIO . "(`idCreador`, `emailReceptor`, `titulo`, `descripcion`, `fechaCreacion`, `fechaApertura`, `fechaCierre`, `estaHabilitado`) " .
+            "VALUES ({$_SESSION['usuario']->id}, '{$formulario->getEmailReceptor()}', '{$formulario->getTitulo()}', '{$formulario->getDescripcion()}', STR_TO_DATE('{$formulario->getFechaCreacion()}', '%Y-%m-%d'), STR_TO_DATE('{$formulario->getFechaApertura()}', '%Y-%m-%d'), STR_TO_DATE('{$formulario->getFechaCierre()}', '%Y-%m-%d'), 0)");
 }
 
 if ($consulta) { // Si la inserción del formulario se completó exitosamente, se continúa con el procesamiento.

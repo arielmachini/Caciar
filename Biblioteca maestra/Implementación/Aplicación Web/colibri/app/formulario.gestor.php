@@ -34,7 +34,7 @@ if ($usuario->esAdministradorDeGestores()) {
             "WHERE `idCreador` = {$_SESSION['usuario']->id}";
 }
 
-$formularios = BDConexion::getInstancia("bdFormularios")->query($query);
+$formularios = BDConexion::getInstancia()->query($query);
 ?>
 
 <html>

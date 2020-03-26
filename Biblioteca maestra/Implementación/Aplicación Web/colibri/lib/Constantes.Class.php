@@ -25,5 +25,8 @@ class Constantes {
     const APPURL = "http://localhost/colibri";
     const HOMEURL = self::APPURL . "/app/index.php";
     const HOMEAUTH = Constantes::FORMSURL;
+    
+    /* Constantes utilizadas por la aplicación móvil del sistema Colibrí */
+    const LLAVE = '8c8b6c186ad4940044533c4303a0ab5c';
 
 }

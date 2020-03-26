@@ -51,7 +51,7 @@ if ($usuario->esAdministradorDeGestores()) {
     }
 }
 
-$consulta = BDConexion::getInstancia("bdFormularios")->query($query);
+$consulta = BDConexion::getInstancia()->query($query);
 ?>
 
 <html>

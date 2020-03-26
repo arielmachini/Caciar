@@ -7,7 +7,7 @@ ControlAcceso::requierePermiso(PermisosSistema::PERMISO_ADMINISTRAR_GESTORES);
 include_once '../modelo/Usuario.Class.php';
 require_once '../modelo/BDConexion.Class.php';
 
-$formulariosPendientes = BDConexion::getInstancia("bdFormularios")->query("" .
+$formulariosPendientes = BDConexion::getInstancia()->query("" .
         "SELECT * " .
         "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
         "WHERE `estaHabilitado` = 0");

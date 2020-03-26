@@ -97,7 +97,7 @@ if ($resultadoCaptcha && $puntajeCaptcha > 0.5) {
     }
 
     FabricaPDF::generar($formulario->getID(), $formulario->getTitulo(), $formulario->incrementarRespuestas(), $cuerpoHtmlPdf);
-    BDConexion::getInstancia("bdFormularios")->autocommit(false);
+    BDConexion::getInstancia()->autocommit(false);
 
     $consulta = BDConexion::getInstancia()->query("" .
             "UPDATE " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .

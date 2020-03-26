@@ -1,6 +1,6 @@
 <?php
 
-include_once '../lib/BDCatalogoTablas.Class.php';
+include_once filter_input(INPUT_SERVER, 'DOCUMENT_ROOT', FILTER_SANITIZE_STRING) . '/colibri/lib/BDCatalogoTablas.Class.php';
 include_once 'BDColeccionGenerica.Class.php';
 include_once 'Rol.Class.php';
 

@@ -191,7 +191,7 @@ $ColeccionRoles = new ColeccionRoles();
                                                     </td>
 
                                                     <td class="nuevo-campo" id="nuevaListaVerificacion">
-                                                        <span class="campo-tipo">Casillas de verificación <span class="campo-tipo-ayuda oi oi-question-mark" title="Es una lista de opciones. Se puede seleccionar más de una opción."></span></span><br/>
+                                                        <span class="campo-tipo">Casillas de verificación <span class="campo-tipo-ayuda oi oi-question-mark" title="Es una lista de opciones. Se pueden seleccionar cero o más opciones."></span></span><br/>
                                                         <img src="../lib/img/creador-formularios/ListaCheckbox.png">
                                                     </td>
                                                 </tr>

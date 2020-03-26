@@ -159,12 +159,6 @@ class Formulario {
         return $this->titulo;
     }
     
-    function incrementarRespuestas() {
-        $this->cantidadRespuestas++;
-        
-        return $this->cantidadRespuestas;
-    }
-    
     function setCantidadRespuestas($cantidadRespuestas_) {
         $this->cantidadRespuestas = $cantidadRespuestas_;
     }
