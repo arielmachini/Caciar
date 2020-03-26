@@ -15,4 +15,4 @@ El proyecto Colibrí se desarrolla en el ámbito de una asignatura de tercer añ
 # Enlaces
 Enlaces que compartimos con el público general.
 * **Metodología PSI:** Utilizamos la metodología PSI creada por los profesores Esteban Gesto y Karim Hallar para el desarrollo del proyecto. http://sistemas.uarg.unpa.edu.ar/psi/
-* **Ionic framework:** Se busca utilizar Ionic framework para el desarrollo de la parte móvil del proyecto. https://ionicframework.com/
+* **Ionic framework:** Se busca utilizar Ionic framework para el desarrollo de la parte móvil del proyecto. https://ionicframework.com/ — **Repositorio de la aplicación móvil:** https://github.com/cinthialima/appColibri-Ionic
