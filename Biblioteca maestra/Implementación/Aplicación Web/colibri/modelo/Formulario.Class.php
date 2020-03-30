@@ -19,11 +19,6 @@ class Formulario {
      * $camposFormulario: Arreglo que contiene a todos los campos que contiene
      * el formulario.
      * 
-     * $cantidadRespuestas: Esta variable no debería ser modificada
-     * manualmente. Almacena el número de respuestas que tiene el formulario
-     * abstraído en cada instancia de esta clase y se incrementa
-     * automáticamente.
-     * 
      * $descripcion: Atributo opcional. Se muestra bajo el título del
      * formulario, es una breve introducción a la temática del formulario.
      * 
@@ -57,7 +52,6 @@ class Formulario {
      */
 
     private $camposFormulario = array();
-    private $cantidadRespuestas;
     private $descripcion;
     private $emailReceptor;
     private $estaHabilitado;
@@ -74,7 +68,6 @@ class Formulario {
     
     
     function __construct($fechaCreacion_ = null) {
-        $this->cantidadRespuestas = 0;
         $this->descripcion = null;
         $this->estaHabilitado = false;
         $this->fechaCreacion = $fechaCreacion_;
@@ -127,10 +120,6 @@ class Formulario {
         return $this->descripcion;
     }
     
-    function getCantidadRespuestas() {
-        return $this->cantidadRespuestas;
-    }
-    
     function getEmailReceptor() {
         return $this->emailReceptor;
     }
@@ -157,10 +146,6 @@ class Formulario {
     
     function getTitulo() {
         return $this->titulo;
-    }
-    
-    function setCantidadRespuestas($cantidadRespuestas_) {
-        $this->cantidadRespuestas = $cantidadRespuestas_;
     }
     
     function setDescripcion($descripcion_) {

@@ -124,7 +124,6 @@ if ($formulario->getFechaCierre() != "") {
 $formulario->setEmailReceptor($consulta['emailReceptor']);
 $formulario->setTitulo($consulta['titulo']);
 $formulario->setDescripcion($consulta['descripcion']);
-$formulario->setCantidadRespuestas($consulta['cantidadRespuestas']);
 
 $consulta = BDConexion::getInstancia()->query("" .
         "SELECT * " .

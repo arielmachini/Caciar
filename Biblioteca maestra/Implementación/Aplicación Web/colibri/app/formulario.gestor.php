@@ -93,7 +93,10 @@ $formularios = BDConexion::getInstancia()->query($query);
                                     <td style="vertical-align: middle;">
                                         
                                         <?php
-                                        $cantidadRespuestas = $formulario['cantidadRespuestas'];
+                                        $cantidadRespuestas = BDConexion::getInstancia()->query("" .
+                                                "SELECT COUNT(`csv`) " .
+                                                "FROM " . BDCatalogoTablas::BD_TABLA_RESPUESTA . " " .
+                                                "WHERE `idFormulario` = {$formulario['idFormulario']}")->fetch_array()[0];
                                         
                                         echo $cantidadRespuestas;
                                         ?>

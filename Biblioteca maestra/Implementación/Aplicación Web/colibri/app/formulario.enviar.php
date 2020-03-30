@@ -32,7 +32,7 @@ function reCaptcha() {
  * Se realiza esta comprobación para evitar que el usuario acceda directamente
  * a esta página.
  */
-if (empty($_POST) || !isset($_SESSION['formulario'])) {
+if (empty($_POST) || !isset($formulario)) {
     ControlAcceso::redireccionar();
     
     exit();
@@ -44,77 +44,37 @@ $puntajeCaptcha = $reCaptcha->score;
 $resultadoCaptcha = $reCaptcha->success;
 
 if ($resultadoCaptcha && $puntajeCaptcha > 0.5) {
-    $colibri = new PHPMailer(true);
-    $direccionEmisor = "arielmachini.pruebas@gmail.com";
-    // $direccionEmisor = "sistema-colibri@uarg.unpa.edu.ar"
-    $errorEnvio = true;
-
-    /* CONFIGURACIÓN DEL SERVIDOR */
-    $colibri->isSMTP();
-    $colibri->Host = "smtp.gmail.com";
-    $colibri->Port = 587;
-    $colibri->SMTPAuth = true;
-    $colibri->SMTPSecure = "tls";
-
-    /* CONFIGURACIÓN DE LA DIRECCIÓN DE E-MAIL EMISORA */
-    $colibri->Username = $direccionEmisor;
-    $colibri->Password = "titpfa312";
-
-    $colibri->setFrom($direccionEmisor, "Sistema Colibrí");
-    $colibri->addAddress($formulario->getEmailReceptor());
-    $colibri->Subject = "Nueva solicitud en \"" . $formulario->getTitulo() . "\"";
-    $colibri->isHTML(false);
-    $colibri->Body = "Estimado usuario,\n\nSe acaba de enviar una nueva solicitud en su formulario \"" . $formulario->getTitulo() . "\". A continuación se muestran los datos de dicha solicitud:\n\n";
-
-    $cuerpoHtmlPdf = '';
-
+    $csvRespuesta = '"' . date("d/m/Y H:i:s") . '",';
+    
     foreach ($formulario->getCampos() as $campo) {
         if ($campo instanceof ListaCheckbox) { // Sólo hay que realizar un tratamiento diferente para la lista de casillas de verificación.
             $nombreCampo = str_replace(" ", "_", $campo->getTitulo());
+            
             $casillasSeleccionadas = filter_input(INPUT_POST, $nombreCampo, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
-            if (!empty($casillasSeleccionadas)) {
-                $colibri->Body .= "\n" . $campo->getTitulo() . ":\n";
-                $cuerpoHtmlPdf .= '<strong>' . $campo->getTitulo() . '</strong><br/>';
+            $csvRespuesta .= '"';
 
-                foreach ($casillasSeleccionadas as $casilla) {
-                    $colibri->Body .= "(✓) " . $casilla . "\n";
-                    $cuerpoHtmlPdf .= '<div style="display: inline-block;"><img alt="(X)" height="12px" src="../lib/img/documentos-pdf/casilla_verificacion.svg" style="background-color: white;" width="12px"> ' . $casilla . '</div>';
-                }
 
-                $colibri->Body .= "\n";
-                $cuerpoHtmlPdf .= '<br/>';
+            foreach ($casillasSeleccionadas as $casilla) {
+                $csvRespuesta .= str_replace('"', '""', $casilla) . ';';
             }
+            
+            $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
+            $csvRespuesta .= '",';
         } else {
             $nombreCampo = "nombre_" . str_replace(" ", "_", $campo->getTitulo());
+            
             $valorCampo = filter_input(INPUT_POST, $nombreCampo);
-
-            if ($valorCampo != "") {
-                $colibri->Body .= $campo->getTitulo() . ": " . $valorCampo . "\n";
-                $cuerpoHtmlPdf .= '<strong>' . $campo->getTitulo() . '</strong><br/>' . $valorCampo . '<br/><br/>';
-            }
+            
+            $csvRespuesta .= '"' . str_replace('"', '""', $valorCampo) . '",';
         }
     }
-
-    FabricaPDF::generar($formulario->getID(), $formulario->getTitulo(), $formulario->incrementarRespuestas(), $cuerpoHtmlPdf);
-    BDConexion::getInstancia()->autocommit(false);
+    
+    $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
 
     $consulta = BDConexion::getInstancia()->query("" .
-            "UPDATE " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
-            "SET `cantidadRespuestas` = {$formulario->incrementarRespuestas()}" .
-            "WHERE `idFormulario` = {$formulario->getID()}");
-
-    if ($consulta) {
-        if ($colibri->send()) {
-            $errorEnvio = false;
-
-            BDConexion::getInstancia()->commit();
-        } else {
-            BDConexion::getInstancia()->rollback();
-        }
-    } else {
-        BDConexion::getInstancia()->rollback();
-    }
+            "INSERT INTO " . BDCatalogoTablas::BD_TABLA_RESPUESTA . "(`idFormulario`, `csv`, `fueEnviada`) " .
+            "VALUES ({$formulario->getID()}, '{$csvRespuesta}', 0)");
 }
 ?>
 
@@ -142,7 +102,7 @@ if ($resultadoCaptcha && $puntajeCaptcha > 0.5) {
                         <div class="alert alert-warning" role="alert">
                             Su respuesta no puede ser procesada porque no pasó el desafío de reCAPTCHA.
                         </div>
-                    <?php } else if (!$consulta || $errorEnvio) { ?>
+                    <?php } else if (!$consulta) { ?>
                         <div class="alert alert-danger" role="alert">
                             Se produjo un error al intentar procesar su respuesta. Por favor, inténtelo más tarde.
                         </div>

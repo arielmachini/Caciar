@@ -31,7 +31,12 @@ if (!$consulta) {
     exit();
 }
 
-if ($formulario['estaHabilitado'] == 1 || $formulario['cantidadRespuestas'] > 0) {
+$cantidadRespuestas = BDConexion::getInstancia()->query("" .
+                "SELECT COUNT(`csv`) " .
+                "FROM " . BDCatalogoTablas::BD_TABLA_RESPUESTA . " " .
+                "WHERE `idFormulario` = {$idFormulario}")->fetch_array()[0];
+
+if ($formulario['estaHabilitado'] == 1 || $cantidadRespuestas > 0) {
     /* El formulario está habilitado o registra respuestas, por lo tanto no se puede modificar. */
     ControlAcceso::redireccionar('formulario.gestor.php');
     

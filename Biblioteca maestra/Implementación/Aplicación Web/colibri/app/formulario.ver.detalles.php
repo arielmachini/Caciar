@@ -28,6 +28,10 @@ if ($usuario->esAdministradorDeGestores()) {
 }
 
 $formulario = BDConexion::getInstancia()->query($query);
+$cantidadRespuestas = BDConexion::getInstancia()->query("" .
+                "SELECT COUNT(`csv`) " .
+                "FROM " . BDCatalogoTablas::BD_TABLA_RESPUESTA . " " .
+                "WHERE `idFormulario` = {$idFormulario}")->fetch_array()[0];
 
 if (mysqli_num_rows($formulario) == 0) {
     /* El formulario no existe o el usuario que intenta acceder no tiene acceso a este. */
@@ -166,8 +170,8 @@ $rolesDestino = BDConexion::getInstancia()->query("" .
                     <div class="informacion informacion-respuestas">
                         <h5><span class="oi oi-chat"></span>Respuestas registradas</h5>
                         <div>
-                            <?php if ($formulario['cantidadRespuestas'] > 0) { ?>
-                                Actualmente, este formulario registra <?= $formulario['cantidadRespuestas']; ?> respuesta(s)<br/>
+                            <?php if ($cantidadRespuestas > 0) { ?>
+                                Actualmente, este formulario registra <?= $cantidadRespuestas; ?> respuesta(s)<br/>
                                 
                                 <a class="btn btn-sm btn-success" href="formulario.respuestas.php?id=<?= $idFormulario; ?>&csv=true" style="margin-top: 20px;" target="_blank">
                                     <span class="oi oi-spreadsheet"></span>Descargar respuestas en formato CSV

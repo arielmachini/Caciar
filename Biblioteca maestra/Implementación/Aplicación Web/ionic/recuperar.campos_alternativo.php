@@ -28,7 +28,6 @@ $hashFechaHoy = md5(date('dmY'));
 if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE . $hashFechaAyer) { // Si la solicitud del cliente es enviada a las 23:59, puede que sea recibida a las 0:00 del día siguiente.
     require_once '../colibri/modelo/BDConexion.Class.php';
     require_once '../colibri/lib/BDCatalogoTablas.Class.php';
-    require_once '../colibri/modelo/Formulario.Class.php';
     
     $formulario = BDConexion::getInstancia()->query("" .
             "SELECT `idFormulario`, `fechaApertura`, `fechaCierre` " .
@@ -69,18 +68,15 @@ if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE .
             "FROM " . BDCatalogoTablas::BD_TABLA_CAMPO . " " .
             "WHERE `idFormulario` = {$idFormulario} " .
             "ORDER BY `posicion` ASC");
-
-    $formulario = new Formulario();
     
     $camposJSON = '[';
 
     while ($campo = $camposFormulario->fetch_assoc()) {
-        /* Se guardan los atributos generales del campo. */
         $idCampo = $campo['idCampo'];
-        $titulo = $campo['titulo'];
-        $descripcion = $campo['descripcion'];
-        $esObligatorio = $campo['esObligatorio'];
-        $posicion = $campo['posicion'];
+        
+        $camposJSON .= '{"titulo": "' . $campo['titulo'] . '", ';
+        $camposJSON .= '"descripcion": "' . $campo['descripcion'] . '", ';
+        $camposJSON .= '"esObligatorio": ' . $campo['esObligatorio'] . ', ';
 
         /* ¿Se trata de un CAMPO DE TEXTO? */
         $consultaPorSubtipo = BDConexion::getInstancia()->query("" .
@@ -90,18 +86,10 @@ if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE .
 
         if (mysqli_num_rows($consultaPorSubtipo) != 0) {
             $consultaPorSubtipo = $consultaPorSubtipo->fetch_assoc();
-            $campoTexto = new CampoTexto();
-            $pista = $consultaPorSubtipo['pista'];
-            $subtipo = $consultaPorSubtipo['subtipo'];
-
-            $campoTexto->setDescripcion($descripcion);
-            $campoTexto->setEsObligatorio($esObligatorio);
-            $campoTexto->setPista($pista);
-            $campoTexto->setPosicion($posicion);
-            $campoTexto->setSubtipo($subtipo);
-            $campoTexto->setTitulo($titulo);
-
-            $formulario->agregarCampo($campoTexto);
+            
+            $camposJSON .= '"pista": "' . $consultaPorSubtipo['pista'] . '", ';
+            $camposJSON .= '"tipo": "' .substr(BDCatalogoTablas::BD_TABLA_CAMPO_TEXTO, strlen(BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS) + 1) . '", ';
+            $camposJSON .= '"subtipo": ' . $consultaPorSubtipo['subtipo'] . '}, ';
 
             continue;
         }
@@ -113,16 +101,8 @@ if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE .
                 "WHERE `idFormulario` = {$idFormulario} AND `idCampo` = {$idCampo}");
 
         if (mysqli_num_rows($consultaPorSubtipo) != 0) {
-            $areaTexto = new AreaTexto();
-            $limiteCaracteres = $consultaPorSubtipo->fetch_assoc()['limiteCaracteres'];
-
-            $areaTexto->setDescripcion($descripcion);
-            $areaTexto->setEsObligatorio($esObligatorio);
-            $areaTexto->setLimiteCaracteres($limiteCaracteres);
-            $areaTexto->setPosicion($posicion);
-            $areaTexto->setTitulo($titulo);
-
-            $formulario->agregarCampo($areaTexto);
+            $camposJSON .= '"limiteCaracteres": ' . $consultaPorSubtipo->fetch_assoc()['limiteCaracteres'] . ', ';
+            $camposJSON .= '"tipo": "' .substr(BDCatalogoTablas::BD_TABLA_AREA_TEXTO, strlen(BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS) + 1) . '"}, ';
 
             continue;
         }
@@ -134,14 +114,7 @@ if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE .
                 "WHERE `idFormulario` = {$idFormulario} AND `idCampo` = {$idCampo}");
 
         if (mysqli_num_rows($consultaPorSubtipo) != 0) {
-            $campoFecha = new Fecha();
-
-            $campoFecha->setDescripcion($descripcion);
-            $campoFecha->setEsObligatorio($esObligatorio);
-            $campoFecha->setPosicion($posicion);
-            $campoFecha->setTitulo($titulo);
-
-            $formulario->agregarCampo($campoFecha);
+            $camposJSON .= '"tipo": "' .substr(BDCatalogoTablas::BD_TABLA_FECHA, strlen(BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS) + 1) . '"}, ';
 
             continue;
         }
@@ -153,26 +126,21 @@ if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE .
                 "WHERE `idFormulario` = {$idFormulario} AND `idCampo` = {$idCampo}");
 
         if (mysqli_num_rows($consultaPorSubtipo) != 0) {
-            $listaDesplegable = new ListaDesplegable();
-
-            $listaDesplegable->setDescripcion($descripcion);
-            $listaDesplegable->setEsObligatorio($esObligatorio);
-            $listaDesplegable->setPosicion($posicion);
-            $listaDesplegable->setTitulo($titulo);
-
             $elementos = BDConexion::getInstancia()->query("" .
                     "SELECT * " .
                     "FROM " . BDCatalogoTablas::BD_TABLA_OPCION . " " .
                     "WHERE `idLista` = {$idCampo}");
 
+            $camposJSON .= '"opciones": [';
+
             while ($elemento = $elementos->fetch_assoc()) {
-                $valorElemento = $elemento['textoOpcion'];
-
-                $listaDesplegable->agregarElemento($valorElemento);
+                $camposJSON .= '"' . $elemento['textoOpcion'] . '", ';
             }
-
-            $formulario->agregarCampo($listaDesplegable);
-
+            
+            $camposJSON = substr($camposJSON, 0, strlen($camposJSON) - 2);
+            $camposJSON .= '], ';
+            $camposJSON .= '"tipo": "' .substr(BDCatalogoTablas::BD_TABLA_LISTA_DESPLEGABLE, strlen(BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS) + 1) . '"}, ';
+            
             continue;
         }
 
@@ -183,55 +151,41 @@ if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE .
                 "WHERE `idFormulario` = {$idFormulario} AND `idCampo` = {$idCampo}");
 
         if (mysqli_num_rows($consultaPorSubtipo) != 0) {
-            $listaCheckbox = new ListaCheckbox();
-
-            $listaCheckbox->setDescripcion($descripcion);
-            $listaCheckbox->setEsObligatorio(false); // Este tipo de campo siempre "es opcional".
-            $listaCheckbox->setPosicion($posicion);
-            $listaCheckbox->setTitulo($titulo);
-
             $elementos = BDConexion::getInstancia()->query("" .
                     "SELECT * " .
                     "FROM " . BDCatalogoTablas::BD_TABLA_CHECKBOX . " " .
                     "WHERE `idLista` = {$idCampo}");
             
+            $camposJSON .= '"opciones": [';
+
             while ($elemento = $elementos->fetch_assoc()) {
-                $valorElemento = $elemento['textoOpcion'];
-
-                $listaCheckbox->agregarElemento($valorElemento);
+                $camposJSON .= '"' . $elemento['textoOpcion'] . '", ';
             }
-
-            $formulario->agregarCampo($listaCheckbox);
+            
+            $camposJSON = substr($camposJSON, 0, strlen($camposJSON) - 2);
+            $camposJSON .= '], ';
+            $camposJSON .= '"tipo": "' .substr(BDCatalogoTablas::BD_TABLA_LISTA_CHECKBOX, strlen(BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS) + 1) . '"}, ';
 
             continue;
         }
 
         /* Falso. Se trata de una LISTA DE BOTONES DE RADIO. */
-        $listaRadio = new ListaRadio();
-
-        $listaRadio->setDescripcion($descripcion);
-        $listaRadio->setEsObligatorio($esObligatorio);
-        $listaRadio->setPosicion($posicion);
-        $listaRadio->setTitulo($titulo);
-
         $elementos = BDConexion::getInstancia()->query("" .
                 "SELECT * " .
                 "FROM " . BDCatalogoTablas::BD_TABLA_BOTON_RADIO . " " .
                 "WHERE `idLista` = {$idCampo}");
 
-        while ($elemento = $elementos->fetch_assoc()) {
-            $valorElemento = $elemento['textoOpcion'];
+        $camposJSON .= '"opciones": [';
 
-            $listaRadio->agregarElemento($valorElemento);
+        while ($elemento = $elementos->fetch_assoc()) {
+            $camposJSON .= '"' . $elemento['textoOpcion'] . '", ';
         }
 
-        $formulario->agregarCampo($listaRadio);
+        $camposJSON = substr($camposJSON, 0, strlen($camposJSON) - 2);
+        $camposJSON .= '], ';
+        $camposJSON .= '"tipo": "' .substr(BDCatalogoTablas::BD_TABLA_LISTA_BOTON_RADIO, strlen(BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS) + 1) . '"}, ';
     }
     
-    foreach ($formulario->getCampos() as $campo) {
-        $camposJSON .= '"' . htmlspecialchars($campo->getCodigo()) . '", ';
-    }
-
     $camposJSON = substr($camposJSON, 0, strlen($camposJSON) - 2);
     $camposJSON .= ']';
 
