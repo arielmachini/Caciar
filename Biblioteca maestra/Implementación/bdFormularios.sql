@@ -25,7 +25,7 @@ CREATE TABLE `formulario` (
 ) ENGINE=INNODB DEFAULT CHARSET='UTF8';
 
 CREATE TABLE `respuesta` (
-    `idRespuesta` INT UNSIGNED NOT NULL,
+    `idRespuesta` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `idFormulario` INT(10) UNSIGNED NOT NULL,
     `camposRespuesta` MEDIUMTEXT NOT NULL,
     `csv` MEDIUMTEXT NOT NULL,
