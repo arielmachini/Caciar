@@ -27,7 +27,8 @@ CREATE TABLE `formulario` (
 CREATE TABLE `respuesta` (
     `idRespuesta` INT UNSIGNED NOT NULL,
     `idFormulario` INT(10) UNSIGNED NOT NULL,
-    `csv` VARCHAR(20480) NOT NULL,
+    `camposRespuesta` MEDIUMTEXT NOT NULL,
+    `csv` MEDIUMTEXT NOT NULL,
     `fueEnviada` BIT(1) NOT NULL DEFAULT b'0',
     PRIMARY KEY (`idRespuesta` , `idFormulario`),
     KEY `idFormulario` (`idFormulario`),
