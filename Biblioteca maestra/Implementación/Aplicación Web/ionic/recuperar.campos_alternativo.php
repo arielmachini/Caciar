@@ -28,6 +28,7 @@ $hashFechaHoy = md5(date('dmY'));
 if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE . $hashFechaAyer) { // Si la solicitud del cliente es enviada a las 23:59, puede que sea recibida a las 0:00 del día siguiente.
     require_once '../colibri/modelo/BDConexion.Class.php';
     require_once '../colibri/lib/BDCatalogoTablas.Class.php';
+    require_once '../colibri/modelo/Campos.Class.php';
     
     $formulario = BDConexion::getInstancia()->query("" .
             "SELECT `idFormulario`, `fechaApertura`, `fechaCierre` " .
@@ -76,7 +77,12 @@ if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE .
         
         $camposJSON .= '{"titulo": "' . $campo['titulo'] . '", ';
         $camposJSON .= '"descripcion": "' . $campo['descripcion'] . '", ';
-        $camposJSON .= '"esObligatorio": ' . $campo['esObligatorio'] . ', ';
+        
+        if ($campo['esObligatorio'] == 1) {
+            $camposJSON .= '"esObligatorio": "true", ';
+        } else {
+            $camposJSON .= '"esObligatorio": "false", ';
+        }
 
         /* ¿Se trata de un CAMPO DE TEXTO? */
         $consultaPorSubtipo = BDConexion::getInstancia()->query("" .
@@ -89,7 +95,14 @@ if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE .
             
             $camposJSON .= '"pista": "' . $consultaPorSubtipo['pista'] . '", ';
             $camposJSON .= '"tipo": "' .substr(BDCatalogoTablas::BD_TABLA_CAMPO_TEXTO, strlen(BDCatalogoEsquemas::BD_ESQUEMA_FORMULARIOS) + 1) . '", ';
-            $camposJSON .= '"subtipo": ' . $consultaPorSubtipo['subtipo'] . '}, ';
+            
+            if ($consultaPorSubtipo['subtipo'] == CampoTexto::$CAMPO_TEXTO) {
+                $camposJSON .= '"subtipo": "text"}, ';
+            } else if ($consultaPorSubtipo['subtipo'] == CampoTexto::$CAMPO_NUMERICO) {
+                $camposJSON .= '"subtipo": "number"}, ';
+            } else { // Por descarte, se asume que es un campo para direcciones de e-mail.
+                $camposJSON .= '"subtipo": "email"}, ';
+            }
 
             continue;
         }
