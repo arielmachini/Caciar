@@ -260,6 +260,16 @@ $rolesDestino = BDConexion::getInstancia()->query("" .
                                         <button class="btn btn-sm btn-primary" id="descargarOpcion1" style="margin-top: 20px;" title="Haga clic aquí para descargar un documento PDF con las respuestas dentro del intervalo que haya definido." type="button">
                                             <span class="oi oi-arrow-circle-bottom"></span>Descargar (opción #1)
                                         </button>
+                                        
+                                        <?php if (date("d/m/Y") === end($arregloFechas)) { ?>
+                                            <a class="btn btn-sm btn-secondary" href="formulario.respuestas.php?id=<?= $idFormulario; ?>&desde=<?= date("d-m-Y"); ?>&hasta=<?= date("d-m-Y"); ?>" style="margin-top: 20px;" title="Haga clic aquí para descargar un documento PDF con las respuestas para este formulario registradas el día de hoy (<?= date("d/m/Y"); ?> hasta las <?= date("h:i A"); ?>)." type="button">
+                                                <span class="oi oi-bolt"></span>Sólo descargar las respuestas de hoy
+                                            </a>
+                                        <?php } else { ?>
+                                            <button class="btn btn-sm btn-secondary" disabled style="cursor: not-allowed; margin-top: 20px;" title="Hasta el momento, hoy no se recibieron nuevas respuestas para este formulario. Por favor vuelva más tarde." type="button">
+                                                <span class="oi oi-bolt"></span>Sólo descargar las respuestas de hoy
+                                            </button>
+                                        <?php } ?>
 
                                         <p class="separador-opciones-descarga-pdf">
                                             <span>Ó</span>
@@ -267,7 +277,7 @@ $rolesDestino = BDConexion::getInstancia()->query("" .
 
                                         <strong>Opción #2:</strong> Puede descargar un documento PDF con <strong>todas</strong> las respuestas que registra el formulario hasta el momento.<br/>
 
-                                        <a class="btn btn-sm btn-primary" href="formulario.respuestas.php?id=<?= $idFormulario; ?>" style="margin-top: 20px;" target="_blank">
+                                        <a class="btn btn-sm btn-primary" href="formulario.respuestas.php?id=<?= $idFormulario; ?>" style="margin-top: 20px;">
                                             <span class="oi oi-arrow-circle-bottom"></span>Descargar (opción #2)
                                         </a>
                                     </div>

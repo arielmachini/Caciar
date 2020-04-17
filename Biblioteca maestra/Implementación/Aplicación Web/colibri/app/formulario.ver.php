@@ -312,7 +312,7 @@ $_SESSION['formulario'] = $formulario;
         <script type="text/javascript" src="../lib/bootstrap-4.1.1-dist/js/bootstrap.min.js"></script>
         
         <?php if ($formularioHabilitado) { // Si el formulario no está habilitado no puede ser rellenado, por lo tanto no es necesario cargar el script de reCAPTCHA. ?>
-            <script src="https://www.google.com/recaptcha/api.js?render=6LdFxpMUAAAAAKrchJP-4SR5BZrkj5-tdFxuUvsY"></script>
+            <script src="https://www.google.com/recaptcha/api.js" async defer></script> <!-- reCaptcha v3: <script src="https://www.google.com/recaptcha/api.js?render=6LdFxpMUAAAAAKrchJP-4SR5BZrkj5-tdFxuUvsY"></script> -->
         <?php } ?>
 
         <script type="text/javascript" src="../lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
@@ -355,13 +355,13 @@ $_SESSION['formulario'] = $formulario;
 
                     <?= $formulario->getCodigo(); ?>
 
-                    <script>
+                    <!-- (Sólo para reCaptcha v3) <script>
                         grecaptcha.ready(function () {
                             grecaptcha.execute('6LdFxpMUAAAAAKrchJP-4SR5BZrkj5-tdFxuUvsY', {action: 'homepage'}).then(function (token) {
                                 $('input[name=g-recaptcha-response]').val(token);
                             });
                         });
-                    </script>
+                    </script> -->
 
                 <?php
                 } else {

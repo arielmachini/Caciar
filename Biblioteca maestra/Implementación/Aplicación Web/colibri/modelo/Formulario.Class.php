@@ -65,6 +65,8 @@ class Formulario {
        válidos a la lista de destinatarios (ver función agregarDestinatario) */
     private $ColeccionRoles;
     
+    private const CLAVE_SITIO_RECAPTCHA = "6LfQZeoUAAAAAL-WqfjHqgKrbBUpvF_8IVAr2ZT6";
+    
     
     function __construct($fechaCreacion_ = null) {
         $this->descripcion = null;
@@ -104,7 +106,9 @@ class Formulario {
         }
         
         $codigoGenerado = $codigoGenerado .
-                "<input name=\"g-recaptcha-response\" type=\"hidden\" value=\"\">";
+                "<p class=\"campo-cabecera\">No soy un robot<span style=\"color: red; font-weight: bold;\">*</span></p>" . // reCAPTCHA v3: "<input name=\"g-recaptcha-response\" type=\"hidden\" value=\"\">";
+                "<p class=\"campo-descripcion\">Complete el siguiente captcha para que sepamos que <i>no es un robot</i>.</p>" .
+                "<div class=\"g-recaptcha\" data-sitekey=\"" . Formulario::CLAVE_SITIO_RECAPTCHA . "\"></div><br/>";
         
         $codigoGenerado = $codigoGenerado .
                 "<button class=\"btn btn-success\" type=\"submit\" value=\"Enviar\"><span class=\"oi oi-check\" style=\"margin-right: 5px;\"></span>Enviar</button>";

@@ -12,14 +12,17 @@ require_once '../modelo/BDConexion.Class.php';
 date_default_timezone_set("America/Argentina/Rio_Gallegos");
 
 /* Google reCAPTCHA */
+function esHumano() {
+    $claveSecreta = "6LfQZeoUAAAAAJ3YivsutzTSYkoy1sH7Zm0NYAy1";
+    $g_recaptcha_response = $_POST["g-recaptcha-response"];
 
-function reCaptcha() {
-    $claveSecreta = "6LdFxpMUAAAAAG80fCKsIt3RLXiXX1WxW-3vboTI";
-    $g_recaptcha_response = filter_var(filter_input(INPUT_POST, "g-recaptcha-response"), FILTER_SANITIZE_STRING);
-
-    $resultado = json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$claveSecreta}&response={$g_recaptcha_response}"));
-
-    return $resultado;
+    $datos_consulta = array('header' => "Content-Type: application/x-www-form-urlencoded\r\n", 'secret' => $claveSecreta, 'response' => $g_recaptcha_response);
+    $opciones = array('http' => array('method' => "POST", 'content' => http_build_query($datos_consulta)));
+    $contexto = stream_context_create($opciones);
+    
+    $resultado = json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify", false, $contexto));
+    
+    return $resultado->success;
 }
 
 /*
@@ -32,12 +35,9 @@ if (empty($_POST) || !isset($formulario)) {
     exit();
 }
 
-$reCaptcha = reCaptcha();
+$esHumano = esHumano();
 
-$puntajeCaptcha = $reCaptcha->score;
-$resultadoCaptcha = $reCaptcha->success;
-
-if ($resultadoCaptcha && $puntajeCaptcha > 0.5) {
+if ($esHumano) {
     $csvRespuesta = '"' . date("d/m/Y H:i:s") . '",';
     
     foreach ($formulario->getCampos() as $campo) {
@@ -94,9 +94,9 @@ if ($resultadoCaptcha && $puntajeCaptcha > 0.5) {
                     <h3><?= $formulario->getTitulo(); ?></h3>
                 </div>
                 <div class="card-body">
-                    <?php if (!$resultadoCaptcha || $puntajeCaptcha < 0.5) { ?>
+                    <?php if (!$esHumano) { ?>
                         <div class="alert alert-warning" role="alert">
-                            Su respuesta no puede ser procesada porque no pasó el desafío de reCAPTCHA.
+                            Su respuesta no puede ser procesada porque no completó el captcha.
                         </div>
                     <?php } else if (!$consulta) { ?>
                         <div class="alert alert-danger" role="alert">
@@ -104,7 +104,7 @@ if ($resultadoCaptcha && $puntajeCaptcha > 0.5) {
                         </div>
                     <?php } else { ?>
                         <div class="alert alert-success" role="alert">
-                            Su respuesta ha sido registrada con éxito.
+                            Gracias. Su respuesta ha sido registrada con éxito.
                         </div>
                     <?php } ?>
                 </div>

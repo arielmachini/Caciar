@@ -127,5 +127,10 @@ if (isset($enCsv) && $enCsv == "true") { // Se genera un documento CSV con las r
         }
     }
     
+    if (empty($respuestasFormulario)) {
+        /* No se registran respuestas en el intervalo especificado por GET. */
+        ControlAcceso::redireccionar("formulario.gestor.php");
+    }
+    
     FabricaPDF::generarPdfRespuestas($tituloFormulario, $titulosCampos, $respuestasFormulario);
 }
