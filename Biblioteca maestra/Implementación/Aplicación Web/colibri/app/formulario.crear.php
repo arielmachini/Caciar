@@ -329,7 +329,7 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 200.</span>
 
                                             <hr/>
-                                            <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesCasillasVerificacion" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div></span>
+                                            <span class="editor-propiedad-cabecera" style="margin-bottom: 10px;">OPCIONES <div class="campo-error" id="errorOpcionesCasillasVerificacion" style="display: none;" title="Debe rellenar todas las opciones de la lista."><span class="oi oi-warning"></span> COMPLETAR</div><div class="campo-error" id="errorTextoOpcionesCasillasVerificacion" style="display: none;" title="El texto de una de las opciones de la lista contiene un punto y coma (;), lo cual no está permitido."><span class="oi oi-warning"></span> COMPLETAR</div></span>
                                             <div class="editor-opciones-botones" style="margin-bottom: 10px;">
                                                 <button class="btn btn-sm btn-outline-primary" id="agregarCasillaVerificacion" type="button"><span class="oi oi-plus"></span> Agregar</button>
                                                 <button class="btn btn-sm btn-outline-secondary" id="eliminarCasillaVerificacion" title="Haga clic aquí para eliminar LA ÚLTIMA opción de la lista." type="button"><span class="oi oi-trash"></span> Eliminar</button>

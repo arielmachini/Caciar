@@ -798,7 +798,18 @@ $('#guardarCasillasVerificacion').click(function () {
     opciones = Array.from(opciones);
 
     for (var i = 0; i < opciones.length; i++) {
-        if ($.trim(opciones[i].value) === '') {
+        if (opciones[i].value.includes(';')) {
+            $('#errorOpcionesCasillasVerificacion').css('display', 'none');
+            
+            $('#guardarCasillasVerificacion').addClass('animacion-error');
+            $('#errorTextoOpcionesCasillasVerificacion').fadeIn(300).css('display', 'inline-block');
+            
+            hayErrores = true;
+            
+            break;
+        } else if ($.trim(opciones[i].value) === '') {
+            $('#errorTextoOpcionesCasillasVerificacion').css('display', 'none');
+            
             $('#guardarCasillasVerificacion').addClass('animacion-error');
             $('#errorOpcionesCasillasVerificacion').fadeIn(300).css('display', 'inline-block');
 
@@ -806,8 +817,9 @@ $('#guardarCasillasVerificacion').click(function () {
 
             break;
         } else {
-            /* Si el usuario corrije este problema, se oculta el error. */
+            /* Si el usuario corrije los problemas, se ocultan los errores. */
             $('#errorOpcionesCasillasVerificacion').css('display', 'none');
+            $('#errorTextoOpcionesCasillasVerificacion').css('display', 'none');
         }
     }
 
