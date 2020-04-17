@@ -62,7 +62,7 @@ $formularios = BDConexion::getInstancia()->query($query);
                     <h3>Gestor de formularios</h3>
                 </div>
                 <div class="card-body">
-                    <p>Aquí podrá ver y gestionar todos los formularios en el sistema que estén bajo su responsabilidad.<br/>Por favor tenga en cuenta que sólo podrá modificar formularios que no registren respuestas y que estén deshabilitados.</p>
+                    <p>Aquí podrá ver y gestionar todos los formularios en el sistema que estén bajo su responsabilidad.<br/>Por favor tenga en cuenta que sólo podrá modificar formularios que <strong>no registren respuestas</strong> y que <strong>estén deshabilitados</strong>.</p>
 
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
@@ -73,12 +73,12 @@ $formularios = BDConexion::getInstancia()->query($query);
                     </div>
                     <br/>
 
-                    <table class="table table-hover table-sm">
+                    <table class="table table-hover table-striped table-sm">
                         <thead>
                             <tr class="table-info">
                                 <th scope="col">Título del formulario</th>
                                 <th scope="col">Fecha de creación</th>
-                                <th scope="col">Respuestas registradas</th>
+                                <th scope="col">Respuestas</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col"></th>
                             </tr>
@@ -135,8 +135,8 @@ $formularios = BDConexion::getInstancia()->query($query);
                                             if ($cantidadRespuestas == 0 && ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS)) {
                                         ?>
 
-                                            <a class="btn btn-outline-warning" href="formulario.modificar.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Modificar este formulario.">
-                                                <span class="oi oi-pencil"></span>
+                                            <a class="btn btn-sm btn-warning gestor-boton-accion" href="formulario.modificar.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Modificar este formulario.">
+                                                <span class="oi oi-pencil"></span> Modificar
                                             </a>    
 
                                         <?php
@@ -145,8 +145,8 @@ $formularios = BDConexion::getInstancia()->query($query);
                                             if (!$estaOculto) {
                                         ?>
                                         
-                                            <a class="btn btn-light" href="formulario.ver.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" target="_blank" title="Visitar este formulario.">
-                                                <span class="oi oi-eye"></span>
+                                            <a class="btn btn-sm btn-outline-secondary gestor-boton-accion" href="formulario.ver.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" target="_blank" title="Visitar este formulario.">
+                                                <span class="oi oi-eye"></span> Ver
                                             </a>
                                             
                                         <?php
@@ -154,8 +154,8 @@ $formularios = BDConexion::getInstancia()->query($query);
                                         }
                                         ?>
                                         
-                                        <a class="btn btn-outline-info" href="formulario.ver.detalles.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Ver más detalles acerca de este formulario y las respuestas que este registra.">
-                                            <span class="oi oi-zoom-in"></span>
+                                        <a class="btn btn-sm btn-outline-info gestor-boton-accion" href="formulario.ver.detalles.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Ver más detalles acerca de este formulario y las respuestas que este registra.">
+                                            <span class="oi oi-zoom-in"></span> Detalles y respuestas
                                         </a>
                                         
                                         <?php
@@ -183,14 +183,14 @@ $formularios = BDConexion::getInstancia()->query($query);
                                             if ($formularioHabilitado == 0) {
                                         ?>
 
-                                            <a class="btn btn-outline-success" href="formulario.modificar.estado.php?id=<?= $formulario['idFormulario']; ?>&estado=1" style="margin-bottom: 2px;" title="Habilitar este formulario.">
-                                                <span class="oi oi-check"></span>
+                                            <a class="btn btn-sm btn-outline-success gestor-boton-accion" href="formulario.modificar.estado.php?id=<?= $formulario['idFormulario']; ?>&estado=1" style="margin-bottom: 2px;" title="Habilitar este formulario.">
+                                                <span class="oi oi-check"></span> Habilitar
                                             </a>
 
                                         <?php } else { ?>
 
-                                            <a class="btn btn-outline-dark" href="formulario.modificar.estado.php?id=<?= $formulario['idFormulario']; ?>&estado=0" style="margin-bottom: 2px;" title="Deshabilitar este formulario.">
-                                                <span class="oi oi-x"></span>
+                                            <a class="btn btn-sm btn-outline-dark gestor-boton-accion" href="formulario.modificar.estado.php?id=<?= $formulario['idFormulario']; ?>&estado=0" style="margin-bottom: 2px;" title="Deshabilitar este formulario.">
+                                                <span class="oi oi-x"></span> Deshabilitar
                                             </a>
 
                                         <?php
@@ -200,8 +200,8 @@ $formularios = BDConexion::getInstancia()->query($query);
 
                                         <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ELIMINAR_FORMULARIOS)) { ?>
 
-                                            <a class="btn btn-outline-danger" href="formulario.eliminar.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Eliminar este formulario.">
-                                                <span class="oi oi-trash"></span>
+                                            <a class="btn btn-sm btn-danger gestor-boton-accion" href="formulario.eliminar.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Eliminar este formulario.">
+                                                <span class="oi oi-trash"></span> Eliminar
                                             </a>
 
                                         <?php } ?>

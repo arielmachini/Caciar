@@ -7,15 +7,9 @@ include_once '../lib/ControlAcceso.Class.php';
 $formulario = $_SESSION['formulario'];
 unset($_SESSION['formulario']);
 
-include_once '../lib/FabricaPDF.php';
 require_once '../modelo/BDConexion.Class.php';
 
 date_default_timezone_set("America/Argentina/Rio_Gallegos");
-
-use PHPMailer\PHPMailer\PHPMailer;
-
-require '../lib/PHPMailer/src/PHPMailer.php';
-require '../lib/PHPMailer/src/SMTP.php';
 
 /* Google reCAPTCHA */
 
@@ -54,12 +48,14 @@ if ($resultadoCaptcha && $puntajeCaptcha > 0.5) {
 
             $csvRespuesta .= '"';
 
-
-            foreach ($casillasSeleccionadas as $casilla) {
-                $csvRespuesta .= str_replace('"', '""', $casilla) . ';';
+            if (isset($casillasSeleccionadas)) {
+                foreach ($casillasSeleccionadas as $casilla) {
+                    $csvRespuesta .= str_replace('"', '""', $casilla) . ';';
+                }
+                
+                $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
             }
             
-            $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
             $csvRespuesta .= '",';
         } else {
             $nombreCampo = "nombre_" . str_replace(" ", "_", $campo->getTitulo());

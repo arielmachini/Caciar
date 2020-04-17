@@ -8,7 +8,7 @@
  */
 
 $(document).ready(function () {
-    "use strict"; // PARA DEBUGGING.
+    // "use strict"; Sólo descomentar esta línea para hacer debugging.
 
     /* Se establecen límites en la selección de fechas de apertura y cierre. */
     $('#fechaApertura').datepicker({minDate: 0});
@@ -66,7 +66,7 @@ $(document).ready(function () {
         $.confirm({
             icon: 'oi oi-signpost',
             title: 'Empezar de nuevo',
-            content: '¿Desea descartar su progreso actual y empezar de nuevo? Esta acción <b>no se puede deshacer</b>.',
+            content: '¿Desea descartar su progreso actual y empezar de nuevo? Esta acción <strong>no se puede deshacer</strong>.',
             animation: 'none',
             closeAnimation: 'none',
             theme: 'material',
@@ -99,7 +99,7 @@ $(document).ready(function () {
         $.confirm({
             icon: 'oi oi-signpost',
             title: 'Cancelar edición',
-            content: '¿Desea descartar todos los cambios realizados sobre este formulario? Esta acción <b>no se puede deshacer</b>.',
+            content: '¿Desea descartar todos los cambios realizados sobre este formulario? Esta acción <strong>no se puede deshacer</strong>.',
             animation: 'none',
             closeAnimation: 'none',
             theme: 'material',
@@ -1628,7 +1628,7 @@ function eliminarCampo(idCampo) {
     $.confirm({
         icon: 'oi oi-trash',
         title: 'Eliminar campo',
-        content: '¿Desea eliminar el campo «<i>' + nombreCampo + '</i>» de su formulario? Esta acción <b>no se puede deshacer</b>.',
+        content: '¿Desea eliminar el campo «<i>' + nombreCampo + '</i>» de su formulario? Esta acción <strong>no se puede deshacer</strong>.',
         animation: 'none',
         boxWidth: '500px',
         closeAnimation: 'none',

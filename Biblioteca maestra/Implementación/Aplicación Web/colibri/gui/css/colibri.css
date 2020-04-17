@@ -64,6 +64,11 @@ p.campo-descripcion {
     50%     {background-color: #ffffa6;}
 }
 
+a.gestor-boton-accion {
+    display: block;
+    width: 100%;
+}
+
 /* Estilo de Bootstrap, modificado. */
 .campo-editor {
     background-clip: padding-box;
