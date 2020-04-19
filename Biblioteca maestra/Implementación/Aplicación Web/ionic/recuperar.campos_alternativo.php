@@ -142,7 +142,8 @@ if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE .
             $elementos = BDConexion::getInstancia()->query("" .
                     "SELECT * " .
                     "FROM " . BDCatalogoTablas::BD_TABLA_OPCION . " " .
-                    "WHERE `idLista` = {$idCampo}");
+                    "WHERE `idLista` = {$idCampo} " .
+                    "ORDER BY `posicion` ASC");
 
             $camposJSON .= '"opciones": [';
 
@@ -167,7 +168,8 @@ if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE .
             $elementos = BDConexion::getInstancia()->query("" .
                     "SELECT * " .
                     "FROM " . BDCatalogoTablas::BD_TABLA_CHECKBOX . " " .
-                    "WHERE `idLista` = {$idCampo}");
+                    "WHERE `idLista` = {$idCampo} " .
+                    "ORDER BY `posicion` ASC");
             
             $camposJSON .= '"opciones": [';
 
@@ -186,7 +188,8 @@ if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE .
         $elementos = BDConexion::getInstancia()->query("" .
                 "SELECT * " .
                 "FROM " . BDCatalogoTablas::BD_TABLA_BOTON_RADIO . " " .
-                "WHERE `idLista` = {$idCampo}");
+                "WHERE `idLista` = {$idCampo} " .
+                "ORDER BY `posicion` ASC");
 
         $camposJSON .= '"opciones": [';
 
