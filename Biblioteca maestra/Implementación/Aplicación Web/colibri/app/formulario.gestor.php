@@ -62,6 +62,14 @@ $formularios = BDConexion::getInstancia()->query($query);
                     <h3>Gestor de formularios</h3>
                 </div>
                 <div class="card-body">
+                    <?php if ($usuario->esAdministradorDeGestores()) { ?>
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <strong>Atención:</strong> Recuerde que usted es un <strong>administrador de gestores de formularios</strong>, lo cual implica que puede gestionar <strong title="(Los haya creado usted o no)" style="cursor: help;">todos</strong> los formularios existentes en el sistema. ¡Tenga precaución!
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <?php } ?>
                     <p>Aquí podrá ver y gestionar todos los formularios en el sistema que estén bajo su responsabilidad.<br/>Por favor tenga en cuenta que sólo podrá modificar formularios que <strong>no registren respuestas</strong> y que <strong>estén deshabilitados</strong>.</p>
 
                     <div class="input-group input-group-sm">

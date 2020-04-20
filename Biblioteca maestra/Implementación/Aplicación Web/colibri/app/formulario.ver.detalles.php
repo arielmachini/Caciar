@@ -199,8 +199,43 @@ $rolesDestino = BDConexion::getInstancia()->query("" .
                     <div class="informacion informacion-respuestas">
                         <h5><span class="oi oi-chat"></span>Respuestas registradas</h5>
                         <div>
-                            <?php if ($cantidadRespuestas > 0) { ?>
-                                Actualmente, este formulario registra <?= $cantidadRespuestas; ?> respuesta(s)<br/>
+                            <?php if ($cantidadRespuestas > 0) {
+                                    $respuestas = BDConexion::getInstancia()->query("" .
+                                            "SELECT `csv` " .
+                                            "FROM " . BDCatalogoTablas::BD_TABLA_RESPUESTA . " " .
+                                            "WHERE `idFormulario` = {$idFormulario} " .
+                                            "ORDER BY `idRespuesta` ASC");
+                                    $respuestasHoy = 0;
+
+                                    $arregloFechas = array();
+
+                                    while ($csv = $respuestas->fetch_array()) {
+                                        $respuesta = str_getcsv($csv[0]);
+                                        $fecha = substr($respuesta[0], 0, strlen($respuesta[0]) - 9); // Se elimina la hora de la fecha.
+                                        
+                                        if ($fecha == date("d/m/Y")) {
+                                            $respuestasHoy++;
+                                        }
+
+                                        if (!in_array($fecha, $arregloFechas)) { // Se evita la inserción de fechas repetidas.
+                                            $arregloFechas[] = $fecha;
+                                        }
+                                    }
+                                ?>
+                                Actualmente, este formulario registra <?= $cantidadRespuestas; ?>
+                                <?php switch ($respuestasHoy) {
+                                    case 0: ?>
+                                        respuesta(s)<br/>
+                                    <?php break;
+                                    case 1: ?>
+                                        respuesta(s), de las cuales 1 fue registrada hoy<br/>
+                                    <?php break;
+                                    default: ?>
+                                        respuesta(s), de las cuales <?= $respuestasHoy; ?> fueron registradas hoy<br/>
+                                <?php
+                                        break;
+                                    }
+                                ?>
                                 
                                 <a class="btn btn-sm btn-success" href="formulario.respuestas.php?id=<?= $idFormulario; ?>&csv=true" style="margin-top: 20px;" target="_blank">
                                     <span class="oi oi-spreadsheet"></span>Descargar respuestas en formato CSV
@@ -215,25 +250,6 @@ $rolesDestino = BDConexion::getInstancia()->query("" .
                                     <div>
                                         <strong>Opción #1:</strong> Puede descargar un documento PDF que sólo incluya respuestas dentro de un intervalo que usted defina. <span class="campo-tipo-ayuda oi oi-question-mark" id="ayudaOpcion1" style="cursor: pointer !important;" title="Haga clic aquí para visualizar una mini-guía sobre la opción de descarga #1."></span><br/>
                                         Tenga en cuenta que <strong>deberá definir al menos una de las dos fechas</strong>.<br/>
-
-                                        <?php
-                                        $respuestas = BDConexion::getInstancia()->query("" .
-                                                "SELECT `csv` " .
-                                                "FROM " . BDCatalogoTablas::BD_TABLA_RESPUESTA . " " .
-                                                "WHERE `idFormulario` = {$idFormulario} " .
-                                                "ORDER BY `idRespuesta` ASC");
-                                        
-                                        $arregloFechas = array();
-                                        
-                                        while ($csv = $respuestas->fetch_array()) {
-                                            $respuesta = str_getcsv($csv[0]);
-                                            $fecha = substr($respuesta[0], 0, strlen($respuesta[0]) - 9); // Se elimina la hora de la fecha.
-                                            
-                                            if (!in_array($fecha, $arregloFechas)) { // Se evita la inserción de fechas repetidas.
-                                                $arregloFechas[] = $fecha;
-                                            }
-                                        }
-                                        ?>
                                         
                                         <span style="display: block; margin-bottom: 10px; margin-top: 25px;">
                                             <span class="oi oi-calendar"></span>Incluir respuestas desde...
