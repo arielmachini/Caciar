@@ -119,6 +119,24 @@ $(document).ready(function () {
             }
         });
     });
+    
+    $('#enviarFormulario').click(function () {
+        descartarCampoTexto();
+        descartarCampoFecha();
+        descartarAreaTexto();
+        descartarListaDesplegable();
+        descartarCasillasVerificacion();
+        descartarBotonesRadio();
+        
+        descartarEdicionCampoTexto();
+        descartarEdicionCampoFecha();
+        descartarEdicionAreaTexto();
+        descartarEdicionListaDesplegable();
+        descartarEdicionCasillasVerificacion();
+        descartarEdicionBotonesRadio();
+        
+        $('#crearFormulario').submit();
+    });
 
     /*
      * Se previene que la sesión expire (por inactividad) mientras el usuario

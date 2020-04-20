@@ -933,7 +933,7 @@ $ColeccionRoles = new ColeccionRoles();
                             } ?>
                         </fieldset>
 
-                        <button class="btn btn-success" type="submit" value="Guardar cambios">
+                        <button class="btn btn-success" id="enviarFormulario" type="button" value="Guardar cambios">
                             <span class="oi oi-check"></span>
                             Guardar cambios
                         </button>
