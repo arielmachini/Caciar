@@ -34,7 +34,7 @@ $ColeccionUsuarios = new ColeccionUsuarios();
                 <div class="card-body">
                     <table class="table table-hover table-sm">
                         <thead>
-                            <tr class="table-info">
+                            <tr class="table-info" style="color: #0c5460;">
                                 <th scope="col">Usuario</th>
                                 <th scope="col">Dirección de e-mail</th>
                                 <th scope="col"></th>

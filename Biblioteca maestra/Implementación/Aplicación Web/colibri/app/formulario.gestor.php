@@ -24,14 +24,16 @@ $cuotaCreacion = $gestorFormularios['cuotaCreacion'];
 if ($usuario->esAdministradorDeGestores()) {
     $query = "" .
             "SELECT * " .
-            "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO;
+            "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
+            "ORDER BY `titulo` ASC";
 } else {
     $puedePublicar = $gestorFormularios['puedePublicar'];
 
     $query = "" .
             "SELECT * " .
             "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
-            "WHERE `idCreador` = {$_SESSION['usuario']->id}";
+            "WHERE `idCreador` = {$_SESSION['usuario']->id} " .
+            "ORDER BY `titulo` ASC";
 }
 
 $formularios = BDConexion::getInstancia()->query($query);
@@ -64,7 +66,7 @@ $formularios = BDConexion::getInstancia()->query($query);
                 <div class="card-body">
                     <?php if ($usuario->esAdministradorDeGestores()) { ?>
                         <div class="alert alert-info alert-dismissible fade show" role="alert">
-                            <strong>Atención:</strong> Recuerde que usted es un <strong>administrador de gestores de formularios</strong>, lo cual implica que puede gestionar <strong title="(Los haya creado usted o no)" style="cursor: help;">todos</strong> los formularios existentes en el sistema. ¡Tenga precaución!
+                            <strong>Atención:</strong> Recuerde que usted es un <strong>administrador de gestores de formularios</strong>, lo cual implica que puede gestionar <span title="(Los que haya creado usted y los que no)" style="cursor: help; font-weight: bold; text-decoration: underline;">todos</span> los formularios existentes en el sistema. ¡Tenga precaución!
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -83,9 +85,9 @@ $formularios = BDConexion::getInstancia()->query($query);
 
                     <table class="table table-hover table-striped table-sm">
                         <thead>
-                            <tr class="table-info">
-                                <th scope="col">Título del formulario</th>
-                                <th scope="col">Fecha de creación</th>
+                            <tr class="table-info" style="color: #0c5460;">
+                                <th scope="col">Título del formulario <span class="oi oi-arrow-bottom" onclick="ordenarPorTituloAsc()" style="color: #17a2b8 !important; cursor: pointer;" title="Ordenar formularios por título (A-Z)"></span><span class="oi oi-arrow-top" onclick="ordenarPorTituloDesc()" style="color: #17a2b8 !important; cursor: pointer;" title="Ordenar formularios por título (Z-A)"></span></th>
+                                <th scope="col">Fecha de creación <span class="oi oi-arrow-bottom" onclick="ordenarPorFechaAsc()" style="color: #17a2b8 !important; cursor: pointer;" title="Ordenar formularios por fecha (Más antiguos primero)"></span><span class="oi oi-arrow-top" onclick="ordenarPorFechaDesc()" style="color: #17a2b8 !important; cursor: pointer;" title="Ordenar formularios por fecha (Más recientes primero)"></span></th>
                                 <th scope="col">Respuestas</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col"></th>
@@ -252,9 +254,9 @@ $formularios = BDConexion::getInstancia()->query($query);
 
     <script type="text/javascript">
         $("#filtrarFormularios").keyup(function () {
-            var palabraClave, listaFormularios;
-            palabraClave = this.value.toUpperCase();
+            var listaFormularios, palabraClave;
             listaFormularios = $("#listaFormularios").find("tr");
+            palabraClave = this.value.toUpperCase();
 
             for (var i = 0; i < listaFormularios.length; i++) {
                 var tituloFormulario = listaFormularios[i].getElementsByTagName("td")[0].textContent;
@@ -275,6 +277,130 @@ $formularios = BDConexion::getInstancia()->query($query);
                 duration: 275
             }
         });
+        
+        function ordenarPorFechaAsc() {
+            var cambiar, filas, i, seguirOrdenando, tablaFormularios, x, y;
+            seguirOrdenando = true;
+            tablaFormularios = document.getElementById("listaFormularios");
+            
+            while (seguirOrdenando) {
+                seguirOrdenando = false;
+                
+                filas = tablaFormularios.rows;
+                
+                for (i = 0; i < (filas.length - 1); i++) {
+                    cambiar = false;
+                    
+                    x = filas[i].getElementsByTagName("td")[1];
+                    y = filas[i + 1].getElementsByTagName("td")[1];
+                    
+                    if (x.innerHTML.toUpperCase() > y.innerHTML.toUpperCase()) {
+                        cambiar = true;
+                        
+                        break;
+                    }
+                }
+                
+                if (cambiar) {
+                    filas[i].parentNode.insertBefore(filas[i + 1], filas[i]);
+                    
+                    seguirOrdenando = true;
+                }
+            }
+        }
+        
+        function ordenarPorFechaDesc() {
+            var cambiar, filas, i, seguirOrdenando, tablaFormularios, x, y;
+            seguirOrdenando = true;
+            tablaFormularios = document.getElementById("listaFormularios");
+            
+            while (seguirOrdenando) {
+                seguirOrdenando = false;
+                
+                filas = tablaFormularios.rows;
+                
+                for (i = 0; i < (filas.length - 1); i++) {
+                    cambiar = false;
+                    
+                    x = filas[i].getElementsByTagName("td")[1];
+                    y = filas[i + 1].getElementsByTagName("td")[1];
+                    
+                    if (x.innerHTML.toUpperCase() < y.innerHTML.toUpperCase()) {
+                        cambiar = true;
+                        
+                        break;
+                    }
+                }
+                
+                if (cambiar) {
+                    filas[i].parentNode.insertBefore(filas[i + 1], filas[i]);
+                    
+                    seguirOrdenando = true;
+                }
+            }
+        }
+        
+        function ordenarPorTituloAsc() {
+            var cambiar, filas, i, seguirOrdenando, tablaFormularios, x, y;
+            seguirOrdenando = true;
+            tablaFormularios = document.getElementById("listaFormularios");
+            
+            while (seguirOrdenando) {
+                seguirOrdenando = false;
+                
+                filas = tablaFormularios.rows;
+                
+                for (i = 0; i < (filas.length - 1); i++) {
+                    cambiar = false;
+                    
+                    x = filas[i].getElementsByTagName("td")[0];
+                    y = filas[i + 1].getElementsByTagName("td")[0];
+                    
+                    if (x.innerHTML.toUpperCase() > y.innerHTML.toUpperCase()) {
+                        cambiar = true;
+                        
+                        break;
+                    }
+                }
+                
+                if (cambiar) {
+                    filas[i].parentNode.insertBefore(filas[i + 1], filas[i]);
+                    
+                    seguirOrdenando = true;
+                }
+            }
+        }
+        
+        function ordenarPorTituloDesc() {
+            var cambiar, filas, i, seguirOrdenando, tablaFormularios, x, y;
+            seguirOrdenando = true;
+            tablaFormularios = document.getElementById("listaFormularios");
+            
+            while (seguirOrdenando) {
+                seguirOrdenando = false;
+                
+                filas = tablaFormularios.rows;
+                
+                for (i = 0; i < (filas.length - 1); i++) {
+                    cambiar = false;
+                    
+                    x = filas[i].getElementsByTagName("td")[0];
+                    y = filas[i + 1].getElementsByTagName("td")[0];
+                    
+                    if (x.innerHTML.toUpperCase() < y.innerHTML.toUpperCase()) {
+                        cambiar = true;
+                        
+                        break;
+                    }
+                }
+                
+                if (cambiar) {
+                    filas[i].parentNode.insertBefore(filas[i + 1], filas[i]);
+                    
+                    seguirOrdenando = true;
+                }
+            }
+        }
     </script>
 
 </html>

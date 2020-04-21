@@ -55,7 +55,7 @@ $formulariosPendientes = BDConexion::getInstancia()->query("" .
 
                     <table class="table table-hover table-sm">
                         <thead>
-                            <tr class="table-info">
+                            <tr class="table-info" style="color: #0c5460;">
                                 <th scope="col">Título del formulario</th>
                                 <th scope="col">Fecha de creación</th>
                                 <th scope="col">Creado por</th>

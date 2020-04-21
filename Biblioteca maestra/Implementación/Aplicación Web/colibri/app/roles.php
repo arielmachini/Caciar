@@ -33,7 +33,7 @@ $ColeccionRoles = new ColeccionRoles();
                                 <span class="oi oi-plus"></span> Nuevo Rol
                             </a>
                         </p>
-                        <tr class="table-info">
+                        <tr class="table-info" style="color: #0c5460;">
                             <th>Nombre</th>
                             <th>Opciones</th>
                         </tr>
