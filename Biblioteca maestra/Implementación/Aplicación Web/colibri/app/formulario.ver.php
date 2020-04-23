@@ -329,6 +329,23 @@ $_SESSION['formulario'] = $formulario;
                         <h3><?= $formulario->getTitulo(); ?><a href="formularios.php"><button class="btn btn-outline-primary" style="float: right;"><span class="oi oi-account-logout" style="margin-right: 5px;"></span>Formularios</button></a></h3>
                     </div>
                     <div class="card-body">
+                        <?php if (isset($_SESSION['usuario']->id)) {
+                            if ($usuario->getId() == $creador['idCreador']) { ?>
+                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                Tenga en cuenta que usted siempre podrá acceder a este formulario porque fue quien lo creó.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        <?php } else if ($usuario->esAdministradorDeGestores()) { ?>
+                            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                Tenga en cuenta que usted siempre podrá acceder a este formulario porque es un administrador de gestores de formularios.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        <?php }
+                        } ?>
                         <div class="alert alert-warning alert-dismissible fade show" role="alert">
                             <strong>Atención:</strong> Todos los campos acompañados por un asterisco (<span style="color: red; font-weight: bold;">*</span>) son obligatorios.
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -370,7 +387,10 @@ $_SESSION['formulario'] = $formulario;
                     $codigoHTMLFormulario = str_replace("<form action=\"formulario.enviar.php\" id=\"formulario\" method=\"post\">", "<form action=\"#\" id=\"formulario\">", $codigoHTMLFormulario);
 
                     /* Se elimina el campo de reCAPTCHA del código HTML del formulario. */
-                    $codigoHTMLFormulario = str_replace("<input name=\"g-recaptcha-response\" type=\"hidden\" value=\"\">", "", $codigoHTMLFormulario);
+                    // reCaptcha v3: $codigoHTMLFormulario = str_replace("<input name=\"g-recaptcha-response\" type=\"hidden\" value=\"\">", "", $codigoHTMLFormulario);
+                    $codigoHTMLFormulario = str_replace("<p class=\"campo-cabecera\">No soy un robot<span style=\"color: red; font-weight: bold;\">*</span></p>", "", $codigoHTMLFormulario);
+                    $codigoHTMLFormulario = str_replace("<p class=\"campo-descripcion\">Complete el siguiente captcha para que sepamos que <i>no es un robot</i>.</p>", "", $codigoHTMLFormulario);
+                    $codigoHTMLFormulario = str_replace("<div class=\"g-recaptcha\" data-sitekey=\"" . Formulario::CLAVE_SITIO_RECAPTCHA . "\"></div><br/>", "", $codigoHTMLFormulario);
 
                     /* Se deshabilitan todos los campos. */
                     $codigoHTMLFormulario = str_replace("<input ", "<input disabled ", $codigoHTMLFormulario);
@@ -378,8 +398,9 @@ $_SESSION['formulario'] = $formulario;
                     $codigoHTMLFormulario = str_replace("<select ", "<select disabled ", $codigoHTMLFormulario);
 
 
-                    /* Se deshabilita el botón para enviar el formulario. */
+                    /* Se deshabilita el botón para enviar el formulario y el resto de los botones. */
                     $codigoHTMLFormulario = str_replace("<button class=\"btn btn-success\" type=\"submit\" value=\"Enviar\"><span class=\"oi oi-check\" style=\"margin-right: 5px;\"></span>Enviar</button>", "<button class=\"btn btn-success\" disabled title=\"No puede responder a este formulario porque está deshabilitado; Esta es una vista previa.\" type=\"button\" value=\"Enviar\"><span class=\"oi oi-check\" style=\"margin-right: 5px;\"></span>Enviar</button>", $codigoHTMLFormulario);
+                    $codigoHTMLFormulario = str_replace("<button ", "<button disabled ", $codigoHTMLFormulario);
 
                     echo $codigoHTMLFormulario;
                 }
