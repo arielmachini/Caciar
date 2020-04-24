@@ -5,9 +5,34 @@ require_once '../modelo/Formulario.Class.php';
 include_once '../lib/ControlAcceso.Class.php';
 
 $formulario = $_SESSION['formulario'];
+
+/*
+ * Se realiza esta comprobación para evitar que el usuario acceda directamente
+ * a esta página.
+ */
+if (empty($_POST) || !isset($formulario)) {
+    ControlAcceso::redireccionar();
+    
+    exit();
+}
+
 unset($_SESSION['formulario']);
 
 require_once '../modelo/BDConexion.Class.php';
+
+$estaHabilitado = BDConexion::getInstancia()->query("" .
+        "SELECT `estaHabilitado` " .
+        "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
+        "WHERE `idFormulario` = {$formulario->getID()}")->fetch_array();
+
+if ($estaHabilitado[0] == 0) {
+    /* El formulario no está habilitado, por lo tanto no puede recibir nuevas
+     * respuestas.
+     */
+    $estaHabilitado = false;
+} else {
+    $estaHabilitado = true;
+}
 
 date_default_timezone_set("America/Argentina/Rio_Gallegos");
 
@@ -25,19 +50,9 @@ function esHumano() {
     return $resultado->success;
 }
 
-/*
- * Se realiza esta comprobación para evitar que el usuario acceda directamente
- * a esta página.
- */
-if (empty($_POST) || !isset($formulario)) {
-    ControlAcceso::redireccionar();
-    
-    exit();
-}
-
 $esHumano = esHumano();
 
-if ($esHumano) {
+if ($estaHabilitado && $esHumano) {
     $csvRespuesta = '"' . date("d/m/Y H:i:s") . '",';
     
     foreach ($formulario->getCampos() as $campo) {
@@ -98,9 +113,9 @@ if ($esHumano) {
                         <div class="alert alert-warning" role="alert">
                             Su respuesta no puede ser procesada porque no completó el captcha.
                         </div>
-                    <?php } else if (!$consulta) { ?>
+                    <?php } else if (!$estaHabilitado || !$consulta) { ?>
                         <div class="alert alert-danger" role="alert">
-                            Se produjo un error al intentar procesar su respuesta. Por favor, inténtelo más tarde.
+                            Se produjo un problema al intentar procesar su respuesta. Por favor, inténtelo más tarde.
                         </div>
                     <?php } else { ?>
                         <div class="alert alert-success" role="alert">
