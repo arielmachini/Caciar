@@ -25,13 +25,13 @@ $estaHabilitado = BDConexion::getInstancia()->query("" .
         "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
         "WHERE `idFormulario` = {$formulario->getID()}")->fetch_array();
 
-if ($estaHabilitado[0] == 0) {
+if ($estaHabilitado[0] == 1) {
+    $estaHabilitado = true;
+} else {
     /* El formulario no está habilitado, por lo tanto no puede recibir nuevas
      * respuestas.
      */
     $estaHabilitado = false;
-} else {
-    $estaHabilitado = true;
 }
 
 date_default_timezone_set("America/Argentina/Rio_Gallegos");
@@ -53,39 +53,71 @@ function esHumano() {
 $esHumano = esHumano();
 
 if ($estaHabilitado && $esHumano) {
+    require_once '../lib/Colibri.Class.php';
+    
+    $idRespuesta = BDConexion::getInstancia()->query("" .
+            "SELECT COUNT(`idRespuesta`) " .
+            "FROM " . BDCatalogoTablas::BD_TABLA_RESPUESTA . " " .
+            "WHERE `idFormulario` = {$formulario->getID()}")->fetch_array()[0];
+    
     $csvRespuesta = '"' . date("d/m/Y H:i:s") . '",';
+    
+    /* VARIABLES PARA EL ENVÍO DE LA RESPUESTA POR E-MAIL: */
+    $colibri = new Colibri($formulario->getEmailReceptor(), ($idRespuesta + 1), $formulario->getTitulo());
+    $arregloCamposFormulario = array();
+    $cuerpoHtmlMensaje = "Estimado usuario,\n\nEl formulario «{$formulario->getTitulo()}» tiene una nueva respuesta. A continuación se muestran los datos de dicha respuesta:\n\n";
+    $fueEnviada = 0;
     
     foreach ($formulario->getCampos() as $campo) {
         if ($campo instanceof ListaCheckbox) { // Sólo hay que realizar un tratamiento diferente para la lista de casillas de verificación.
             $nombreCampo = str_replace(" ", "_", $campo->getTitulo());
-            
             $casillasSeleccionadas = filter_input(INPUT_POST, $nombreCampo, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
 
             $csvRespuesta .= '"';
 
             if (isset($casillasSeleccionadas)) {
+                $cuerpoHtmlMensaje .= $campo->getTitulo() . ":\n";
+                $enumeracionCasillasSeleccionadas = "";
+                
                 foreach ($casillasSeleccionadas as $casilla) {
                     $csvRespuesta .= str_replace('"', '""', $casilla) . ';';
+                    
+                    $cuerpoHtmlMensaje .= "☑ " . $casilla . "\n";
+                    $enumeracionCasillasSeleccionadas .= $casilla . ';';
                 }
                 
                 $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
+                
+                $cuerpoHtmlMensaje .= "\n";
+                $enumeracionCasillasSeleccionadas = substr($enumeracionCasillasSeleccionadas, 0, strlen($enumeracionCasillasSeleccionadas) - 1);
+                $arregloCamposFormulario[$campo->getTitulo()] = $enumeracionCasillasSeleccionadas;
             }
             
             $csvRespuesta .= '",';
         } else {
             $nombreCampo = "nombre_" . str_replace(" ", "_", $campo->getTitulo());
-            
             $valorCampo = filter_input(INPUT_POST, $nombreCampo);
             
             $csvRespuesta .= '"' . str_replace('"', '""', $valorCampo) . '",';
+            
+            $arregloCamposFormulario[$campo->getTitulo()] = $valorCampo;
+            
+            if (isset($valorCampo) && trim($valorCampo) != "") {
+                $cuerpoHtmlMensaje .= $campo->getTitulo() . ":\n" . $valorCampo . "\n\n";
+            }
         }
     }
     
     $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
+    $cuerpoHtmlMensaje .= "En el presente mensaje también se encuentra adjunto un documento PDF con los detalles de esta respuesta.\nRecuerde que puede acceder a todas las respuestas que registra este formulario cuando usted desee desde el gestor de formularios.";
+    
+    if ($colibri->enviarMensaje($cuerpoHtmlMensaje, $arregloCamposFormulario)) {
+        $fueEnviada = 1;
+    }
 
     $consulta = BDConexion::getInstancia()->query("" .
             "INSERT INTO " . BDCatalogoTablas::BD_TABLA_RESPUESTA . "(`idFormulario`, `csv`, `fueEnviada`) " .
-            "VALUES ({$formulario->getID()}, '{$csvRespuesta}', 0)");
+            "VALUES ({$formulario->getID()}, '{$csvRespuesta}', {$fueEnviada})");
 }
 ?>
 
@@ -115,7 +147,7 @@ if ($estaHabilitado && $esHumano) {
                         </div>
                     <?php } else if (!$estaHabilitado || !$consulta) { ?>
                         <div class="alert alert-danger" role="alert">
-                            Se produjo un problema al intentar procesar su respuesta. Por favor, inténtelo más tarde.
+                            Se produjo un error al intentar procesar su respuesta. Por favor, inténtelo más tarde.
                         </div>
                     <?php } else { ?>
                         <div class="alert alert-success" role="alert">

@@ -275,7 +275,7 @@ $ColeccionRoles = new ColeccionRoles();
                     <form action="formulario.modificar.procesar.php" id="crearFormulario" method="post" novalidate>
                         <p for="destinatarioFormulario" class="campo-cabecera">Dirección de e-mail que recibirá las respuestas<span style="color: red; font-weight: bold;">*</span></p>
                         <div>
-                            <p class="campo-descripcion">¿Qué dirección de e-mail debería recibir las respuestas al formulario que está creando?</p>
+                            <p class="campo-descripcion">¿Qué dirección de e-mail debería recibir las respuestas al formulario que está modificando?</p>
                             <input autocomplete="on" class="form-control form-control-lg" id="destinatarioFormulario" maxlength="200" name="destinatarioFormulario" required type="email" value="<?= $formulario->getEmailReceptor(); ?>"/>
                             <div class="invalid-feedback">
                                 <span class="oi oi-circle-x"></span> La dirección de e-mail que ingresó no es válida.
@@ -933,7 +933,7 @@ $ColeccionRoles = new ColeccionRoles();
                             } ?>
                         </fieldset>
 
-                        <button class="btn btn-success" id="enviarFormulario" type="button" value="Guardar cambios">
+                        <button class="btn btn-success" id="enviarFormulario" type="submit" value="Guardar cambios">
                             <span class="oi oi-check"></span>
                             Guardar cambios
                         </button>

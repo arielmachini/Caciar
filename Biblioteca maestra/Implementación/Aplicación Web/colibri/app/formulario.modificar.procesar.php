@@ -198,7 +198,7 @@ if (empty($formulario->getFechaApertura()) && empty($formulario->getFechaCierre(
             "WHERE `idFormulario` = {$idFormulario}");
 }
 
-if ($consulta) { // Si la inserción del formulario se completó exitosamente, se continúa con el procesamiento.
+if ($consulta) { // Si la actualización del formulario se completó exitosamente, se continúa con el procesamiento.
     $elimCorrectaFormularioRol = BDConexion::getInstancia()->query("DELETE FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO_ROL . " WHERE `idFormulario` = {$idFormulario}");
     
     /* Se guardan los roles de destino para el formulario. */

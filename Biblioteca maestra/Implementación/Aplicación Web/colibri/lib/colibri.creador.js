@@ -134,8 +134,6 @@ $(document).ready(function () {
         descartarEdicionListaDesplegable();
         descartarEdicionCasillasVerificacion();
         descartarEdicionBotonesRadio();
-        
-        $('#crearFormulario').submit();
     });
 
     /*

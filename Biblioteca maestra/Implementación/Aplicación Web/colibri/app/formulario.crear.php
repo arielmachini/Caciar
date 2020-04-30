@@ -638,7 +638,7 @@ $ColeccionRoles = new ColeccionRoles();
 
                         <fieldset id="camposCreados" style="display: none;"></fieldset>
 
-                        <button class="btn btn-success" id="enviarFormulario" type="button" value="Crear formulario">
+                        <button class="btn btn-success" id="enviarFormulario" type="submit" value="Crear formulario">
                             <span class="oi oi-check"></span>
                             Crear formulario
                         </button>

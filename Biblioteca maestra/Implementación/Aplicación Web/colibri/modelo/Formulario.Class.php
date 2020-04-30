@@ -65,7 +65,7 @@ class Formulario {
        válidos a la lista de destinatarios (ver función agregarDestinatario) */
     private $ColeccionRoles;
     
-    private const CLAVE_SITIO_RECAPTCHA = "6LfQZeoUAAAAAL-WqfjHqgKrbBUpvF_8IVAr2ZT6";
+    const CLAVE_SITIO_RECAPTCHA = "6LfQZeoUAAAAAL-WqfjHqgKrbBUpvF_8IVAr2ZT6";
     
     
     function __construct($fechaCreacion_ = null) {

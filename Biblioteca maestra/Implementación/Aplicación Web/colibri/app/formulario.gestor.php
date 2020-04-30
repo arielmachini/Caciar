@@ -72,7 +72,7 @@ $formularios = BDConexion::getInstancia()->query($query);
                             </button>
                         </div>
                     <?php } ?>
-                    <p>Aquí podrá ver y gestionar todos los formularios en el sistema que estén bajo su responsabilidad.<br/>Por favor tenga en cuenta que sólo podrá modificar formularios que <strong>no registren respuestas</strong> y que <strong>estén deshabilitados</strong>.</p>
+                    <p>Aquí podrá ver y gestionar todos los formularios en el sistema que estén bajo su responsabilidad.<br/>Por favor tenga en cuenta que <strong>sólo podrá modificar formularios que estén deshabilitados</strong>.</p>
 
                     <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
@@ -142,14 +142,18 @@ $formularios = BDConexion::getInstancia()->query($query);
                                         
                                         <?php
                                         if ($formularioHabilitado == 0) {
-                                            if ($cantidadRespuestas == 0 && ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS)) {
+                                            if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_CREAR_FORMULARIOS)) {
+                                                if ($cantidadRespuestas == 0) {
                                         ?>
-
-                                            <a class="btn btn-sm btn-warning gestor-boton-accion" href="formulario.modificar.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Modificar este formulario.">
-                                                <span class="oi oi-pencil"></span> Modificar
-                                            </a>    
-
+                                                <a class="btn btn-sm btn-warning gestor-boton-accion" href="formulario.modificar.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Modificar este formulario.">
+                                                    <span class="oi oi-pencil"></span> Modificar
+                                                </a>
+                                        <?php } else { ?>
+                                                <a class="btn btn-sm btn-warning gestor-boton-accion" href="formulario.modificar.basico.php?id=<?= $formulario['idFormulario']; ?>" style="margin-bottom: 2px;" title="Modificar los parámetros básicos de este formulario.">
+                                                    <span class="oi oi-pencil"></span> Modificar
+                                                </a>
                                         <?php
+                                                }
                                             }
                                         } else {
                                             if (!$estaOculto) {

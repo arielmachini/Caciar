@@ -33,7 +33,7 @@ $formulario = BDConexion::getInstancia()->query("" .
                         <h3>Eliminar formulario</h3>
                     </div>
                     <div class="card-body">
-                        <p>¿Confirma que desea eliminar el formulario "<strong><?= $formulario['titulo']; ?></strong>"? ¡Esta acción no se puede deshacer!</p>
+                        <p>¿Confirma que desea eliminar el formulario "<strong><?= $formulario['titulo']; ?></strong>" junto a todas las respuestas que registra? ¡Esta acción no se puede deshacer!</p>
                     </div>
                     <div class="card-footer">
                         <input type="hidden" name="idFormulario" class="form-control" value="<?= $idFormulario; ?>" >

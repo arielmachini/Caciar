@@ -33,7 +33,7 @@ CREATE TABLE `respuesta` (
     KEY `idFormulario` (`idFormulario`),
     CONSTRAINT `respuesta_ibfk_1` FOREIGN KEY (`idFormulario`)
         REFERENCES `formulario` (`idFormulario`)
-        ON DELETE NO ACTION ON UPDATE CASCADE # "ON DELETE NO ACTION": Por defecto, se conservan las respuestas aunque se elimine el formulario asociado a estas. De todas maneras, si se quiere se pueden eliminar manualmente.
+        ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=INNODB DEFAULT CHARSET='UTF8';
 
 CREATE TABLE `campo` (
