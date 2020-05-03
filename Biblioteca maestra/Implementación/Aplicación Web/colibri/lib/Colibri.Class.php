@@ -18,13 +18,11 @@ class Colibri extends PHPMailer\PHPMailer\PHPMailer {
     private const PUERTO_SERVIDOR_EMISOR = 587;
     
     private $nombreArchivoDocumentoPdf;
-    private $idRespuesta;
     private $tituloFormulario;
     
-    function __construct($direccionCorreoReceptor_, $idRespuesta_, $tituloFormulario_) {
-        $this->idRespuesta = $idRespuesta_;
+    function __construct($direccionCorreoReceptor_, $tituloFormulario_) {
         $this->tituloFormulario = $tituloFormulario_;
-        $this->nombreArchivoDocumentoPdf = "Respuesta-" . $this->idRespuesta . "_" . preg_replace(array('/\s/', '/\.[\.]+/', '/[^\w_\.\-]/'), array('_', '.', ''), str_replace(" ", "-", $this->tituloFormulario)) . "_" . date("d-m-Y") .".pdf";
+        $this->nombreArchivoDocumentoPdf = "Respuesta_" . preg_replace(array('/\s/', '/\.[\.]+/', '/[^\w_\.\-]/'), array('_', '.', ''), str_replace(" ", "-", $this->tituloFormulario)) . "_" . date("d-m-Y") . "_" . date("H-i-s") . ".pdf";
         
         $this->Username = Colibri::DIRECCION_CORREO_EMISOR;
         $this->Password = Colibri::CONTRASENIA_CORREO_EMISOR;
@@ -53,7 +51,7 @@ class Colibri extends PHPMailer\PHPMailer\PHPMailer {
      */
     function enviarMensaje($cuerpoMensaje_, $arregloCamposFormulario_) {
         $this->Body = $cuerpoMensaje_;
-        $documentoPdfRespuesta = FabricaPDF::generarPdf($this->nombreArchivoDocumentoPdf, $this->idRespuesta, $this->tituloFormulario, $arregloCamposFormulario_);
+        $documentoPdfRespuesta = FabricaPDF::generarPdf($this->nombreArchivoDocumentoPdf, $this->tituloFormulario, $arregloCamposFormulario_);
         
         $this->addStringAttachment($documentoPdfRespuesta, $this->nombreArchivoDocumentoPdf, "base64", "application/pdf");
         

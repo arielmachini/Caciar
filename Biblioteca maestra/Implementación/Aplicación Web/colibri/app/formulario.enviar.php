@@ -55,17 +55,12 @@ $esHumano = esHumano();
 if ($estaHabilitado && $esHumano) {
     require_once '../lib/Colibri.Class.php';
     
-    $idRespuesta = BDConexion::getInstancia()->query("" .
-            "SELECT COUNT(`idRespuesta`) " .
-            "FROM " . BDCatalogoTablas::BD_TABLA_RESPUESTA . " " .
-            "WHERE `idFormulario` = {$formulario->getID()}")->fetch_array()[0];
-    
     $csvRespuesta = '"' . date("d/m/Y H:i:s") . '",';
     
     /* VARIABLES PARA EL ENVÍO DE LA RESPUESTA POR E-MAIL: */
-    $colibri = new Colibri($formulario->getEmailReceptor(), ($idRespuesta + 1), $formulario->getTitulo());
+    $colibri = new Colibri($formulario->getEmailReceptor(), $formulario->getTitulo());
     $arregloCamposFormulario = array();
-    $cuerpoHtmlMensaje = "Estimado usuario,\n\nEl formulario «{$formulario->getTitulo()}» tiene una nueva respuesta. A continuación se muestran los datos de dicha respuesta:\n\n";
+    $cuerpoMensaje = "Estimado usuario,\n\nEl formulario «{$formulario->getTitulo()}» tiene una nueva respuesta. A continuación se muestran los datos de dicha respuesta:\n\n";
     $fueEnviada = 0;
     
     foreach ($formulario->getCampos() as $campo) {
@@ -76,19 +71,19 @@ if ($estaHabilitado && $esHumano) {
             $csvRespuesta .= '"';
 
             if (isset($casillasSeleccionadas)) {
-                $cuerpoHtmlMensaje .= $campo->getTitulo() . ":\n";
+                $cuerpoMensaje .= $campo->getTitulo() . ":\n";
                 $enumeracionCasillasSeleccionadas = "";
                 
                 foreach ($casillasSeleccionadas as $casilla) {
                     $csvRespuesta .= str_replace('"', '""', $casilla) . ';';
                     
-                    $cuerpoHtmlMensaje .= "☑ " . $casilla . "\n";
+                    $cuerpoMensaje .= "☑ " . $casilla . "\n";
                     $enumeracionCasillasSeleccionadas .= $casilla . ';';
                 }
                 
                 $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
                 
-                $cuerpoHtmlMensaje .= "\n";
+                $cuerpoMensaje .= "\n";
                 $enumeracionCasillasSeleccionadas = substr($enumeracionCasillasSeleccionadas, 0, strlen($enumeracionCasillasSeleccionadas) - 1);
                 $arregloCamposFormulario[$campo->getTitulo()] = $enumeracionCasillasSeleccionadas;
             }
@@ -103,15 +98,15 @@ if ($estaHabilitado && $esHumano) {
             $arregloCamposFormulario[$campo->getTitulo()] = $valorCampo;
             
             if (isset($valorCampo) && trim($valorCampo) != "") {
-                $cuerpoHtmlMensaje .= $campo->getTitulo() . ":\n" . $valorCampo . "\n\n";
+                $cuerpoMensaje .= $campo->getTitulo() . ":\n" . $valorCampo . "\n\n";
             }
         }
     }
     
     $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
-    $cuerpoHtmlMensaje .= "En el presente mensaje también se encuentra adjunto un documento PDF con los detalles de esta respuesta.\nRecuerde que puede acceder a todas las respuestas que registra este formulario cuando usted desee desde el gestor de formularios.";
+    $cuerpoMensaje .= "En el presente mensaje también se encuentra adjunto un documento PDF con los detalles de esta respuesta.\nRecuerde que puede acceder a todas las respuestas que registra este formulario cuando usted desee desde el gestor de formularios.";
     
-    if ($colibri->enviarMensaje($cuerpoHtmlMensaje, $arregloCamposFormulario)) {
+    if ($colibri->enviarMensaje($cuerpoMensaje, $arregloCamposFormulario)) {
         $fueEnviada = 1;
     }
 

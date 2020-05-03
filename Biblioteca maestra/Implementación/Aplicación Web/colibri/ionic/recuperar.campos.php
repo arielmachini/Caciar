@@ -16,7 +16,7 @@ if (!isset($idFormulario)) {
     die();
 }
 
-require_once '../colibri/lib/Constantes.Class.php';
+require_once '../lib/Constantes.Class.php';
 
 /* Llave de acceso, provista por el cliente. */
 $llave = filter_var(filter_input(INPUT_GET, 'llave'), FILTER_SANITIZE_STRING);
@@ -26,9 +26,9 @@ $hashFechaAyer = md5(date('dmY', strtotime("-1 days")));
 $hashFechaHoy = md5(date('dmY'));
 
 if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE . $hashFechaAyer) { // Si la solicitud del cliente es enviada a las 23:59, puede que sea recibida a las 0:00 del día siguiente.
-    require_once '../colibri/modelo/BDConexion.Class.php';
-    require_once '../colibri/lib/BDCatalogoTablas.Class.php';
-    require_once '../colibri/modelo/Campos.Class.php';
+    require_once '../modelo/BDConexion.Class.php';
+    require_once '../lib/BDCatalogoTablas.Class.php';
+    require_once '../modelo/Campos.Class.php';
     
     $formulario = BDConexion::getInstancia()->query("" .
             "SELECT `idFormulario`, `fechaApertura`, `fechaCierre` " .
