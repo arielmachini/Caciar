@@ -32,6 +32,9 @@ session_destroy();
                     <a class="btn btn-outline-primary" href="index.php">
                         <span class="oi oi-account-logout"></span> Volver a la página de inicio de <?php echo Constantes::NOMBRE_SISTEMA; ?>
                     </a>
+                    <a class="btn btn-outline-success" href="formularios.php" title="Ver formularios disponibles para invitados">
+                        <span class="oi oi-document"></span> Ver formularios
+                    </a>
                     <a class="btn btn-outline-secondary" href="https://www.gmail.com/">
                         <span class="oi oi-inbox"></span> Ir a Gmail
                     </a>

@@ -19,7 +19,7 @@ if (!$consulta) {
     //arrojar una excepcion
     die(BDConexion::getInstancia()->errno);
 }
-$idRol = BDConexion::getInstancia()->insert_id;
+$idRol = BDConexion::getInstancia()->query("SELECT LAST_INSERT_ID()")->fetch_array()[0];
 foreach ($DatosFormulario["permiso"] as $idPermiso) {
     $query = "INSERT INTO " . BDCatalogoTablas::BD_TABLA_ROL_PERMISO . " "
             . "VALUES ({$idRol}, {$idPermiso})";

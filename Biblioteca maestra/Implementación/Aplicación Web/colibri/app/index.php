@@ -36,7 +36,9 @@
 
                             <h5>Acceso para invitados</h5>
                             <p>Si no dispone de una dirección de correo institucional, podrá acceder al sistema como invitado.</p>
-                            <a href="formularios.php" title="Ver formularios disponibles para invitados"><button class="btn btn-outline-success" type="button"><span class="oi oi-document"></span> Ver formularios</button></a>
+                            <a class="btn btn-outline-success" href="formularios.php" title="Ver formularios disponibles para invitados">
+                                <span class="oi oi-document"></span> Ver formularios
+                            </a>
                         </div>
                     </div>
                 </article>

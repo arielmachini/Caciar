@@ -42,7 +42,12 @@ $ColeccionRoles = new ColeccionRoles();
                         </div>
                         <hr />
                         <h4>Roles</h4>
-                        <?php foreach ($ColeccionRoles->getRoles() as $Rol) { ?>
+                        <?php
+                        foreach ($ColeccionRoles->getRoles() as $Rol) {
+                            if ($Rol->getId() == PermisosSistema::IDROL_PUBLICO_GENERAL) {
+                                continue; // Se omite el rol "Público general" porque un usuario registrado no puede tener ese rol.
+                            }
+                        ?>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="<?= $Rol->getId(); ?>" id="rol[<?= $Rol->getId(); ?>]" name="rol[<?= $Rol->getId(); ?>]" />
                                 <label class="form-check-label" for="rol">

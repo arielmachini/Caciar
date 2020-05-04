@@ -121,19 +121,23 @@ $(document).ready(function () {
     });
     
     $('#enviarFormulario').click(function () {
-        descartarCampoTexto();
-        descartarCampoFecha();
-        descartarAreaTexto();
-        descartarListaDesplegable();
-        descartarCasillasVerificacion();
-        descartarBotonesRadio();
-        
-        descartarEdicionCampoTexto();
-        descartarEdicionCampoFecha();
-        descartarEdicionAreaTexto();
-        descartarEdicionListaDesplegable();
-        descartarEdicionCasillasVerificacion();
-        descartarEdicionBotonesRadio();
+        var formulario = document.getElementById('crearFormulario');
+
+        if (formulario.checkValidity() === true) {
+            descartarCampoTexto();
+            descartarCampoFecha();
+            descartarAreaTexto();
+            descartarListaDesplegable();
+            descartarCasillasVerificacion();
+            descartarBotonesRadio();
+
+            descartarEdicionCampoTexto();
+            descartarEdicionCampoFecha();
+            descartarEdicionAreaTexto();
+            descartarEdicionListaDesplegable();
+            descartarEdicionCasillasVerificacion();
+            descartarEdicionBotonesRadio();
+        }
     });
 
     /*
