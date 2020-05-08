@@ -62,6 +62,11 @@
 
                             <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ADMINISTRAR_GESTORES)) { ?>
                                 <h6 class="dropdown-header">Sistema Colibrí</h6>
+                                <a class="dropdown-item" href="../app/formulario.gestor.pendientes.php">
+                                    <span class="oi oi-task" />
+                                    Gestionar formularios pendientes
+                                </a>
+                                
                                 <a class="dropdown-item" href="../app/gestores.php">
                                     <span class="oi oi-people" />
                                     Gestores de formularios
@@ -83,13 +88,6 @@
                                 <a class="dropdown-item" href="../app/formulario.crear.php">
                                     <span class="oi oi-plus" />
                                     Nuevo formulario
-                                </a>
-                            <?php } ?>
-
-                            <?php if (ControlAcceso::verificaPermiso(PermisosSistema::PERMISO_ADMINISTRAR_GESTORES)) { ?>
-                                <a class="dropdown-item" href="../app/formulario.gestor.pendientes.php">
-                                    <span class="oi oi-task" />
-                                    Gestionar formularios pendientes
                                 </a>
                             <?php } ?>
 
