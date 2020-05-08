@@ -286,7 +286,7 @@ $ColeccionRoles = new ColeccionRoles();
                         <div>
                             <p class="campo-cabecera" for="tituloFormulario">Título del formulario<span style="color: red; font-weight: bold;">*</span></p>
                             <p class="campo-descripcion">Ingrese un título corto (pero descriptivo) para el formulario.</p>
-                            <input autocomplete="off" class="form-control" id="tituloFormulario" maxlength="40" name="tituloFormulario" required spellcheck="true" type="text" value="<?= $formulario->getTitulo(); ?>"/>
+                            <input autocomplete="off" class="form-control" id="tituloFormulario" maxlength="75" name="tituloFormulario" required spellcheck="true" type="text" value="<?= $formulario->getTitulo(); ?>"/>
                             <div class="invalid-feedback">
                                 <span class="oi oi-circle-x"></span> No escribió un título para el formulario.
                             </div>

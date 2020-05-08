@@ -1,5 +1,4 @@
 <?php
-
 header('Content-Type: text/html; charset=utf-8');
 
 /* Se evita que los datos se guarden en caché. */
@@ -25,7 +24,8 @@ if ($llave == Constantes::LLAVE . $hashFechaHoy || $llave == Constantes::LLAVE .
     $formularios = BDConexion::getInstancia()->query("" .
             "SELECT `idFormulario`, `titulo`, `descripcion`, `fechaApertura`, `fechaCierre` " .
             "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
-            "WHERE `estaHabilitado` = 1");
+            "WHERE `estaHabilitado` = 1 " .
+            "ORDER BY `titulo` ASC");
 
     if (mysqli_num_rows($formularios) == 0) {
         /* No existen formularios habilitados. */

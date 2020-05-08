@@ -10,7 +10,7 @@ CREATE TABLE `formulario` (
     `idFormulario` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     `idCreador` INT(11) NOT NULL,
     `emailReceptor` VARCHAR(200) NOT NULL,
-    `titulo` VARCHAR(40) NOT NULL,
+    `titulo` VARCHAR(75) NOT NULL,
     `descripcion` VARCHAR(400) DEFAULT NULL,
     `fechaCreacion` DATE NOT NULL,
     `fechaApertura` DATE DEFAULT NULL,

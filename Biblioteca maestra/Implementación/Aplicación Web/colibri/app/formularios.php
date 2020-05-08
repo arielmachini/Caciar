@@ -10,12 +10,14 @@ if (isset($_SESSION['usuario']->id)) {
     $formularios = BDConexion::getInstancia()->query("" .
             "SELECT `idFormulario`, `titulo`, `fechaApertura`, `fechaCierre` " .
             "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " " .
-            "WHERE `estaHabilitado` = 1");
+            "WHERE `estaHabilitado` = 1 " .
+            "ORDER BY `titulo` ASC");
 } else {
     $formularios = BDConexion::getInstancia()->query("" .
             "SELECT `idFormulario`, `titulo`, `fechaApertura`, `fechaCierre` " .
             "FROM " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " NATURAL JOIN " . BDCatalogoTablas::BD_TABLA_FORMULARIO_ROL . " " .
-            "WHERE `estaHabilitado` = 1 AND `idRol` = " . PermisosSistema::IDROL_PUBLICO_GENERAL);
+            "WHERE `estaHabilitado` = 1 AND `idRol` = " . PermisosSistema::IDROL_PUBLICO_GENERAL . " " .
+            "ORDER BY `titulo` ASC");
 }
 ?>
 
