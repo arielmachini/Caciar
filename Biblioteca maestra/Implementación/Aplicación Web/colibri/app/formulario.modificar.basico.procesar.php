@@ -40,34 +40,43 @@ BDConexion::getInstancia()->begin_transaction();
 $emailReceptor = sanitizar(filter_input(INPUT_POST, "destinatarioFormulario", FILTER_SANITIZE_EMAIL));
 $fechaApertura = sanitizar(filter_input(INPUT_POST, "fechaAperturaFormulario"));
 $fechaCierre = sanitizar(filter_input(INPUT_POST, "fechaCierreFormulario"));
+$notificacionesCorreo = 0;
+
+if (sanitizar(filter_input(INPUT_POST, "notificacionesCorreo")) == 1) {
+    $notificacionesCorreo = 1;
+}
 
 if (empty($fechaApertura) && empty($fechaCierre)) {
     $consulta = BDConexion::getInstancia()->query("" .
             "UPDATE " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " SET " .
                 "`emailReceptor` = '{$emailReceptor}', " .
                 "`fechaApertura` = NULL, " .
-                "`fechaCierre` = NULL " .
+                "`fechaCierre` = NULL, " .
+                "`notificacionesCorreo` = {$notificacionesCorreo} " .
             "WHERE `idFormulario` = {$idFormulario}");
 } else if (empty($fechaCierre)) {
     $consulta = BDConexion::getInstancia()->query("" .
             "UPDATE " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " SET " .
                 "`emailReceptor` = '{$emailReceptor}', " .
                 "`fechaApertura` = STR_TO_DATE('{$fechaApertura}', '%Y-%m-%d'), " .
-                "`fechaCierre` = NULL " .
+                "`fechaCierre` = NULL, " .
+                "`notificacionesCorreo` = {$notificacionesCorreo} " .
             "WHERE `idFormulario` = {$idFormulario}");
 } else if (empty($fechaApertura)) {
     $consulta = BDConexion::getInstancia()->query("" .
             "UPDATE " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " SET " .
                 "`emailReceptor` = '{$emailReceptor}', " .
                 "`fechaApertura` = NULL, " .
-                "`fechaCierre` = STR_TO_DATE('{$fechaCierre}', '%Y-%m-%d') " .
+                "`fechaCierre` = STR_TO_DATE('{$fechaCierre}', '%Y-%m-%d'), " .
+                "`notificacionesCorreo` = {$notificacionesCorreo} " .
             "WHERE `idFormulario` = {$idFormulario}");
 } else {
     $consulta = BDConexion::getInstancia()->query("" .
             "UPDATE " . BDCatalogoTablas::BD_TABLA_FORMULARIO . " SET " .
                 "`emailReceptor` = '{$emailReceptor}', " .
                 "`fechaApertura` = STR_TO_DATE('{$fechaApertura}', '%Y-%m-%d'), " .
-                "`fechaCierre` = STR_TO_DATE('{$fechaCierre}', '%Y-%m-%d') " .
+                "`fechaCierre` = STR_TO_DATE('{$fechaCierre}', '%Y-%m-%d'), " .
+                "`notificacionesCorreo` = {$notificacionesCorreo} " .
             "WHERE `idFormulario` = {$idFormulario}");
 }
 

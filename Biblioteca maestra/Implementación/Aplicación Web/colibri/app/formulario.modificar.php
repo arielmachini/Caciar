@@ -50,6 +50,7 @@ $formulario->setDescripcion($consulta['descripcion']);
 $formulario->setEmailReceptor($consulta['emailReceptor']);
 $formulario->setFechaApertura($consulta['fechaApertura']);
 $formulario->setFechaCierre($consulta['fechaCierre']);
+$formulario->setNotificacionesCorreo($consulta['notificacionesCorreo']);
 $formulario->setTitulo($consulta['titulo']);
 
 $consulta = BDConexion::getInstancia()->query("" .
@@ -273,13 +274,27 @@ $ColeccionRoles = new ColeccionRoles();
                     </div>
 
                     <form action="formulario.modificar.procesar.php" id="crearFormulario" method="post" novalidate>
-                        <p for="destinatarioFormulario" class="campo-cabecera">Dirección de e-mail que recibirá las respuestas<span style="color: red; font-weight: bold;">*</span></p>
                         <div>
-                            <p class="campo-descripcion">¿Qué dirección de e-mail debería recibir las respuestas al formulario que está modificando?</p>
+                            <p for="destinatarioFormulario" class="campo-cabecera">Dirección de e-mail que recibirá las respuestas<span style="color: red; font-weight: bold;">*</span></p>
+                            <p class="campo-descripcion">¿Qué dirección de e-mail debería recibir las respuestas a este formulario?</p>
                             <input autocomplete="on" class="form-control form-control-lg" id="destinatarioFormulario" maxlength="200" name="destinatarioFormulario" required type="email" value="<?= $formulario->getEmailReceptor(); ?>"/>
                             <div class="invalid-feedback">
                                 <span class="oi oi-circle-x"></span> La dirección de e-mail que ingresó no es válida.
                             </div>
+                        </div>
+                        <br/>
+                        
+                        <div>
+                            <p for="notificacionesCorreo" class="campo-cabecera">Notificaciones por e-mail</p>
+                            <p class="campo-descripcion">Marque la siguiente casilla si desea recibir una notificación por e-mail (<span style="cursor: help;" title="Especificada en el campo &quot;Dirección de e-mail que recibirá las respuestas&quot;">a la dirección especificada en el campo de arriba</span>) cada vez que este formulario reciba una nueva respuesta.</p>
+                            <label for="notificacionesCorreo">
+                                <?php if($formulario->getNotificacionesCorreo() == 1) { ?>
+                                    <input checked class="campo-opcion" id="notificacionesCorreo" name="notificacionesCorreo" type="checkbox" value="1">
+                                <?php } else { ?>
+                                    <input class="campo-opcion" id="notificacionesCorreo" name="notificacionesCorreo" type="checkbox" value="1">
+                                <?php } ?>
+                                Sí, recibir notificaciones por e-mail
+                            </label>
                         </div>
                         <br/>
 
@@ -293,9 +308,11 @@ $ColeccionRoles = new ColeccionRoles();
                         </div>
                         <br/>
 
-                        <p class="campo-cabecera">Descripción del formulario</p>
-                        <p class="campo-descripcion">Una descripción concisa, que facilite la comprensión de su formulario.</p>
-                        <textarea class="form-control" id="descripcionFormulario" maxlength="400" name="descripcionFormulario" placeholder="Puede escribir una descripción de hasta 400 caracteres." spellcheck="true" style="max-height: 120px; min-height: 60px;"><?= $formulario->getDescripcion(); ?></textarea>
+                        <div>
+                            <p class="campo-cabecera">Descripción del formulario</p>
+                            <p class="campo-descripcion">Una descripción concisa, que facilite la comprensión de su formulario.</p>
+                            <textarea class="form-control" id="descripcionFormulario" maxlength="400" name="descripcionFormulario" placeholder="Puede escribir una descripción de hasta 400 caracteres." spellcheck="true" style="max-height: 120px; min-height: 60px;"><?= $formulario->getDescripcion(); ?></textarea>
+                        </div>
                         <br/>
 
                         <div>
@@ -307,7 +324,7 @@ $ColeccionRoles = new ColeccionRoles();
                                 <?php } else { ?>
                                     <input class="campo-opcion" id="rolId<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>" name="rolesDestinoFormulario[]" type="checkbox" value="<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>">
                                 <?php } ?>
-                                Público general
+                                Usuario no registrado
                             </label>
                             
                             <?php foreach ($ColeccionRoles->getRoles() as $Rol) {

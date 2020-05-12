@@ -153,7 +153,16 @@ $rolesDestino = BDConexion::getInstancia()->query("" .
                     
                     <div class="informacion">
                         <h5><span class="oi oi-envelope-open"></span>Dirección de e-mail que recibe las respuestas</h5>
-                        <div><?= $formulario['emailReceptor']; ?></div>
+                        <div>
+                            <?= $formulario['emailReceptor']; ?>
+                            <div class="alert alert-info" role="alert" style="font-size: 0.8rem; margin-bottom: 0 !important; margin-top: 15px;">
+                            <?php if ($formulario['notificacionesCorreo'] == 1) { ?>
+                                <span class="oi oi-circle-check"></span><strong>Información:</strong> Nuevas respuestas a este formulario serán enviadas por e-mail
+                            <?php } else { ?>
+                                <span class="oi oi-circle-x"></span><strong>Información:</strong> Nuevas respuestas a este formulario no serán enviadas por e-mail
+                            <?php } ?>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="informacion">
@@ -196,7 +205,7 @@ $rolesDestino = BDConexion::getInstancia()->query("" .
                         </div>
                     </div>
                     
-                    <div class="informacion informacion-respuestas">
+                    <div class="informacion informacion-respuestas" id="respuestas">
                         <h5><span class="oi oi-chat"></span>Respuestas registradas</h5>
                         <div>
                             <?php if ($cantidadRespuestas > 0) {

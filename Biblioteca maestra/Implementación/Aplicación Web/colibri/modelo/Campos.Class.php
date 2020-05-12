@@ -46,8 +46,6 @@ abstract class Campo {
         return $codigoGenerado;
     }
 
-    abstract function getCodigoIonic();
-
     function esObligatorio() {
         return $this->obligatorio;
     }
@@ -113,23 +111,6 @@ class AreaTexto extends Campo {
         $codigoGenerado = $codigoGenerado .
                 "></textarea><br/>";
 
-        return $codigoGenerado;
-    }
-
-    function getCodigoIonic() {
-        $codigoGenerado = "<ion-item>" . parent::getCodigo();
-        
-        $codigoGenerado = $codigoGenerado .
-                "<ion-textarea maxlength=\"" . $this->getLimiteCaracteres() . "\" name=\"nombre_" . str_replace(" ", "_", $this->getTitulo()) . "\"";
-        
-        if ($this->esObligatorio()) {
-            $codigoGenerado = $codigoGenerado .
-                    " required=\"true\"";
-        }
-        
-        $codigoGenerado = $codigoGenerado .
-                "></ion-textarea></ion-item>";
-        
         return $codigoGenerado;
     }
 
@@ -201,39 +182,6 @@ class CampoTexto extends Campo {
         return $codigoGenerado;
     }
 
-    function getCodigoIonic() {
-        $codigoGenerado = "<ion-item>" . parent::getCodigo();
-        
-        $codigoGenerado = $codigoGenerado .
-                "<ion-input name=\"nombre_" . str_replace(" ", "_", $this->getTitulo()) . "\" ";
-
-        if (!empty($this->getPista())) {
-            $codigoGenerado = $codigoGenerado .
-                    "placeholder=\"" . $this->getPista() . "\" ";
-        }
-
-        if($this->esObligatorio()) {
-            $codigoGenerado = $codigoGenerado .
-                    "required=\"true\" ";
-        }
-
-        if ($this->getSubtipo() == CampoTexto::$CAMPO_TEXTO) {
-            $codigoGenerado = $codigoGenerado .
-                    " type=\"text\"></ion-input>";
-        } else if ($this->getSubtipo() == CampoTexto::$CAMPO_NUMERICO) {
-            $codigoGenerado = $codigoGenerado .
-                    " min=\"0\" type=\"number\"></ion-input>";
-        } else { // Por descarte, se asume que es un campo para direcciones de e-mail.
-            $codigoGenerado = $codigoGenerado .
-                    " type=\"email\"></ion-input>";
-        }
-        
-        $codigoGenerado = $codigoGenerado .
-                "</ion-item>";
-
-        return $codigoGenerado;
-    }
-
     function getPista() {
         return $this->pista;
     }
@@ -289,23 +237,6 @@ class Fecha extends Campo {
         $codigoGenerado = $codigoGenerado .
                 " type=\"date\"></div><br/>";
 
-        return $codigoGenerado;
-    }
-
-    function getCodigoIonic() {
-        $codigoGenerado = "<ion-item>" . parent::getCodigo();
-        
-        $codigoGenerado = $codigoGenerado .
-                "<ion-datetime cancelText=\"Cancelar\" displayFormat=\"DD/MM/YYYY\" doneText=\"Aceptar\" placeholder=\"Toque aquí para elegir una fecha\"";
-        
-        if ($this->esObligatorio()) {
-            $codigoGenerado = $codigoGenerado .
-                    " required=\"true\"";
-        }
-        
-        $codigoGenerado = $codigoGenerado .
-                "></ion-datetime></ion-item>";
-        
         return $codigoGenerado;
     }
 
@@ -392,23 +323,6 @@ class ListaCheckbox extends Lista {
         return $codigoGenerado;
     }
 
-    function getCodigoIonic() {
-        $codigoGenerado = "<ion-item>" . parent::getCodigo() . "</ion-item>";
-        
-        $codigoGenerado = $codigoGenerado .
-                "<ion-list>";
-        
-        for ($i = 1; $i < count($this->getElementos()); $i++) {
-            $codigoGenerado = $codigoGenerado .
-                    "<ion-item><ion-label>" . $this->getElementos()[$i] . "</ion-label><ion-checkbox name=\"" . str_replace(" ", "_", $this->getTitulo()) . "[]\" value=\"" . $this->getElementos()[$i] . "\"></ion-checkbox></ion-item>";
-        }
-        
-        $codigoGenerado = $codigoGenerado .
-                "</ion-list>";
-        
-        return $codigoGenerado;
-    }
-
 }
 
 /**
@@ -448,31 +362,6 @@ class ListaDesplegable extends Lista {
         $codigoGenerado = $codigoGenerado .
                 "</select><br/>";
 
-        return $codigoGenerado;
-    }
-
-    function getCodigoIonic() {
-        $codigoGenerado = "<ion-item>" . parent::getCodigo() . "</ion-item>";
-
-        $codigoGenerado = $codigoGenerado .
-                "<ion-item><ion-label>Elija una opción</ion-label><ion-select cancelText=\"Cancelar\" name=\"" . str_replace(" ", "_", $this->getTitulo()) . "\" okText=\"Aceptar\"";
-
-        if ($this->esObligatorio()) {
-            $codigoGenerado = $codigoGenerado .
-                    " required=\"true\"";
-        }
-
-        $codigoGenerado = $codigoGenerado .
-                ">";
-
-        for ($i = 1; $i < count($this->getElementos()); $i++) {
-            $codigoGenerado = $codigoGenerado .
-                    "<ion-option value=\"" . $this->getElementos()[$i] . "\">" . $this->getElementos()[$i] . "</ion-option>";
-        }
-
-        $codigoGenerado = $codigoGenerado .
-                "</ion-select></ion-item>";
-        
         return $codigoGenerado;
     }
 
@@ -533,30 +422,6 @@ class ListaRadio extends Lista {
         $codigoGenerado = $codigoGenerado .
                 "<br/>";
 
-        return $codigoGenerado;
-    }
-
-    function getCodigoIonic() {
-        $codigoGenerado = "<ion-item>" . parent::getCodigo() . "</ion-item>";
-
-        $codigoGenerado = $codigoGenerado .
-                "<ion-list radio-group>";
-
-        if ($this->esObligatorio()) {
-            for ($i = 1; $i < count($this->getElementos()); $i++) {
-                $codigoGenerado = $codigoGenerado .
-                        "<ion-item><ion-label>" . $this->getElementos()[$i] . "</ion-label><ion-radio name=\"" . str_replace(" ", "_", $this->getTitulo()) . "[]\" required=\"true\" value=\"" . $this->getElementos()[$i] . "\"></ion-radio></ion-item>";
-            }
-        } else {
-            for ($i = 1; $i < count($this->getElementos()); $i++) {
-                $codigoGenerado = $codigoGenerado .
-                        "<ion-item><ion-label>" . $this->getElementos()[$i] . "</ion-label><ion-radio name=\"" . str_replace(" ", "_", $this->getTitulo()) . "[]\" value=\"" . $this->getElementos()[$i] . "\"></ion-radio></ion-item>";
-            }
-        }
-
-        $codigoGenerado = $codigoGenerado .
-                "</ion-list>";
-        
         return $codigoGenerado;
     }
 

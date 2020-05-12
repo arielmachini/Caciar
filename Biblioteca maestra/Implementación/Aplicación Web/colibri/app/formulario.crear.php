@@ -92,13 +92,23 @@ $ColeccionRoles = new ColeccionRoles();
                     </div>
 
                     <form action="formulario.crear.procesar.php" id="crearFormulario" method="post" novalidate>
-                        <p for="destinatarioFormulario" class="campo-cabecera">Dirección de e-mail que recibirá las respuestas<span style="color: red; font-weight: bold;">*</span></p>
                         <div>
+                            <p for="destinatarioFormulario" class="campo-cabecera">Dirección de e-mail que recibirá las respuestas<span style="color: red; font-weight: bold;">*</span></p>
                             <p class="campo-descripcion">¿Qué dirección de e-mail debería recibir las respuestas al formulario que está creando? Tenga en cuenta que, de ser necesario, <strong>podrá cambiar esta dirección después de haber creado el formulario</strong>.</p>
                             <input autocomplete="on" class="form-control form-control-lg" id="destinatarioFormulario" maxlength="200" name="destinatarioFormulario" required type="email"/>
                             <div class="invalid-feedback">
                                 <span class="oi oi-circle-x"></span> La dirección de e-mail que ingresó no es válida.
                             </div>
+                        </div>
+                        <br/>
+                        
+                        <div>
+                            <p for="notificacionesCorreo" class="campo-cabecera">Notificaciones por e-mail</p>
+                            <p class="campo-descripcion">Marque la siguiente casilla si desea recibir una notificación por e-mail (<span style="cursor: help;" title="Especificada en el campo &quot;Dirección de e-mail que recibirá las respuestas&quot;">a la dirección especificada en el campo de arriba</span>) cada vez que el formulario que está creando reciba una nueva respuesta. Tenga en cuenta que, en caso de que cambie de parecer, <strong>podrá cambiar esta preferencia después de haber creado el formulario</strong>.</p>
+                            <label for="notificacionesCorreo">
+                                <input class="campo-opcion" id="notificacionesCorreo" name="notificacionesCorreo" type="checkbox" value="1">
+                                Sí, recibir notificaciones por e-mail
+                            </label>
                         </div>
                         <br/>
 
@@ -112,9 +122,11 @@ $ColeccionRoles = new ColeccionRoles();
                         </div>
                         <br/>
 
-                        <p class="campo-cabecera">Descripción del formulario</p>
-                        <p class="campo-descripcion">Una descripción concisa, que facilite la comprensión de su formulario.</p>
-                        <textarea class="form-control" id="descripcionFormulario" maxlength="400" name="descripcionFormulario" placeholder="Puede escribir una descripción de hasta 400 caracteres." spellcheck="true" style="max-height: 120px; min-height: 60px;"></textarea>
+                        <div>
+                            <p class="campo-cabecera">Descripción del formulario</p>
+                            <p class="campo-descripcion">Una descripción concisa, que facilite la comprensión de su formulario.</p>
+                            <textarea class="form-control" id="descripcionFormulario" maxlength="400" name="descripcionFormulario" placeholder="Puede escribir una descripción de hasta 400 caracteres." spellcheck="true" style="max-height: 120px; min-height: 60px;"></textarea>
+                        </div>
                         <br/>
 
                         <div>
@@ -122,7 +134,7 @@ $ColeccionRoles = new ColeccionRoles();
                             <p class="campo-descripcion">Seleccione uno o más roles a los que estará dirigido su formulario. Aquellos usuarios con roles que no seleccione no podrán acceder al formulario.</p>
                             <label for="rolId<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>" title="Comprende estudiantes y a otras personas sin correo institucional.">
                                 <input class="campo-opcion" id="rolId<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>" name="rolesDestinoFormulario[]" type="checkbox" value="<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>">
-                                Público general
+                                Usuario no registrado
                             </label>
                             
                             <?php foreach ($ColeccionRoles->getRoles() as $Rol) {

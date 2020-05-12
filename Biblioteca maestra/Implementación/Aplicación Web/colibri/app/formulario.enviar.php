@@ -53,61 +53,92 @@ function esHumano() {
 $esHumano = esHumano();
 
 if ($estaHabilitado && $esHumano) {
-    require_once '../lib/Colibri.Class.php';
-    
-    $csvRespuesta = '"' . date("d/m/Y H:i:s") . '",';
-    
-    /* VARIABLES PARA EL ENVÍO DE LA RESPUESTA POR E-MAIL: */
-    $colibri = new Colibri($formulario->getEmailReceptor(), $formulario->getTitulo());
-    $arregloCamposFormulario = array();
-    $cuerpoMensaje = "Estimado usuario,\n\nEl formulario «{$formulario->getTitulo()}» tiene una nueva respuesta. A continuación se muestran los datos de dicha respuesta:\n\n";
-    $fueEnviada = 0;
-    
-    foreach ($formulario->getCampos() as $campo) {
-        if ($campo instanceof ListaCheckbox) { // Sólo hay que realizar un tratamiento diferente para la lista de casillas de verificación.
-            $nombreCampo = str_replace(" ", "_", $campo->getTitulo());
-            $casillasSeleccionadas = filter_input(INPUT_POST, $nombreCampo, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+    if ($formulario->getNotificacionesCorreo() == 1) { // El creador del formulario quiere recibir esta respuesta por correo electrónico.
+        require_once '../lib/Colibri.Class.php';
 
-            $csvRespuesta .= '"';
+        $csvRespuesta = '"' . date("d/m/Y H:i:s") . '",';
 
-            if (isset($casillasSeleccionadas)) {
-                $cuerpoMensaje .= $campo->getTitulo() . ":\n";
-                $enumeracionCasillasSeleccionadas = "";
-                
-                foreach ($casillasSeleccionadas as $casilla) {
-                    $csvRespuesta .= str_replace('"', '""', $casilla) . ';';
-                    
-                    $cuerpoMensaje .= "☑ " . $casilla . "\n";
-                    $enumeracionCasillasSeleccionadas .= $casilla . ';';
+        /* VARIABLES PARA EL ENVÍO DE LA RESPUESTA POR E-MAIL: */
+        $colibri = new Colibri($formulario->getEmailReceptor(), $formulario->getTitulo());
+        $arregloCamposFormulario = array();
+        $cuerpoMensaje = "Estimado usuario,\n\nEl formulario «{$formulario->getTitulo()}» tiene una nueva respuesta. A continuación se muestran los datos de dicha respuesta:\n\n";
+        $fueEnviada = 0;
+
+        foreach ($formulario->getCampos() as $campo) {
+            if ($campo instanceof ListaCheckbox) { // Sólo hay que realizar un tratamiento diferente para la lista de casillas de verificación.
+                $nombreCampo = str_replace(" ", "_", $campo->getTitulo());
+                $casillasSeleccionadas = filter_input(INPUT_POST, $nombreCampo, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+
+                $csvRespuesta .= '"';
+
+                if (isset($casillasSeleccionadas)) {
+                    $cuerpoMensaje .= $campo->getTitulo() . ":\n";
+                    $enumeracionCasillasSeleccionadas = "";
+
+                    foreach ($casillasSeleccionadas as $casilla) {
+                        $csvRespuesta .= str_replace('"', '""', $casilla) . ';';
+
+                        $cuerpoMensaje .= "☑ " . $casilla . "\n";
+                        $enumeracionCasillasSeleccionadas .= $casilla . ';';
+                    }
+
+                    $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
+
+                    $cuerpoMensaje .= "\n";
+                    $enumeracionCasillasSeleccionadas = substr($enumeracionCasillasSeleccionadas, 0, strlen($enumeracionCasillasSeleccionadas) - 1);
+                    $arregloCamposFormulario[$campo->getTitulo()] = $enumeracionCasillasSeleccionadas;
                 }
-                
-                $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
-                
-                $cuerpoMensaje .= "\n";
-                $enumeracionCasillasSeleccionadas = substr($enumeracionCasillasSeleccionadas, 0, strlen($enumeracionCasillasSeleccionadas) - 1);
-                $arregloCamposFormulario[$campo->getTitulo()] = $enumeracionCasillasSeleccionadas;
-            }
-            
-            $csvRespuesta .= '",';
-        } else {
-            $nombreCampo = "nombre_" . str_replace(" ", "_", $campo->getTitulo());
-            $valorCampo = filter_input(INPUT_POST, $nombreCampo);
-            
-            $csvRespuesta .= '"' . str_replace('"', '""', $valorCampo) . '",';
-            
-            $arregloCamposFormulario[$campo->getTitulo()] = $valorCampo;
-            
-            if (isset($valorCampo) && trim($valorCampo) != "") {
-                $cuerpoMensaje .= $campo->getTitulo() . ":\n" . $valorCampo . "\n\n";
+
+                $csvRespuesta .= '",';
+            } else {
+                $nombreCampo = "nombre_" . str_replace(" ", "_", $campo->getTitulo());
+                $valorCampo = filter_input(INPUT_POST, $nombreCampo);
+
+                $csvRespuesta .= '"' . str_replace('"', '""', $valorCampo) . '",';
+
+                $arregloCamposFormulario[$campo->getTitulo()] = $valorCampo;
+
+                if (isset($valorCampo) && trim($valorCampo) != "") {
+                    $cuerpoMensaje .= $campo->getTitulo() . ":\n" . $valorCampo . "\n\n";
+                }
             }
         }
-    }
-    
-    $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
-    $cuerpoMensaje .= "En el presente mensaje también se encuentra adjunto un documento PDF con los detalles de esta respuesta.\nRecuerde que puede acceder a todas las respuestas que registra este formulario cuando usted desee desde el gestor de formularios.";
-    
-    if ($colibri->enviarMensaje($cuerpoMensaje, $arregloCamposFormulario)) {
-        $fueEnviada = 1;
+
+        $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
+        $cuerpoMensaje .= "En el presente mensaje también se encuentra adjunto un documento PDF con los detalles de esta respuesta.\nRecuerde que puede acceder a todas las respuestas que registra este formulario cuando usted desee desde el gestor de formularios.";
+
+        if ($colibri->enviarMensaje($cuerpoMensaje, $arregloCamposFormulario)) {
+            $fueEnviada = 1;
+        }
+    } else { // El creador del formulario NO quiere recibir esta respuesta por correo electrónico.
+        $csvRespuesta = '"' . date("d/m/Y H:i:s") . '",';
+        $fueEnviada = 0;
+        
+        foreach ($formulario->getCampos() as $campo) {
+            if ($campo instanceof ListaCheckbox) { // Sólo hay que realizar un tratamiento diferente para la lista de casillas de verificación.
+                $nombreCampo = str_replace(" ", "_", $campo->getTitulo());
+                $casillasSeleccionadas = filter_input(INPUT_POST, $nombreCampo, FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);
+
+                $csvRespuesta .= '"';
+
+                if (isset($casillasSeleccionadas)) {
+                    foreach ($casillasSeleccionadas as $casilla) {
+                        $csvRespuesta .= str_replace('"', '""', $casilla) . ';';
+                    }
+
+                    $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
+                }
+
+                $csvRespuesta .= '",';
+            } else {
+                $nombreCampo = "nombre_" . str_replace(" ", "_", $campo->getTitulo());
+                $valorCampo = filter_input(INPUT_POST, $nombreCampo);
+
+                $csvRespuesta .= '"' . str_replace('"', '""', $valorCampo) . '",';
+            }
+        }
+
+        $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
     }
 
     $consulta = BDConexion::getInstancia()->query("" .

@@ -16,6 +16,7 @@ CREATE TABLE `formulario` (
     `fechaApertura` DATE DEFAULT NULL,
     `fechaCierre` DATE DEFAULT NULL,
     `estaHabilitado` BIT(1) DEFAULT b'0',
+    `notificacionesCorreo` BIT(1) DEFAULT b'1',
     PRIMARY KEY (`idFormulario`),
     UNIQUE KEY `titulo` (`titulo`),
     KEY `idCreador` (`idCreador`),

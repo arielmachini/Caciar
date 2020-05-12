@@ -158,6 +158,12 @@ $formulario->setEmailReceptor(sanitizar(filter_input(INPUT_POST, "destinatarioFo
 $formulario->setFechaApertura(sanitizar(filter_input(INPUT_POST, "fechaAperturaFormulario")));
 $formulario->setFechaCierre(sanitizar(filter_input(INPUT_POST, "fechaCierreFormulario")));
 
+if (sanitizar(filter_input(INPUT_POST, "notificacionesCorreo")) == 1) {
+    $formulario->setNotificacionesCorreo(1);
+} else {
+    $formulario->setNotificacionesCorreo(0);
+}
+
 $formulario->setTitulo(sanitizar(filter_input(INPUT_POST, "tituloFormulario")));
 
 if (empty($formulario->getFechaApertura()) && empty($formulario->getFechaCierre())) {
@@ -167,7 +173,8 @@ if (empty($formulario->getFechaApertura()) && empty($formulario->getFechaCierre(
                 "`titulo` = '{$formulario->getTitulo()}', " .
                 "`descripcion` = '{$formulario->getDescripcion()}', " .
                 "`fechaApertura` = NULL, " .
-                "`fechaCierre` = NULL " .
+                "`fechaCierre` = NULL, " .
+                "`notificacionesCorreo` = {$formulario->getNotificacionesCorreo()} " .
             "WHERE `idFormulario` = {$idFormulario}");
 } else if (empty($formulario->getFechaCierre())) {
     $consulta = BDConexion::getInstancia()->query("" .
@@ -176,7 +183,8 @@ if (empty($formulario->getFechaApertura()) && empty($formulario->getFechaCierre(
                 "`titulo` = '{$formulario->getTitulo()}', " .
                 "`descripcion` = '{$formulario->getDescripcion()}', " .
                 "`fechaApertura` = STR_TO_DATE('{$formulario->getFechaApertura()}', '%Y-%m-%d'), " .
-                "`fechaCierre` = NULL " .
+                "`fechaCierre` = NULL, " .
+                "`notificacionesCorreo` = {$formulario->getNotificacionesCorreo()} " .
             "WHERE `idFormulario` = {$idFormulario}");
 } else if (empty($formulario->getFechaApertura())) {
     $consulta = BDConexion::getInstancia()->query("" .
@@ -185,7 +193,8 @@ if (empty($formulario->getFechaApertura()) && empty($formulario->getFechaCierre(
                 "`titulo` = '{$formulario->getTitulo()}', " .
                 "`descripcion` = '{$formulario->getDescripcion()}', " .
                 "`fechaApertura` = NULL, " .
-                "`fechaCierre` = STR_TO_DATE('{$formulario->getFechaCierre()}', '%Y-%m-%d') " .
+                "`fechaCierre` = STR_TO_DATE('{$formulario->getFechaCierre()}', '%Y-%m-%d'), " .
+                "`notificacionesCorreo` = {$formulario->getNotificacionesCorreo()} " .
             "WHERE `idFormulario` = {$idFormulario}");
 } else {
     $consulta = BDConexion::getInstancia()->query("" .
@@ -194,7 +203,8 @@ if (empty($formulario->getFechaApertura()) && empty($formulario->getFechaCierre(
                 "`titulo` = '{$formulario->getTitulo()}', " .
                 "`descripcion` = '{$formulario->getDescripcion()}', " .
                 "`fechaApertura` = STR_TO_DATE('{$formulario->getFechaApertura()}', '%Y-%m-%d'), " .
-                "`fechaCierre` = STR_TO_DATE('{$formulario->getFechaCierre()}', '%Y-%m-%d') " .
+                "`fechaCierre` = STR_TO_DATE('{$formulario->getFechaCierre()}', '%Y-%m-%d'), " .
+                "`notificacionesCorreo` = {$formulario->getNotificacionesCorreo()} " .
             "WHERE `idFormulario` = {$idFormulario}");
 }
 

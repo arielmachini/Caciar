@@ -25,7 +25,7 @@ class Formulario {
      * las solicitudes.
      * 
      * $estaHabilitado: Define si el formulario está actualmente publicado o
-     * no. Este valor se puede alternar siempre que sea necesario.
+     * no.
      * 
      * $fechaApertura: Atributo opcional. Define cuándo el formulario comenzará a
      * aceptar solicitudes (AAAA-MM-DD).
@@ -41,6 +41,9 @@ class Formulario {
      * formulario a través de un objeto de este tipo (tipo «Formulario»). Un
      * ejemplo de esto puede verse en las páginas «formulario.ver.php» y
      * «formulario.enviar.php».
+     * 
+     * $notificacionesCorreo: Define si las nuevas respuestas que reciba el
+     * formulario se envían por e-mail a la dirección de correo $emailReceptor.
      * 
      * $rolesDestino: Arreglo que contiene los roles del sistema a los que
      * está dirigido el formulario.
@@ -58,6 +61,7 @@ class Formulario {
     private $fechaCierre;
     private $fechaCreacion;
     private $id;
+    private $notificacionesCorreo;
     private $rolesDestino = array();
     private $titulo;
     
@@ -147,6 +151,10 @@ class Formulario {
         return $this->id;
     }
     
+    function getNotificacionesCorreo() {
+        return $this->notificacionesCorreo;
+    }
+    
     function getTitulo() {
         return $this->titulo;
     }
@@ -169,6 +177,10 @@ class Formulario {
     
     function setID($id_) {
         $this->id = $id_;
+    }
+    
+    function setNotificacionesCorreo($notificacionesCorreo_) {
+        $this->notificacionesCorreo = $notificacionesCorreo_;
     }
     
     function setTitulo($titulo_) {

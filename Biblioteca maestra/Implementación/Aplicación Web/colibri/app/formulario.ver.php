@@ -122,6 +122,7 @@ if ($formulario->getFechaCierre() != "") {
 }
 
 $formulario->setEmailReceptor($consulta['emailReceptor']);
+$formulario->setNotificacionesCorreo($consulta['notificacionesCorreo']);
 $formulario->setTitulo($consulta['titulo']);
 $formulario->setDescripcion($consulta['descripcion']);
 
