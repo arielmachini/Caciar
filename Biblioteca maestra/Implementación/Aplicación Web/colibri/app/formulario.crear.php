@@ -234,8 +234,8 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-cabecera" id="cabeceraCampoTexto">CAMPO DE TEXTO</span>
 
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloCampoTexto" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
-                                            <input class="campo-editor" id="tituloCampoTexto" maxlength="30"/>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+                                            <input class="campo-editor" id="tituloCampoTexto" maxlength="40"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 40.</span>
 
                                             <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
                                             <textarea class="campo-editor" id="descripcionCampoTexto" maxlength="200" style="max-height: 120px;"></textarea>
@@ -269,8 +269,8 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-cabecera" id="cabeceraListaDesplegable">LISTA DESPLEGABLE</span>
 
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloListaDesplegable" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
-                                            <input class="campo-editor" id="tituloListaDesplegable" maxlength="30"/>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+                                            <input class="campo-editor" id="tituloListaDesplegable" maxlength="40"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 40.</span>
 
                                             <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
                                             <textarea class="campo-editor" id="descripcionListaDesplegable" maxlength="200" style="max-height: 120px;"></textarea>
@@ -307,8 +307,8 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-cabecera" id="cabeceraCampoFecha">SELECTOR DE FECHA</span>
 
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloCampoFecha" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
-                                            <input class="campo-editor" id="tituloCampoFecha" maxlength="30"/>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+                                            <input class="campo-editor" id="tituloCampoFecha" maxlength="40"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 40.</span>
 
                                             <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
                                             <textarea class="campo-editor" id="descripcionCampoFecha" maxlength="200" style="max-height: 120px;"></textarea>
@@ -333,8 +333,8 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-cabecera" id="cabeceraCasillasVerificacion">CASILLAS DE VERIFICACIÓN</span>
 
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloCasillasVerificacion" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
-                                            <input class="campo-editor" id="tituloCasillasVerificacion" maxlength="30"/>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+                                            <input class="campo-editor" id="tituloCasillasVerificacion" maxlength="40"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 40.</span>
 
                                             <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
                                             <textarea class="campo-editor" id="descripcionCasillasVerificacion" maxlength="200" style="max-height: 120px;"></textarea>
@@ -368,8 +368,8 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-cabecera" id="cabeceraAreaTexto">ÁREA DE TEXTO</span>
 
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloAreaTexto" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
-                                            <input class="campo-editor" id="tituloAreaTexto" maxlength="30"/>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+                                            <input class="campo-editor" id="tituloAreaTexto" maxlength="40"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 40.</span>
 
                                             <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
                                             <textarea class="campo-editor" id="descripcionAreaTexto" maxlength="200" style="max-height: 120px;"></textarea>
@@ -397,8 +397,8 @@ $ColeccionRoles = new ColeccionRoles();
                                             <span class="editor-cabecera" id="cabeceraBotonesRadio">BOTONES DE RADIO</span>
 
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloBotonesRadio" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
-                                            <input class="campo-editor" id="tituloBotonesRadio" maxlength="30"/>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+                                            <input class="campo-editor" id="tituloBotonesRadio" maxlength="40"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 40.</span>
 
                                             <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
                                             <textarea class="campo-editor" id="descripcionBotonesRadio" maxlength="200" style="max-height: 120px;"></textarea>
@@ -444,8 +444,8 @@ $ColeccionRoles = new ColeccionRoles();
                                         
                                         <div class="div-editar oculto" id="edicionCampoTexto">
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloCampoTextoEdicion" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
-                                            <input class="campo-editor" id="tituloCampoTextoEdicion" maxlength="30"/>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+                                            <input class="campo-editor" id="tituloCampoTextoEdicion" maxlength="40"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 40.</span>
 
                                             <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
                                             <textarea class="campo-editor" id="descripcionCampoTextoEdicion" maxlength="200" style="max-height: 120px;"></textarea>
@@ -477,8 +477,8 @@ $ColeccionRoles = new ColeccionRoles();
                                         
                                         <div class="div-editar oculto" id="edicionListaDesplegable">
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloListaDesplegableEdicion" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
-                                            <input class="campo-editor" id="tituloListaDesplegableEdicion" maxlength="30"/>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+                                            <input class="campo-editor" id="tituloListaDesplegableEdicion" maxlength="40"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 40.</span>
 
                                             <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
                                             <textarea class="campo-editor" id="descripcionListaDesplegableEdicion" maxlength="200" style="max-height: 120px;"></textarea>
@@ -511,8 +511,8 @@ $ColeccionRoles = new ColeccionRoles();
                                         
                                         <div class="div-editar oculto" id="edicionCampoFecha">
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloCampoFechaEdicion" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
-                                            <input class="campo-editor" id="tituloCampoFechaEdicion" maxlength="30"/>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+                                            <input class="campo-editor" id="tituloCampoFechaEdicion" maxlength="40"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 40.</span>
 
                                             <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
                                             <textarea class="campo-editor" id="descripcionCampoFechaEdicion" maxlength="200" style="max-height: 120px;"></textarea>
@@ -535,8 +535,8 @@ $ColeccionRoles = new ColeccionRoles();
                                         
                                         <div class="div-editar oculto" id="edicionCasillasVerificacion">
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloCasillasVerificacionEdicion" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
-                                            <input class="campo-editor" id="tituloCasillasVerificacionEdicion" maxlength="30"/>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+                                            <input class="campo-editor" id="tituloCasillasVerificacionEdicion" maxlength="40"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 40.</span>
 
                                             <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
                                             <textarea class="campo-editor" id="descripcionCasillasVerificacionEdicion" maxlength="200" style="max-height: 120px;"></textarea>
@@ -566,8 +566,8 @@ $ColeccionRoles = new ColeccionRoles();
                                         
                                         <div class="div-editar oculto" id="edicionAreaTexto">
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloAreaTextoEdicion" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
-                                            <input class="campo-editor" id="tituloAreaTextoEdicion" maxlength="30"/>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+                                            <input class="campo-editor" id="tituloAreaTextoEdicion" maxlength="40"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 40.</span>
 
                                             <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
                                             <textarea class="campo-editor" id="descripcionAreaTextoEdicion" maxlength="200" style="max-height: 120px;"></textarea>
@@ -593,8 +593,8 @@ $ColeccionRoles = new ColeccionRoles();
 
                                         <div class="div-editar oculto" id="edicionBotonesRadio">
                                             <span class="editor-propiedad-cabecera">TÍTULO <div class="campo-error" id="errorTituloBotonesRadioEdicion" style="display: none;" title="Debe especificar un título para el campo."><span class="oi oi-warning"></span> COMPLETAR</div></span>
-                                            <input class="campo-editor" id="tituloBotonesRadioEdicion" maxlength="30"/>
-                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 30.</span>
+                                            <input class="campo-editor" id="tituloBotonesRadioEdicion" maxlength="40"/>
+                                            <span class="editor-propiedad-pista"><span class="oi oi-info" style="padding-right: 3px;"></span> Máximo de caracteres: 40.</span>
 
                                             <span class="editor-propiedad-cabecera">DESCRIPCIÓN</span>
                                             <textarea class="campo-editor" id="descripcionBotonesRadioEdicion" maxlength="200" style="max-height: 120px;"></textarea>

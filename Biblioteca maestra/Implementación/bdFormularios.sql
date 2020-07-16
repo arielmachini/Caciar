@@ -40,7 +40,7 @@ CREATE TABLE `respuesta` (
 CREATE TABLE `campo` (
     `idCampo` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
     `idFormulario` INT(10) UNSIGNED NOT NULL,
-    `titulo` VARCHAR(30) NOT NULL,
+    `titulo` VARCHAR(40) NOT NULL,
     `descripcion` VARCHAR(200) DEFAULT NULL,
     `esObligatorio` BIT(1) DEFAULT b'0',
     `posicion` TINYINT(3) UNSIGNED NOT NULL,
