@@ -200,7 +200,7 @@ class UsuarioSesion {
             BDConexion::getInstancia()->rollback();
             throw new Exception(BDConexion::getInstancia()->error, BDConexion::getInstancia()->errno);
         }
-        $this->id = (Int) BDConexion::getInstancia()->insert_id;
+        $this->id = (Int) BDConexion::getInstancia()->query("SELECT LAST_INSERT_ID()")->fetch_array()[0];
 
         $this->datos = BDConexion::getInstancia()->query(""
                 . "INSERT INTO " . BDCatalogoEsquemas::BD_ESQUEMA_USUARIOS . ".usuario_rol "
