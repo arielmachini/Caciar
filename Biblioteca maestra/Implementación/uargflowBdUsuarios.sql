@@ -98,7 +98,7 @@ CREATE TABLE `rol_permiso` (
 
 LOCK TABLES `rol_permiso` WRITE;
 /*!40000 ALTER TABLE `rol_permiso` DISABLE KEYS */;
-INSERT INTO `rol_permiso` VALUES (7,7),(7,11),(8,7),(8,8),(8,9),(8,11);
+INSERT INTO `rol_permiso` VALUES (7,11),(8,7),(8,8),(8,9),(8,11);
 /*!40000 ALTER TABLE `rol_permiso` ENABLE KEYS */;
 UNLOCK TABLES;
 
