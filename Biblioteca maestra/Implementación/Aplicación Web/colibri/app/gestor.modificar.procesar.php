@@ -9,7 +9,6 @@ require_once '../modelo/BDConexion.Class.php';
 require_once '../modelo/ColeccionRoles.php';
 
 $ColeccionRoles = new ColeccionRoles();
-$idRolGestorFormularios;
 
 $idUsuario = filter_var(filter_input(INPUT_POST, "idUsuario"), FILTER_SANITIZE_NUMBER_INT);
 

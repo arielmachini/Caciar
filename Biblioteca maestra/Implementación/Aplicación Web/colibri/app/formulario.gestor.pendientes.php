@@ -78,9 +78,9 @@ $formulariosPendientes = BDConexion::getInstancia()->query("" .
                                     <td style="vertical-align: middle;">
                                         <?php
                                         $nombreCreador = BDConexion::getInstancia()->query("" .
-                                                        "SELECT `nombre` " .
+                                                        "SELECT `email` " .
                                                         "FROM " . BDCatalogoTablas::BD_TABLA_USUARIO . " " .
-                                                        "WHERE `id` = {$formulario['idCreador']}")->fetch_assoc()['nombre'];
+                                                        "WHERE `id` = {$formulario['idCreador']}")->fetch_assoc()['email'];
 
                                         echo $nombreCreador;
                                         ?>

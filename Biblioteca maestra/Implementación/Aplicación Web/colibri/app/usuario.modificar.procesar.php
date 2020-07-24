@@ -5,9 +5,31 @@ include_once '../lib/ControlAcceso.Class.php';
 ControlAcceso::requierePermiso(PermisosSistema::PERMISO_USUARIOS);
 
 include_once '../modelo/BDConexion.Class.php';
+include_once '../modelo/ColeccionRoles.php';
 
 $DatosFormulario = $_POST;
 $idUsuario = $DatosFormulario["id"];
+$RolesSistema = new ColeccionRoles();
+
+$idRolGestorFormularios;
+
+foreach ($RolesSistema->getRoles() as $Rol) {
+    if ($Rol->getNombre() === PermisosSistema::ROL_GESTOR) {
+        $idRolGestorFormularios = $Rol->getId();
+
+        break 1;
+    }
+}
+
+$idRolUsuarioRegistrado;
+
+foreach ($RolesSistema->getRoles() as $Rol) {
+    if ($Rol->getNombre() === PermisosSistema::ROL_ESTANDAR) {
+        $idRolUsuarioRegistrado = $Rol->getId();
+
+        break 1;
+    }
+}
 
 BDConexion::getInstancia()->autocommit(false);
 BDConexion::getInstancia()->begin_transaction();
@@ -23,7 +45,7 @@ if (!$consulta) {
 }
 
 $query = "DELETE FROM " . BDCatalogoTablas::BD_TABLA_USUARIO_ROL . " "
-        . "WHERE id_usuario = {$idUsuario}";
+        . "WHERE id_usuario = {$idUsuario} AND (id_rol <> {$idRolUsuarioRegistrado} AND id_rol <> {$idRolGestorFormularios})";
 $consulta = BDConexion::getInstancia()->query($query);
 if (!$consulta) {
     BDConexion::getInstancia()->rollback();
