@@ -106,7 +106,7 @@ $ColeccionRoles = new ColeccionRoles();
                             <p for="notificacionesCorreo" class="campo-cabecera">Notificaciones por e-mail</p>
                             <p class="campo-descripcion">Marque la siguiente casilla si desea recibir una notificación por e-mail (<span style="cursor: help;" title="Especificada en el campo &quot;Dirección de e-mail que recibirá las respuestas&quot;">a la dirección especificada en el campo de arriba</span>) cada vez que el formulario que está creando reciba una nueva respuesta. Tenga en cuenta que, en caso de que cambie de parecer, <strong>podrá cambiar esta preferencia después de haber creado el formulario</strong>.</p>
                             <label for="notificacionesCorreo">
-                                <input class="campo-opcion" id="notificacionesCorreo" name="notificacionesCorreo" type="checkbox" value="1">
+                                <input checked class="campo-opcion" id="notificacionesCorreo" name="notificacionesCorreo" type="checkbox" value="1">
                                 Sí, recibir notificaciones por e-mail
                             </label>
                         </div>
@@ -132,17 +132,21 @@ $ColeccionRoles = new ColeccionRoles();
                         <div>
                             <p class="campo-cabecera" for="rolesDestinoFormulario">Destinatarios del formulario<span style="color: red; font-weight: bold;">*</span></p>
                             <p class="campo-descripcion">Seleccione uno o más roles a los que estará dirigido su formulario. Aquellos usuarios con roles que no seleccione no podrán acceder al formulario.</p>
-                            <label for="rolId<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>" title="Comprende estudiantes y a otras personas sin correo institucional.">
+                            <label for="rolId<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>" title="Comprende estudiantes y a otras personas sin una dirección de correo institucional.">
                                 <input class="campo-opcion" id="rolId<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>" name="rolesDestinoFormulario[]" type="checkbox" value="<?= PermisosSistema::IDROL_PUBLICO_GENERAL; ?>">
                                 Usuario no registrado
                             </label>
                             
                             <?php foreach ($ColeccionRoles->getRoles() as $Rol) {
-                                if ($Rol->getNombre() !== PermisosSistema::ROL_GESTOR && $Rol->getNombre() !== PermisosSistema::ROL_ADMINISTRADOR_GESTORES && $Rol->getNombre() !== PermisosSistema::ROL_ADMINISTRADOR && $Rol->getId() != PermisosSistema::IDROL_PUBLICO_GENERAL) { // Los roles administrativos no son incumbencia del gestor de formularios. El rol de invitado también se omite ya que se insertó manualmente en el código. ?>
-                                    <label for="rolId<?= $Rol->getId(); ?>">
-                                        <input class="campo-opcion" id="rolId<?= $Rol->getId(); ?>" name="rolesDestinoFormulario[]" type="checkbox" value="<?= $Rol->getId(); ?>">
-                                        <?= $Rol->getNombre(); ?>
-                                    </label>
+                                if ($Rol->getNombre() !== PermisosSistema::ROL_GESTOR && $Rol->getNombre() !== PermisosSistema::ROL_ADMINISTRADOR_GESTORES && $Rol->getNombre() !== PermisosSistema::ROL_ADMINISTRADOR && $Rol->getId() != PermisosSistema::IDROL_PUBLICO_GENERAL) { // Los roles administrativos no son incumbencia del gestor de formularios. El rol de invitado también se omite ya que se insertó manualmente en el código.
+                                    if ($Rol->getNombre() === PermisosSistema::ROL_ESTANDAR) { ?>
+                                        <label for="rolId<?= $Rol->getId(); ?>"  title="Comprende a cualquier persona que cuente con una dirección de correo institucional.">
+                                    <?php } else { ?>
+                                        <label for="rolId<?= $Rol->getId(); ?>">
+                                    <?php } ?>
+                                            <input class="campo-opcion" id="rolId<?= $Rol->getId(); ?>" name="rolesDestinoFormulario[]" type="checkbox" value="<?= $Rol->getId(); ?>">
+                                            <?= $Rol->getNombre(); ?>
+                                        </label>
                                 <?php }
                             } ?>
                             

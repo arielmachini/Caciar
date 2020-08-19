@@ -112,6 +112,11 @@ if (isset($_SESSION['usuario']->id)) {
     </body>
 
     <script type="text/javascript">
+        if (!$.trim($("#listaFormularios").html()).length) {
+            $("#filtrarFormularios").attr("disabled", true);
+            $("#listaFormularios").html('<div class="alert alert-info fade show" role="alert"><span class="oi oi-info" style="margin-right: 15px;"></span>Ahora mismo no hay ningún formulario disponible. Por favor, vuelva más tarde.</div>');
+        }
+        
         $("#filtrarFormularios").keyup(function () {
             var palabraClave, listaFormularios;
             palabraClave = this.value.toUpperCase();
