@@ -85,7 +85,7 @@ while ($tituloCampo = $camposFormulario->fetch_array()[0]) {
 $csvRespuesta = substr($csvRespuesta, 0, strlen($csvRespuesta) - 1);
 $cuerpoMensaje .= "En el presente mensaje también se encuentra adjunto un documento PDF con los detalles de esta respuesta.\nRecuerde que puede acceder a todas las respuestas que registra este formulario cuando usted desee desde el gestor de formularios.";
 
-if ($colibri->enviarMensaje($cuerpoMensaje, $respuesta)) {
+if ($colibri->enviarMensaje($cuerpoMensaje, $arregloCamposFormulario)) {
     $fueEnviada = 1;
 }
 
